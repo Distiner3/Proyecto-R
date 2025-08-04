@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="es-es" data-bs-theme="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>Proyecto Final | Curso de R</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Proyecto final integrador del curso de R: análisis completo de datos desde la carga hasta el reporte final."/>
+    <link rel="icon" href="assets/images/favicon.ico"/>
+    
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        })();
+    </script>
+
+    <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/icofont@1.0.0/dist/icofont.min.css">
+
+    <style>
+        .project-hero {
+            background: linear-gradient(135deg, #6610f2 0%, #e83e8c 100%);
+            color: white;
+            padding: 50px 0;
+            margin-bottom: 40px;
+            border-radius: 15px;
+        }
+        .phase-section {
+            border-left: 4px solid #6610f2;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        .phase-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102,16,242,0.1);
+        }
+        .phase-section.completed {
+            border-left-color: #28a745;
+        }
+        .phase-section.completed .phase-icon {
+            background: linear-gradient(45deg, #28a745, #20c997);
+        }
+        .phase-icon {
+            background: linear-gradient(45deg, #6610f2, #e83e8c);
+            color: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-right: 25px;
+            flex-shrink: 0;
+            position: relative;
+        }
+        .phase-number {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: white;
+            color: #6610f2;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .phase-header {
+            background: linear-gradient(135deg, #6610f2 0%, #e83e8c 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .difficulty-badge {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        .difficulty-beginner { background: #28a745; color: white; }
+        .difficulty-intermediate { background: #ffc107; color: #212529; }
+        .difficulty-advanced { background: #dc3545; color: white; }
+        .difficulty-expert { background: #6610f2; color: white; }
+        .dataset-card {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            height: 100%;
+            cursor: pointer;
+        }
+        .dataset-card:hover {
+            border-color: #6610f2;
+            box-shadow: 0 5px 15px rgba(102,16,242,0.1);
+            transform: translateY(-3px);
+        }
+        .dataset-card.selected {
+            border-color: #28a745;
+            background: rgba(40,167,69,0.05);
+        }
+        .checklist-item {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+        .checklist-item.completed {
+            background: rgba(40,167,69,0.1);
+            border-color: #28a745;
+        }
+        .checklist-item input[type="checkbox"] {
+            transform: scale(1.2);
+            margin-right: 10px;
+        }
+        .progress-tracker {
+            background: white;
+            border: 2px solid #6610f2;
+            border-radius: 15px;
+            padding: 25px;
+            position: sticky;
+            top: 20px;
+        }
+        [data-bs-theme="dark"] .progress-tracker {
+            background: #2d3748;
+            border-color: #6610f2;
+        }
+        .progress-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(#6610f2 0deg, #e83e8c 180deg, #f8f9fa 360deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+        .progress-inner {
+            width: 90px;
+            height: 90px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #6610f2;
+        }
+        [data-bs-theme="dark"] .progress-inner {
+            background: #2d3748;
+            color: #e83e8c;
+        }
+        .milestone-badge {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #212529;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin: 5px;
+        }
+        .code-template {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 15px 0;
+            position: relative;
+        }
+        [data-bs-theme="dark"] .code-template {
+            background: #2d3748;
+            border-color: #4a5568;
+            color: #e2e8f0;
+        }
+        .download-template {
+            background: #e83e8c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .download-template:hover {
+            background: #d91a72;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .rubric-table {
+            font-size: 0.85rem;
+        }
+        .rubric-table th {
+            background: #6610f2;
+            color: white;
+        }
+        .rubric-score {
+            text-align: center;
+            font-weight: bold;
+        }
+        .score-excellent { color: #28a745; }
+        .score-good { color: #20c997; }
+        .score-fair { color: #ffc107; }
+        .score-poor { color: #dc3545; }
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 25px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: #6610f2;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 2px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #6610f2;
+        }
+        .final-showcase {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-wrapper">
+        
+        <!-- TOPBAR -->
+        <div class="topbar d-print-none">
+            <div class="container-xxl">
+                <nav class="topbar-custom d-flex justify-content-between" id="topbar-custom">
+                    <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
+                        <li class="mx-3 welcome-text">
+                            <h3 class="mb-0 fw-bold text-truncate">
+                                <i class="fas fa-trophy me-2"></i>
+                                Proyecto Final
+                            </h3>
+                        </li>
+                    </ul>
+        
+                    <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
+                        <li class="topbar-item">
+                            <a class="nav-link nav-icon theme-toggle" href="javascript:void(0);">
+                                <i class="icofont-moon"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- SIDEBAR -->
+        <div class="startbar d-print-none">
+            <div class="brand">
+                <a href="index.html" class="logo">
+                    <span>
+                        <img src="assets/images/logo-sm.png" alt="logo-small" class="logo-sm">
+                    </span>
+                    <span class="">
+                        <img src="assets/images/logo-light.png" alt="logo-large" class="logo-lg logo-light">
+                        <img src="assets/images/logo-dark.png" alt="logo-large" class="logo-lg logo-dark">
+                    </span>
+                </a>
+            </div>
+            <div class="startbar-menu">
+                <div class="startbar-collapse" id="startbarCollapse">
+                    <div class="d-flex align-items-start flex-column w-100">
+                        <ul class="navbar-nav mb-auto w-100">
+                            <li class="menu-label pt-0 mt-0">
+                                <span>Menú Principal</span>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">
+                                    <i class="fas fa-home menu-icon"></i>
+                                    <span>Inicio</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link active" href="proyecto-final.html">
+                                    <i class="fas fa-trophy menu-icon"></i>
+                                    <span>Proyecto Final</span>
+                                </a>
+                            </li>
+        
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sidebarComponents" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarComponents">
+                                    <i class="fas fa-box-open menu-icon"></i>
+                                    <span>Curso Completo</span>
+                                </a>
+                                <div class="collapse" id="sidebarComponents">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="estadisticas-basicas.html">Estadísticas</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="graficos.html">Gráficos</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="ejemplo-practico.html">Ejemplo Práctico</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="recursos.html">Recursos</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="startbar-overlay d-print-none"></div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="page-content">
+            <div class="container-fluid">
+                
+                <!-- Hero Section -->
+                <div class="project-hero">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <h1><i class="fas fa-trophy me-3"></i>Proyecto Final: Análisis de Datos Completo</h1>
+                            <p class="lead">
+                                ¡Llegó el momento de aplicar todo lo que has aprendido! En este proyecto integrador 
+                                realizarás un análisis completo de datos desde la carga hasta el reporte final.
+                            </p>
+                            <div class="d-flex gap-3 flex-wrap">
+                                <span class="milestone-badge">
+                                    <i class="fas fa-star me-2"></i>Proyecto Capstone
+                                </span>
+                                <span class="milestone-badge">
+                                    <i class="fas fa-clock me-2"></i>2-4 horas
+                                </span>
+                                <span class="milestone-badge">
+                                    <i class="fas fa-users me-2"></i>Individual
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <i class="fas fa-project-diagram" style="font-size: 8rem; opacity: 0.3;"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Contenido Principal -->
+                    <div class="col-lg-8">
+                        
+                        <!-- Introducción -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">
+                                            <i class="fas fa-bullseye text-primary me-2"></i>
+                                            Objetivo del Proyecto
+                                        </h4>
+                                        <p class="card-text">
+                                            Realizarás un análisis estadístico completo de un dataset real, aplicando todas las 
+                                            técnicas aprendidas en el curso. Tu entregable final será un reporte profesional 
+                                            con código, visualizaciones y conclusiones.
+                                        </p>
+                                        
+                                        <div class="alert alert-info">
+                                            <h6><i class="fas fa-lightbulb me-2"></i>¿Qué vas a lograr?</h6>
+                                            <ul class="mb-0">
+                                                <li>Demostrar dominio de R para análisis de datos</li>
+                                                <li>Aplicar conceptos estadísticos en un caso real</li>
+                                                <li>Crear visualizaciones profesionales</li>
+                                                <li>Redactar conclusiones basadas en evidencia</li>
+                                                <li>Desarrollar un portafolio de trabajo</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Selección de Dataset -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card phase-section">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start">
+                                            <div class="phase-icon">
+                                                <i class="fas fa-database"></i>
+                                                <div class="phase-number">1</div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="phase-header">
+                                                    <i class="fas fa-database me-2"></i>Fase 1: Selección del Dataset
+                                                </div>
+                                                
+                                                <p>Elige uno de estos datasets reales para realizar tu análisis:</p>
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="dataset-card" onclick="selectDataset(this, 'ventas')">
+                                                            <span class="difficulty-badge difficulty-intermediate">Intermedio</span>
+                                                            <h6><i class="fas fa-shopping-cart text-primary me-2"></i>Análisis de Ventas</h6>
+                                                            <p class="small text-muted">
+                                                                Dataset con 2,500 registros de ventas mensuales por producto, 
+                                                                región y vendedor. Incluye variables categóricas y numéricas.
+                                                            </p>
+                                                            <div class="small">
+                                                                <strong>Variables:</strong> Fecha, Producto, Vendedor, Región, Ventas, Comisión
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="dataset-card" onclick="selectDataset(this, 'salud')">
+                                                            <span class="difficulty-badge difficulty-advanced">Avanzado</span>
+                                                            <h6><i class="fas fa-heartbeat text-danger me-2"></i>Indicadores de Salud</h6>
+                                                            <p class="small text-muted">
+                                                                Datos de 1,800 pacientes con indicadores vitales, hábitos 
+                                                                y diagnósticos. Ideal para correlaciones complejas.
+                                                            </p>
+                                                            <div class="small">
+                                                                <strong>Variables:</strong> Edad, IMC, Presión, Ejercicio, Tabaquismo, Diagnóstico
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="dataset-card" onclick="selectDataset(this, 'educacion')">
+                                                            <span class="difficulty-badge difficulty-intermediate">Intermedio</span>
+                                                            <h6><i class="fas fa-graduation-cap text-success me-2"></i>Desempeño Académico</h6>
+                                                            <p class="small text-muted">
+                                                                Calificaciones de 1,200 estudiantes con factores 
+                                                                socioeconómicos y de estudio. Perfecto para principiantes.
+                                                            </p>
+                                                            <div class="small">
+                                                                <strong>Variables:</strong> Calificaciones, Horas de estudio, Ingreso familiar, Apoyo parental
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="dataset-card" onclick="selectDataset(this, 'inmobiliario')">
+                                                            <span class="difficulty-badge difficulty-expert">Experto</span>
+                                                            <h6><i class="fas fa-home text-warning me-2"></i>Mercado Inmobiliario</h6>
+                                                            <p class="small text-muted">
+                                                                Precios de 3,000 propiedades con características detalladas. 
+                                                                Incluye análisis de regresión y predicción.
+                                                            </p>
+                                                            <div class="small">
+                                                                <strong>Variables:</strong> Precio, m², Habitaciones, Ubicación, Antigüedad, Amenidades
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="alert alert-warning">
+                                                    <i class="fas fa-download me-2"></i>
+                                                    <strong>¡Importante!</strong> Una vez que selecciones tu dataset, descárgalo desde la 
+                                                    <a href="recursos.html" class="alert-link">página de recursos</a> para comenzar tu análisis.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Análisis Exploratorio -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card phase-section">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start">
+                                            <div class="phase-icon">
+                                                <i class="fas fa-search"></i>
+                                                <div class="phase-number">2</div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="phase-header">
+                                                    <i class="fas fa-search me-2"></i>Fase 2: Análisis Exploratorio de Datos (EDA)
+                                                </div>
+                                                
+                                                <p>Explora y conoce tu dataset antes de hacer análisis profundos:</p>
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <h6>Checklist de Exploración:</h6>
+                                                        <div class="checklist-item">
+                                                            <input type="checkbox" id="check1" onchange="updateProgress()">
+                                                            <label for="check1">Cargar y examinar estructura del dataset</label>
+                                                        </div>
+                                                        <div class="checklist-item">
+                                                            <input type="checkbox" id="check2" onchange="updateProgress()">
+                                                            <label for="check2">Identificar tipos de variables (numéricas/categóricas)</label>
+                                                        </div>
+                                                        <div class="checklist-item">
+                                                            <input type="checkbox" id="check3" onchange="updateProgress()">
+                                                            <label for="check3">Detectar y manejar valores faltantes (NA)</label>
+                                                        </div>
+                                                        <div class="checklist-item">
+                                                            <input type="checkbox" id="check4" onchange="updateProgress()">
+                                                            <label for="check4">Calcular estadísticas descriptivas básicas</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h6>Código Template:</h6>
+                                                        <div class="code-template">
+                                                            <a href="descargas/template-eda.R" class="download-template" download>
+                                                                <i class="fas fa-download"></i>Descargar Template
+                                                            </a>
+                                                            # Template para EDA<br>
+                                                            library(dplyr)<br>
+                                                            library(ggplot2)<br>
+                                                            <br>
+                                                            # 1. Cargar datos<br>
+                                                            datos <- read.csv("tu_dataset.csv")<br>
+                                                            <br>
+                                                            # 2. Exploración inicial<br>
+                                                            str(datos)<br>
+                                                            summary(datos)<br>
+                                                            head(datos)<br>
+                                                            <br>
+                                                            # 3. Valores faltantes<br>
+                                                            sum(is.na(datos))<br>
+                                                            colSums(is.na(datos))
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="alert alert-info">
+                                                    <h6><i class="fas fa-lightbulb me-2"></i>Preguntas Clave para esta Fase</h6>
+                                                    <ul class="mb-0">
+                                                        <li>¿Cuántas observaciones y variables tienes?</li>
+                                                        <li>¿Hay datos faltantes? ¿Cómo los vas a manejar?</li>
+                                                        <li>¿Cuáles son las características principales de tus variables?</li>
+                                                        <li>¿Detectas algún patrón o anomalía inicial?</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Análisis Estadístico -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card phase-section">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start">
+                                            <div class="phase-icon">
+                                                <i class="fas fa-chart-pie"></i>
+                                                <div class="phase-number">3</div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="phase-header">
+                                                    <i class="fas fa-chart-pie me-2"></i>Fase 3: Análisis Estadístico Profundo
+                                                </div>
+                                                
+                                                <p>Aplica las técnicas estadísticas aprendidas para extraer insights valiosos:</p>
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <h6>Análisis Requeridos:</h6>
+                                                        <div class="checklist-item">
+                                                            <input type="checkbox" id="check5" onchange="updateProgress()">
+                                                            <label for="check5">Medidas de tendencia central y dispersión</label>
+                                                        </div>
+                                                        <div class="checklist-item">
+                                                            <input type="checkbox" id="check6" onchange="updateProgress()">
+                                                            <label for="check6">Análisis de cuartiles y detección de outliers</label>
+                                                        </div>
+                                                        <div class="checklist-item">
+                                                            <input type="checkbox" id="check7" onchange="updateProgress()">
+                                                            <label for="check7">Análisis de correlaciones entre variables</label>
+                                                        </div>
+                                                        <div class="checklist-item">
+                                                            <input type="checkbox" id="check8" onchange="updateProgress()">
+                                                            <label for="check8">Análisis por grupos/categorías</label>
+                                                        </div>
+                                                        <div class="checklist-item">
+                                                            <input type="checkbox" id="check9" onchange="updateProgress()">
+                                                            <label for="check9">Identificación de patrones y tendencias</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h6>Ejemplo de Análisis:</h6>
+                                                        <div class="code-template">
+                                                            # Análisis por grupos<br>
+                                                            datos %>%<br>
+                                                            &nbsp;&nbsp;group_by(categoria) %>%<br>
+                                                            &nbsp;&nbsp;summarise(<br>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;media = mean(variable),<br>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;mediana = median(variable),<br>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;sd = sd(variable)<br>
+                                                            &nbsp;&nbsp;)<br>
+                                                            <br>
+                                                            # Matriz de correlaciones<br>
+                                                            cor(datos[, c("var1", "var2", "var3")])
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="alert alert-success">
+                                                    <h6><i class="fas fa-target me-2"></i>Objetivos de esta Fase</h6>
+                                                    <p class="mb-0">
+                                                        Al completar esta fase, deberías poder responder preguntas específicas sobre 
+                                                        tu dataset y tener insights claros que puedas comunicar a otros.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Visualizaciones -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card phase-section">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start">
+                                            <div class="phase-icon">
+                                                <i class="fas fa-chart-line"></i>
+                                                <div class="phase-number">4</div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="phase-header">
+                                                    <i class="fas fa-chart-line me-2"></i>Fase 4: Visualizaciones Profesionales
+                                                </div>
+                                                
+                                                <p>Crea gráficos que comuniquen tus hallazgos de manera clara y atractiva:</p>
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <h6>Gráficos Requeridos:</h6>
+                                                        <div class="checklist-item">
+                                                            <input type="checkbox" id="check10" onchange="updateProgress()">
+                                                            <label for="check10">Histograma de variable principal</label>
+                                                        </div>
+                                                        <div class="checklist-item">
+                                                            <input type="checkbox" id="check11" onchange="updateProgress()">
+                                                            <label for="check11">Boxplot comparativo por grupos</label>
+                                                        </div>
+                                                        <div class="checklist-item">
+                                                            <input type="checkbox" id="check12" onchange="updateProgress()">
+                                                            <label for="check12">Gráfico de dispersión con correlación</label>
+                                                        </div>
+                                                        <div class="checklist-item">
+                                                            <input type="checkbox" id="check13" onchange="updateProgress()">
+                                                            <label for="check13">2 gráficos adicionales creativos</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <h6>Criterios de Calidad:</h6>
+                                                        <ul class="small">
+                                                            <li><strong>Títulos descriptivos:</strong> Cada gráfico debe tener un título claro</li>
+                                                            <li><strong>Ejes etiquetados:</strong> Con unidades cuando sea apropiado</li>
+                                                            <li><strong>Colores apropiados:</strong> Que faciliten la interpretación</li>
+                                                            <li><strong>Leyendas claras:</strong> Cuando uses múltiples series</li>
+                                                            <li><strong>Escalas apropiadas:</strong> Que no distorsionen la información</li>
+                                                        </ul>
+
+                                                        <div class="code-template">
+                                                            # Ejemplo de gráfico profesional<br>
+                                                            ggplot(datos, aes(x = variable_x, y = variable_y)) +<br>
+                                                            &nbsp;&nbsp;geom_point(aes(color = categoria), size = 3) +<br>
+                                                            &nbsp;&nbsp;labs(<br>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;title = "Título Descriptivo",<br>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;x = "Etiqueta del Eje X",<br>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;y = "Etiqueta del Eje Y"<br>
+                                                            &nbsp;&nbsp;) +<br>
+                                                            &nbsp;&nbsp;theme_minimal()
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Reporte Final -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card phase-section">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start">
+                                            <div class="phase-icon">
+                                                <i class="fas fa-file-alt"></i>
+                                                <div class="phase-number">5</div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="phase-header">
+                                                    <i class="fas fa-file-alt me-2"></i>Fase 5: Reporte y Conclusiones
+                                                </div>
+                                                
+                                                <p>Documenta tu trabajo y comunica tus hallazgos de manera profesional:</p>
+                                                
+                                                <div class="timeline-item">
+                                                    <h6><strong>1. Resumen Ejecutivo</strong></h6>
+                                                    <p class="small">Un párrafo que resuma los hallazgos principales y su importancia.</p>
+                                                </div>
+
+                                                <div class="timeline-item">
+                                                    <h6><strong>2. Metodología</strong></h6>
+                                                    <p class="small">Explica qué técnicas usaste y por qué las elegiste.</p>
+                                                </div>
+
+                                                <div class="timeline-item">
+                                                    <h6><strong>3. Resultados Principales</strong></h6>
+                                                    <p class="small">Presenta tus hallazgos más importantes con apoyo de gráficos y estadísticas.</p>
+                                                </div>
+
+                                                <div class="timeline-item">
+                                                    <h6><strong>4. Interpretación y Contexto</strong></h6>
+                                                    <p class="small">¿Qué significan tus resultados en el mundo real?</p>
+                                                </div>
+
+                                                <div class="timeline-item">
+                                                    <h6><strong>5. Limitaciones y Próximos Pasos</strong></h6>
+                                                    <p class="small">¿Qué no pudiste analizar? ¿Qué investigarías después?</p>
+                                                </div>
+
+                                                <div class="checklist-item">
+                                                    <input type="checkbox" id="check14" onchange="updateProgress()">
+                                                    <label for="check14">Reporte escrito completo (2-3 páginas)</label>
+                                                </div>
+                                                <div class="checklist-item">
+                                                    <input type="checkbox" id="check15" onchange="updateProgress()">
+                                                    <label for="check15">Código R comentado y organizado</label>
+                                                </div>
+                                                <div class="checklist-item">
+                                                    <input type="checkbox" id="check16" onchange="updateProgress()">
+                                                    <label for="check16">Todas las visualizaciones incluidas</label>
+                                                </div>
+
+                                                <div class="alert alert-warning">
+                                                    <h6><i class="fas fa-upload me-2"></i>Entrega Final</h6>
+                                                    <p class="mb-0">
+                                                        Tu proyecto debe incluir: (1) Reporte en PDF, (2) Script de R con todo el código, 
+                                                        (3) Dataset utilizado, (4) Imágenes de los gráficos en alta resolución.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rúbrica de Evaluación -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-clipboard-check text-primary me-2"></i>
+                                            Rúbrica de Evaluación
+                                        </h5>
+                                        
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered rubric-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 20%;">Criterio</th>
+                                                        <th style="width: 20%;">Excelente (4)</th>
+                                                        <th style="width: 20%;">Bueno (3)</th>
+                                                        <th style="width: 20%;">Regular (2)</th>
+                                                        <th style="width: 20%;">Deficiente (1)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><strong>Análisis Estadístico</strong></td>
+                                                        <td class="rubric-score score-excellent">Aplica múltiples técnicas correctamente</td>
+                                                        <td class="rubric-score score-good">Aplica la mayoría correctamente</td>
+                                                        <td class="rubric-score score-fair">Aplica algunas técnicas</td>
+                                                        <td class="rubric-score score-poor">Análisis básico o incorrecto</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Visualizaciones</strong></td>
+                                                        <td class="rubric-score score-excellent">Gráficos profesionales y efectivos</td>
+                                                        <td class="rubric-score score-good">Gráficos claros y bien etiquetados</td>
+                                                        <td class="rubric-score score-fair">Gráficos básicos pero apropiados</td>
+                                                        <td class="rubric-score score-poor">Gráficos confusos o inadecuados</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Código R</strong></td>
+                                                        <td class="rubric-score score-excellent">Código limpio, comentado y eficiente</td>
+                                                        <td class="rubric-score score-good">Código funcional y comentado</td>
+                                                        <td class="rubric-score score-fair">Código funciona con comentarios básicos</td>
+                                                        <td class="rubric-score score-poor">Código desorganizado o con errores</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Interpretación</strong></td>
+                                                        <td class="rubric-score score-excellent">Insights profundos y contextualizados</td>
+                                                        <td class="rubric-score score-good">Interpretaciones correctas y relevantes</td>
+                                                        <td class="rubric-score score-fair">Interpretaciones básicas</td>
+                                                        <td class="rubric-score score-poor">Interpretaciones incorrectas o ausentes</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Comunicación</strong></td>
+                                                        <td class="rubric-score score-excellent">Reporte claro, completo y profesional</td>
+                                                        <td class="rubric-score score-good">Reporte bien estructurado</td>
+                                                        <td class="rubric-score score-fair">Reporte básico pero completo</td>
+                                                        <td class="rubric-score score-poor">Reporte incompleto o confuso</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="alert alert-info">
+                                            <strong>Puntuación Total:</strong> 20 puntos máximo | 
+                                            <strong>Excelente:</strong> 18-20pts | 
+                                            <strong>Bueno:</strong> 15-17pts | 
+                                            <strong>Regular:</strong> 12-14pts | 
+                                            <strong>Mejorar:</strong> < 12pts
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Barra Lateral de Progreso -->
+                    <div class="col-lg-4">
+                        <div class="progress-tracker">
+                            <h5 class="text-center mb-3">
+                                <i class="fas fa-tasks me-2"></i>Tu Progreso
+                            </h5>
+                            
+                            <div class="progress-circle">
+                                <div class="progress-inner" id="progressPercent">0%</div>
+                            </div>
+                            
+                            <div class="text-center mb-3">
+                                <div id="progressText">¡Comienza tu proyecto!</div>
+                                <small class="text-muted">
+                                    <span id="completedTasks">0</span> de <span id="totalTasks">16</span> tareas completadas
+                                </small>
+                            </div>
+
+                            <div class="mb-3">
+                                <h6>Próximos Pasos:</h6>
+                                <div id="nextSteps" class="small text-muted">
+                                    1. Selecciona tu dataset<br>
+                                    2. Descarga los archivos necesarios<br>
+                                    3. Configura tu entorno de R
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <h6>Recursos Útiles:</h6>
+                                <div class="d-grid gap-2">
+                                    <a href="descargas/template-proyecto-final.zip" class="btn btn-primary btn-sm" download>
+                                        <i class="fas fa-download me-2"></i>Templates del Proyecto
+                                    </a>
+                                    <a href="comandos-utiles.html" class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-terminal me-2"></i>Comandos de R
+                                    </a>
+                                    <a href="errores-comunes.html" class="btn btn-outline-warning btn-sm">
+                                        <i class="fas fa-bug me-2"></i>Solución de Errores
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="final-showcase" id="finalShowcase" style="display: none;">
+                                <h6><i class="fas fa-trophy me-2"></i>¡Proyecto Completado!</h6>
+                                <p class="mb-2">¡Felicidades! Has terminado tu proyecto final.</p>
+                                <button class="btn btn-light btn-sm" onclick="celebrateCompletion()">
+                                    <i class="fas fa-star me-2"></i>Celebrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/vendors.min.js"></script>
+    <script src="assets/js/app.min.js"></script>
+    <script src="assets/js/global.js"></script>
+
+    <script>
+        let selectedDataset = null;
+        const totalTasks = 16;
+
+        function selectDataset(card, dataset) {
+            // Remover selección anterior
+            document.querySelectorAll('.dataset-card').forEach(c => c.classList.remove('selected'));
+            
+            // Agregar selección actual
+            card.classList.add('selected');
+            selectedDataset = dataset;
+            
+            // Actualizar próximos pasos
+            updateNextSteps();
+            
+            // Marcar la fase 1 como completada visualmente
+            document.querySelector('.phase-section').classList.add('completed');
+        }
+
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const completed = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            const percentage = Math.round((completed / totalTasks) * 100);
+            
+            // Actualizar círculo de progreso
+            document.getElementById('progressPercent').textContent = percentage + '%';
+            
+            // Actualizar texto
+            document.getElementById('completedTasks').textContent = completed;
+            
+            // Actualizar mensaje de progreso
+            const progressText = document.getElementById('progressText');
+            if (percentage === 0) {
+                progressText.textContent = '¡Comienza tu proyecto!';
+            } else if (percentage < 25) {
+                progressText.textContent = '¡Buen comienzo!';
+            } else if (percentage < 50) {
+                progressText.textContent = '¡Vas por buen camino!';
+            } else if (percentage < 75) {
+                progressText.textContent = '¡Más de la mitad!';
+            } else if (percentage < 100) {
+                progressText.textContent = '¡Casi terminado!';
+            } else {
+                progressText.textContent = '¡Proyecto Completado!';
+                showFinalShowcase();
+            }
+            
+            // Actualizar color del círculo de progreso
+            const circle = document.querySelector('.progress-circle');
+            const gradientAngle = (percentage / 100) * 360;
+            circle.style.background = `conic-gradient(#6610f2 0deg, #e83e8c ${gradientAngle}deg, #f8f9fa ${gradientAngle}deg)`;
+            
+            // Marcar checklist items como completados
+            checkboxes.forEach(checkbox => {
+                const item = checkbox.closest('.checklist-item');
+                if (checkbox.checked) {
+                    item.classList.add('completed');
+                } else {
+                    item.classList.remove('completed');
+                }
+            });
+
+            updateNextSteps();
+        }
+
+        function updateNextSteps() {
+            const nextStepsDiv = document.getElementById('nextSteps');
+            const completed = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            
+            if (!selectedDataset) {
+                nextStepsDiv.innerHTML = '1. Selecciona tu dataset<br>2. Descarga los archivos necesarios<br>3. Configura tu entorno de R';
+            } else if (completed < 4) {
+                nextStepsDiv.innerHTML = '1. Explora tu dataset<br>2. Identifica variables clave<br>3. Maneja datos faltantes';
+            } else if (completed < 9) {
+                nextStepsDiv.innerHTML = '1. Calcula estadísticas descriptivas<br>2. Analiza correlaciones<br>3. Identifica patrones';
+            } else if (completed < 13) {
+                nextStepsDiv.innerHTML = '1. Crea histogramas y boxplots<br>2. Gráficos de dispersión<br>3. Visualizaciones creativas';
+            } else if (completed < 16) {
+                nextStepsDiv.innerHTML = '1. Escribe tu reporte<br>2. Documenta tu código<br>3. Revisa tu trabajo';
+            } else {
+                nextStepsDiv.innerHTML = '¡Proyecto completado!<br>🎉 ¡Felicidades!<br>Revisa tu trabajo final';
+            }
+        }
+
+        function showFinalShowcase() {
+            document.getElementById('finalShowcase').style.display = 'block';
+        }
+
+        function celebrateCompletion() {
+            // Crear efecto de confetti (simple)
+            const colors = ['#6610f2', '#e83e8c', '#28a745', '#ffc107', '#17a2b8'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.cssText = `
+                        position: fixed;
+                        width: 10px;
+                        height: 10px;
+                        background: ${colors[Math.floor(Math.random() * colors.length)]};
+                        left: ${Math.random() * 100}vw;
+                        top: -10px;
+                        border-radius: 50%;
+                        pointer-events: none;
+                        z-index: 10000;
+                        animation: fall 3s linear forwards;
+                    `;
+                    
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 100);
+            }
+            
+            // Agregar CSS para la animación
+            if (!document.getElementById('confetti-style')) {
+                const style = document.createElement('style');
+                style.id = 'confetti-style';
+                style.textContent = `
+                    @keyframes fall {
+                        to {
+                            transform: translateY(100vh) rotate(360deg);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+
+        // Inicializar contadores
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('totalTasks').textContent = totalTasks;
+            updateProgress();
+        });
+    </script>
+
+</body>
+</html>

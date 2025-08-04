@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="es-es" data-bs-theme="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>Recursos y Descargas | Curso de R</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Recursos complementarios para aprender R: descargas, enlaces útiles, datasets, cheat sheets y más."/>
+    <link rel="icon" href="assets/images/favicon.ico"/>
+    
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        })();
+    </script>
+
+    <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/icofont@1.0.0/dist/icofont.min.css">
+
+    <style>
+        .resource-section {
+            border-left: 4px solid #fd7e14;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        .resource-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(253,126,20,0.1);
+        }
+        .resource-icon {
+            background: linear-gradient(45deg, #fd7e14, #e55100);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-right: 25px;
+            flex-shrink: 0;
+        }
+        .download-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            height: 100%;
+        }
+        .download-card:hover {
+            border-color: #fd7e14;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(253,126,20,0.15);
+        }
+        .download-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #fd7e14;
+        }
+        .download-btn {
+            background: linear-gradient(45deg, #fd7e14, #e55100);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(253,126,20,0.3);
+            color: white;
+        }
+        .file-size {
+            color: #6c757d;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+        .category-header {
+            background: linear-gradient(135deg, #fd7e14 0%, #f57c00 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .link-card {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .link-card:hover {
+            border-color: #fd7e14;
+            box-shadow: 0 5px 15px rgba(253,126,20,0.1);
+        }
+        .link-title {
+            color: #fd7e14;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .link-title:hover {
+            color: #e55100;
+        }
+        .stats-counter {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .stats-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .faq-item {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        .faq-question {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-weight: 600;
+        }
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+        .faq-answer {
+            padding: 20px;
+            display: none;
+        }
+        .faq-answer.show {
+            display: block;
+        }
+        .tool-badge {
+            background: #fd7e14;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 5px 5px 5px 0;
+            display: inline-block;
+        }
+        .difficulty-beginner { background: #28a745; }
+        .difficulty-intermediate { background: #ffc107; color: #212529; }
+        .difficulty-advanced { background: #dc3545; }
+        
+        .cheatsheet-preview {
+            background: #f8f9fa;
+            border: 2px dashed #fd7e14;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin: 15px 0;
+        }
+        [data-bs-theme="dark"] .cheatsheet-preview {
+            background: #2d3748;
+            border-color: #fd7e14;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-wrapper">
+        
+        <!-- TOPBAR -->
+        <div class="topbar d-print-none">
+            <div class="container-xxl">
+                <nav class="topbar-custom d-flex justify-content-between" id="topbar-custom">
+                    <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
+                        <li class="mx-3 welcome-text">
+                            <h3 class="mb-0 fw-bold text-truncate">
+                                <i class="fas fa-download me-2"></i>
+                                Recursos y Descargas
+                            </h3>
+                        </li>
+                    </ul>
+        
+                    <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
+                        <li class="topbar-item">
+                            <a class="nav-link nav-icon theme-toggle" href="javascript:void(0);">
+                                <i class="icofont-moon"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- SIDEBAR -->
+        <div class="startbar d-print-none">
+            <div class="brand">
+                <a href="index.html" class="logo">
+                    <span>
+                        <img src="assets/images/logo-sm.png" alt="logo-small" class="logo-sm">
+                    </span>
+                    <span class="">
+                        <img src="assets/images/logo-light.png" alt="logo-large" class="logo-lg logo-light">
+                        <img src="assets/images/logo-dark.png" alt="logo-large" class="logo-lg logo-dark">
+                    </span>
+                </a>
+            </div>
+            <div class="startbar-menu">
+                <div class="startbar-collapse" id="startbarCollapse">
+                    <div class="d-flex align-items-start flex-column w-100">
+                        <ul class="navbar-nav mb-auto w-100">
+                            <li class="menu-label pt-0 mt-0">
+                                <span>Menú Principal</span>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">
+                                    <i class="fas fa-home menu-icon"></i>
+                                    <span>Inicio</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link active" href="recursos.html">
+                                    <i class="fas fa-download menu-icon"></i>
+                                    <span>Recursos</span>
+                                </a>
+                            </li>
+        
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sidebarComponents" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarComponents">
+                                    <i class="fas fa-box-open menu-icon"></i>
+                                    <span>Curso</span>
+                                </a>
+                                <div class="collapse" id="sidebarComponents">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="instalacion.html">Instalación</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="primeros-pasos.html">Primeros Pasos</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="graficos.html">Gráficos</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="ejemplo-practico.html">Ejemplo Completo</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="startbar-overlay d-print-none"></div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="page-content">
+            <div class="container-fluid">
+                
+                <!-- Introducción -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <i class="fas fa-treasure-chest text-primary me-2"></i>
+                                    Tu Biblioteca de Recursos para R
+                                </h4>
+                                <p class="card-text">
+                                    Aquí encontrarás todo el material complementario para tu aprendizaje: documentos descargables, 
+                                    datasets de práctica, enlaces útiles y herramientas adicionales. Todo diseñado para maximizar 
+                                    tu experiencia de aprendizaje.
+                                </p>
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="stats-counter">
+                                            <div class="stats-number">15+</div>
+                                            <div>Archivos Descargables</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="stats-counter">
+                                            <div class="stats-number">25+</div>
+                                            <div>Datasets de Ejemplo</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="stats-counter">
+                                            <div class="stats-number">10+</div>
+                                            <div>Enlaces Útiles</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="stats-counter">
+                                            <div class="stats-number">100%</div>
+                                            <div>Gratis</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Documentos PDF -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card resource-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="resource-icon">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="category-header">
+                                            <i class="fas fa-file-pdf me-2"></i>Documentos y Guías PDF
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card download-card">
+                                                    <div class="card-body text-center">
+                                                        <i class="fas fa-book download-icon"></i>
+                                                        <h6>Guía Completa de R</h6>
+                                                        <p class="small text-muted">Manual completo con todos los temas del curso, ejemplos y ejercicios.</p>
+                                                        <a href="descargas/guia-completa-R.pdf" class="download-btn" download>
+                                                            <i class="fas fa-download"></i>Descargar
+                                                        </a>
+                                                        <div class="file-size">PDF • 2.5 MB</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card download-card">
+                                                    <div class="card-body text-center">
+                                                        <i class="fas fa-sticky-note download-icon"></i>
+                                                        <h6>Cheat Sheet R Básico</h6>
+                                                        <p class="small text-muted">Hoja de referencia rápida con comandos esenciales para principiantes.</p>
+                                                        <a href="descargas/cheatsheet-r-basico.pdf" class="download-btn" download>
+                                                            <i class="fas fa-download"></i>Descargar
+                                                        </a>
+                                                        <div class="file-size">PDF • 850 KB</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card download-card">
+                                                    <div class="card-body text-center">
+                                                        <i class="fas fa-chart-bar download-icon"></i>
+                                                        <h6>Guía de Gráficos</h6>
+                                                        <p class="small text-muted">Manual detallado para crear visualizaciones profesionales en R.</p>
+                                                        <a href="descargas/guia-graficos-R.pdf" class="download-btn" download>
+                                                            <i class="fas fa-download"></i>Descargar
+                                                        </a>
+                                                        <div class="file-size">PDF • 1.8 MB</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card download-card">
+                                                    <div class="card-body text-center">
+                                                        <i class="fas fa-calculator download-icon"></i>
+                                                        <h6>Estadística con R</h6>
+                                                        <p class="small text-muted">Conceptos estadísticos explicados con ejemplos prácticos en R.</p>
+                                                        <a href="descargas/estadistica-con-R.pdf" class="download-btn" download>
+                                                            <i class="fas fa-download"></i>Descargar
+                                                        </a>
+                                                        <div class="file-size">PDF • 2.1 MB</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card download-card">
+                                                    <div class="card-body text-center">
+                                                        <i class="fas fa-bug download-icon"></i>
+                                                        <h6>Errores Comunes y Soluciones</h6>
+                                                        <p class="small text-muted">Guía de troubleshooting con los errores más frecuentes en R.</p>
+                                                        <a href="descargas/errores-comunes-R.pdf" class="download-btn" download>
+                                                            <i class="fas fa-download"></i>Descargar
+                                                        </a>
+                                                        <div class="file-size">PDF • 1.2 MB</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card download-card">
+                                                    <div class="card-body text-center">
+                                                        <i class="fas fa-graduation-cap download-icon"></i>
+                                                        <h6>Ejercicios Resueltos</h6>
+                                                        <p class="small text-muted">50+ ejercicios con soluciones paso a paso para practicar.</p>
+                                                        <a href="descargas/ejercicios-resueltos-R.pdf" class="download-btn" download>
+                                                            <i class="fas fa-download"></i>Descargar
+                                                        </a>
+                                                        <div class="file-size">PDF • 3.2 MB</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scripts y Código -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card resource-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="resource-icon">
+                                        <i class="fas fa-code"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="category-header">
+                                            <i class="fas fa-code me-2"></i>Scripts y Código R
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card download-card">
+                                                    <div class="card-body text-center">
+                                                        <i class="fas fa-file-code download-icon"></i>
+                                                        <h6>Todos los Scripts del Curso</h6>
+                                                        <p class="small text-muted">Código completo de todos los ejemplos vistos en el curso.</p>
+                                                        <a href="descargas/scripts-curso-completo.zip" class="download-btn" download>
+                                                            <i class="fas fa-download"></i>Descargar
+                                                        </a>
+                                                        <div class="file-size">ZIP • 1.5 MB</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card download-card">
+                                                    <div class="card-body text-center">
+                                                        <i class="fas fa-chart-line download-icon"></i>
+                                                        <h6>Script Análisis Estaturas</h6>
+                                                        <p class="small text-muted">Código completo del ejemplo práctico con análisis estadístico.</p>
+                                                        <a href="descargas/analisis-estaturas.R" class="download-btn" download>
+                                                            <i class="fas fa-download"></i>Descargar
+                                                        </a>
+                                                        <div class="file-size">R • 25 KB</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card download-card">
+                                                    <div class="card-body text-center">
+                                                        <i class="fas fa-palette download-icon"></i>
+                                                        <h6>Scripts de Gráficos</h6>
+                                                        <p class="small text-muted">Colección de scripts para crear diferentes tipos de gráficos.</p>
+                                                        <a href="descargas/scripts-graficos.zip" class="download-btn" download>
+                                                            <i class="fas fa-download"></i>Descargar
+                                                        </a>
+                                                        <div class="file-size">ZIP • 800 KB</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card download-card">
+                                                    <div class="card-body text-center">
+                                                        <i class="fas fa-wrench download-icon"></i>
+                                                        <h6>Scripts de Utilidades</h6>
+                                                        <p class="small text-muted">Funciones útiles y atajos para hacer tu trabajo más eficiente.</p>
+                                                        <a href="descargas/utilidades-R.R" class="download-btn" download>
+                                                            <i class="fas fa-download"></i>Descargar
+                                                        </a>
+                                                        <div class="file-size">R • 15 KB</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card download-card">
+                                                    <div class="card-body text-center">
+                                                        <i class="fas fa-puzzle-piece download-icon"></i>
+                                                        <h6>Plantillas de Proyectos</h6>
+                                                        <p class="small text-muted">Estructuras básicas para iniciar tus propios proyectos en R.</p>
+                                                        <a href="descargas/plantillas-proyectos.zip" class="download-btn" download>
+                                                            <i class="fas fa-download"></i>Descargar
+                                                        </a>
+                                                        <div class="file-size">ZIP • 950 KB</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Datasets -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card resource-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="resource-icon">
+                                        <i class="fas fa-database"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="category-header">
+                                            <i class="fas fa-database me-2"></i>Datasets de Práctica
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card download-card">
+                                                    <div class="card-body text-center">
+                                                        <i class="fas fa-users download-icon"></i>
+                                                        <h6>Datos de Estudiantes</h6>
+                                                        <p class="small text-muted">Dataset con estaturas, edades, géneros y más información estudiantil.</p>
+                                                        <span class="tool-badge difficulty-beginner">Básico</span>
+                                                        <a href="descargas/dataset-estudiantes.csv" class="download-btn d-block mt-2" download>
+                                                            <i class="fas fa-download"></i>Descargar
+                                                        </a>
+                                                        <div class="file-size">CSV • 45 KB • 500 registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card download-card">
+                                                    <div class="card-body text-center">
+                                                        <i class="fas fa-chart-line download-icon"></i>
+                                                        <h6>Ventas Mensuales</h6>
+                                                        <p class="small text-muted">Datos de ventas por meses, productos y regiones para análisis temporal.</p>
+                                                        <span class="tool-badge difficulty-intermediate">Intermedio</span>
+                                                        <a href="descargas/dataset-ventas.csv" class="download-btn d-block mt-2" download>
+                                                            <i class="fas fa-download"></i>Descargar
+                                                        </a>
+                                                        <div class="file-size">CSV • 120 KB • 1,200 registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card download-card">
+                                                    <div class="card-body text-center">
+                                                        <i class="fas fa-thermometer-half download-icon"></i>
+                                                        <h6>Datos Climáticos</h6>
+                                                        <p class="small text-muted">Temperaturas, precipitación y humedad de diferentes ciudades.</p>
+                                                        <span class="tool-badge difficulty-intermediate">Intermedio</span>
+                                                        <a href="descargas/dataset-clima.csv" class="download-btn d-block mt-2" download>
+                                                            <i class="fas fa-download"></i>Descargar
+                                                        </a>
+                                                        <div class="file-size">CSV • 85 KB • 800 registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card download-card">
+                                                    <div class="card-body text-center">
+                                                        <i class="fas fa-car download-icon"></i>
+                                                        <h6>Datos de Automóviles</h6>
+                                                        <p class="small text-muted">Información técnica de vehículos: consumo, potencia, peso, etc.</p>
+                                                        <span class="tool-badge difficulty-beginner">Básico</span>
+                                                        <a href="descargas/dataset-autos.csv" class="download-btn d-block mt-2" download>
+                                                            <i class="fas fa-download"></i>Descargar
+                                                        </a>
+                                                        <div class="file-size">CSV • 30 KB • 400 registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card download-card">
+                                                    <div class="card-body text-center">
+                                                        <i class="fas fa-home download-icon"></i>
+                                                        <h6>Precios de Viviendas</h6>
+                                                        <p class="small text-muted">Dataset para análisis de regresión con precios inmobiliarios.</p>
+                                                        <span class="tool-badge difficulty-advanced">Avanzado</span>
+                                                        <a href="descargas/dataset-viviendas.csv" class="download-btn d-block mt-2" download>
+                                                            <i class="fas fa-download"></i>Descargar
+                                                        </a>
+                                                        <div class="file-size">CSV • 180 KB • 2,000 registros</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-4 mb-3">
+                                                <div class="card download-card">
+                                                    <div class="card-body text-center">
+                                                        <i class="fas fa-archive download-icon"></i>
+                                                        <h6>Pack Completo de Datasets</h6>
+                                                        <p class="small text-muted">Todos los datasets anteriores en un solo archivo comprimido.</p>
+                                                        <span class="tool-badge">Completo</span>
+                                                        <a href="descargas/datasets-completos.zip" class="download-btn d-block mt-2" download>
+                                                            <i class="fas fa-download"></i>Descargar
+                                                        </a>
+                                                        <div class="file-size">ZIP • 850 KB • 10 archivos</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enlaces Útiles -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card resource-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="resource-icon">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="category-header">
+                                            <i class="fas fa-external-link-alt me-2"></i>Enlaces y Recursos Externos
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <div class="link-card">
+                                                    <h6>
+                                                        <a href="https://cran.r-project.org/" target="_blank" class="link-title">
+                                                            <i class="fab fa-r-project me-2"></i>CRAN - The R Project
+                                                        </a>
+                                                    </h6>
+                                                    <p class="small text-muted">Sitio oficial de R. Descargas, documentación y paquetes oficiales.</p>
+                                                    <span class="tool-badge">Oficial</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <div class="link-card">
+                                                    <h6>
+                                                        <a href="https://posit.co/" target="_blank" class="link-title">
+                                                            <i class="fas fa-desktop me-2"></i>Posit (RStudio)
+                                                        </a>
+                                                    </h6>
+                                                    <p class="small text-muted">Empresa detrás de RStudio. Recursos, tutoriales y herramientas profesionales.</p>
+                                                    <span class="tool-badge">IDE</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <div class="link-card">
+                                                    <h6>
+                                                        <a href="https://www.r-graph-gallery.com/" target="_blank" class="link-title">
+                                                            <i class="fas fa-chart-bar me-2"></i>R Graph Gallery
+                                                        </a>
+                                                    </h6>
+                                                    <p class="small text-muted">Galería de gráficos con código R. Inspiración y ejemplos para visualizaciones.</p>
+                                                    <span class="tool-badge">Gráficos</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <div class="link-card">
+                                                    <h6>
+                                                        <a href="https://stackoverflow.com/questions/tagged/r" target="_blank" class="link-title">
+                                                            <i class="fab fa-stack-overflow me-2"></i>Stack Overflow - R
+                                                        </a>
+                                                    </h6>
+                                                    <p class="small text-muted">Comunidad para resolver dudas y problemas específicos de programación en R.</p>
+                                                    <span class="tool-badge">Comunidad</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <div class="link-card">
+                                                    <h6>
+                                                        <a href="https://r4ds.had.co.nz/" target="_blank" class="link-title">
+                                                            <i class="fas fa-book me-2"></i>R for Data Science
+                                                        </a>
+                                                    </h6>
+                                                    <p class="small text-muted">Libro gratuito online para ciencia de datos con R. Nivel intermedio-avanzado.</p>
+                                                    <span class="tool-badge difficulty-intermediate">Intermedio</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <div class="link-card">
+                                                    <h6>
+                                                        <a href="https://www.kaggle.com/datasets" target="_blank" class="link-title">
+                                                            <i class="fas fa-database me-2"></i>Kaggle Datasets
+                                                        </a>
+                                                    </h6>
+                                                    <p class="small text-muted">Miles de datasets reales para practicar análisis de datos con R.</p>
+                                                    <span class="tool-badge">Datos</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <div class="link-card">
+                                                    <h6>
+                                                        <a href="https://www.tidyverse.org/" target="_blank" class="link-title">
+                                                            <i class="fas fa-tools me-2"></i>Tidyverse
+                                                        </a>
+                                                    </h6>
+                                                    <p class="small text-muted">Colección de paquetes R para ciencia de datos (ggplot2, dplyr, etc.).</p>
+                                                    <span class="tool-badge">Paquetes</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <div class="link-card">
+                                                    <h6>
+                                                        <a href="https://github.com/rstudio/cheatsheets" target="_blank" class="link-title">
+                                                            <i class="fab fa-github me-2"></i>RStudio Cheatsheets
+                                                        </a>
+                                                    </h6>
+                                                    <p class="small text-muted">Hojas de referencia oficiales para los principales paquetes de R.</p>
+                                                    <span class="tool-badge">Referencias</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preguntas Frecuentes -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card resource-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="resource-icon">
+                                        <i class="fas fa-question-circle"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="category-header">
+                                            <i class="fas fa-question-circle me-2"></i>Preguntas Frecuentes
+                                        </div>
+                                        
+                                        <div class="faq-item">
+                                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                                <i class="fas fa-chevron-down me-2"></i>
+                                                ¿Necesito experiencia previa en programación para usar estos recursos?
+                                            </button>
+                                            <div class="faq-answer">
+                                                <p>No, todos los recursos están diseñados para principiantes. Los materiales marcados como "Básico" son perfectos para comenzar desde cero. Los recursos intermedios y avanzados te ayudarán a progresar gradualmente.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="faq-item">
+                                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                                <i class="fas fa-chevron-down me-2"></i>
+                                                ¿Los archivos funcionan en cualquier versión de R?
+                                            </button>
+                                            <div class="faq-answer">
+                                                <p>Los scripts están probados en R versión 4.0 y superiores. Si tienes una versión anterior, la mayoría del código funcionará, pero recomendamos actualizar a la versión más reciente.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="faq-item">
+                                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                                <i class="fas fa-chevron-down me-2"></i>
+                                                ¿Cómo uso los datasets de práctica?
+                                            </button>
+                                            <div class="faq-answer">
+                                                <p>Descarga el archivo CSV y cárgalo en R usando <code>read.csv("nombre_archivo.csv")</code>. Cada dataset incluye un archivo README con descripción de las variables y sugerencias de análisis.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="faq-item">
+                                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                                <i class="fas fa-chevron-down me-2"></i>
+                                                ¿Puedo usar estos materiales para enseñar?
+                                            </button>
+                                            <div class="faq-answer">
+                                                <p>Sí, todos los recursos son de uso libre para fines educativos. Si los usas en clases o talleres, agradecemos que menciones la fuente.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="faq-item">
+                                            <button class="faq-question" onclick="toggleFAQ(this)">
+                                                <i class="fas fa-chevron-down me-2"></i>
+                                                ¿Hay más recursos en el futuro?
+                                            </button>
+                                            <div class="faq-answer">
+                                                <p>Sí, actualizamos regularmente con nuevos datasets, scripts y guías. Visita esta página periódicamente para encontrar nuevo contenido.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cheat Sheet Preview -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card bg-warning bg-opacity-10 border-warning">
+                            <div class="card-body">
+                                <h5 class="card-title text-warning">
+                                    <i class="fas fa-star me-2"></i>
+                                    ¡Nuevo! Vista Previa del Cheat Sheet
+                                </h5>
+                                
+                                <div class="cheatsheet-preview">
+                                    <i class="fas fa-sticky-note" style="font-size: 4rem; color: #fd7e14; margin-bottom: 20px;"></i>
+                                    <h6>Comandos R Esenciales</h6>
+                                    <p class="text-muted">Hoja de referencia rápida con los comandos más importantes</p>
+                                    
+                                    <div class="row mt-3 text-start small">
+                                        <div class="col-md-4">
+                                            <strong>Datos básicos:</strong><br>
+                                            <code>mean(), median(), sd()</code><br>
+                                            <code>length(), max(), min()</code>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <strong>Gráficos:</strong><br>
+                                            <code>plot(), hist(), boxplot()</code><br>
+                                            <code>abline(), legend()</code>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <strong>Archivos:</strong><br>
+                                            <code>read.csv(), write.csv()</code><br>
+                                            <code>getwd(), setwd()</code>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center mt-3">
+                                    <a href="descargas/cheatsheet-completo.pdf" class="download-btn" download>
+                                        <i class="fas fa-download me-2"></i>
+                                        Descargar Cheat Sheet Completo
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/vendors.min.js"></script>
+    <script src="assets/js/app.min.js"></script>
+    <script src="assets/js/global.js"></script>
+
+    <script>
+        function toggleFAQ(button) {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            if (answer.classList.contains('show')) {
+                answer.classList.remove('show');
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            } else {
+                // Cerrar todas las otras FAQ
+                document.querySelectorAll('.faq-answer.show').forEach(item => {
+                    item.classList.remove('show');
+                });
+                document.querySelectorAll('.faq-question i').forEach(i => {
+                    i.classList.remove('fa-chevron-up');
+                    i.classList.add('fa-chevron-down');
+                });
+                
+                // Abrir la actual
+                answer.classList.add('show');
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            }
+        }
+
+        // Animación de contadores
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stats-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent);
+                const hasPlus = counter.textContent.includes('+');
+                const hasPercent = counter.textContent.includes('%');
+                
+                let current = 0;
+                const increment = target / 30;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    
+                    let displayValue = Math.floor(current);
+                    if (hasPlus) displayValue += '+';
+                    if (hasPercent) displayValue += '%';
+                    
+                    counter.textContent = displayValue;
+                }, 50);
+            });
+        }
+
+        // Ejecutar animación cuando sea visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const statsSection = document.querySelector('.stats-counter').parentElement.parentElement;
+            observer.observe(statsSection);
+        });
+
+        // Efecto hover para las cards de descarga
+        document.querySelectorAll('.download-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+
+</body>
+</html>

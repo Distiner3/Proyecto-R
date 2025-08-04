@@ -3,43 +3,175 @@
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-    <title>Página de Inicio | Curso de R</title>
+    <title>Página de Inicio | Curso de R y Estadística</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content="Página informativa para el curso de estadística con R."/>
-    <meta name="author" content="Tu Nombre"/>
+    <meta name="description" content="Aprende R y estadística desde cero. Curso completo con ejemplos prácticos, ejercicios y proyectos reales."/>
+    <meta name="author" content="Curso de R"/>
     <link rel="icon" href="assets/images/favicon.ico"/>
     
-    <!-- Script para aplicar el tema oscuro/claro inmediatamente -->
     <script>
         (function() {
-            const theme = localStorage.getItem('theme') || 'dark'; // Empecemos con oscuro por defecto
+            const theme = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-bs-theme', theme);
         })();
     </script>
 
-    <!-- Archivos CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
-    
-    <!-- Iconos (asumiendo que están en un archivo icons.min.css o similar) -->
-    <!-- Necesitarás copiar el archivo de iconos de tu plantilla original -->
-    <!-- Por ahora, usaremos Font Awesome como un reemplazo fácil -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/icofont@1.0.0/dist/icofont.min.css">
 
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 50px;
+        }
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        .feature-card {
+            transition: all 0.3s ease;
+            height: 100%;
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+        .course-module {
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        .course-module:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(102,126,234,0.1);
+        }
+        .module-number {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .stats-card {
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .cta-section {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 50px 0;
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+        .download-button {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .download-button:hover {
+            background: white;
+            color: #4facfe;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .learning-path {
+            position: relative;
+            padding: 20px 0;
+        }
+        .learning-path::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+        }
+        .testimonial {
+            background: rgba(102,126,234,0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .testimonial::before {
+            content: '"';
+            font-size: 4rem;
+            color: #667eea;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            opacity: 0.3;
+        }
+        .difficulty-badge {
+            background: #28a745;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .difficulty-badge.intermediate {
+            background: #ffc107;
+            color: #212529;
+        }
+        .difficulty-badge.advanced {
+            background: #dc3545;
+        }
+    </style>
 </head>
 <body>
 
     <div class="page-wrapper">
         
-        <!-- =================== TOPBAR =================== -->
+        <!-- TOPBAR -->
         <div class="topbar d-print-none">
             <div class="container-xxl">
                 <nav class="topbar-custom d-flex justify-content-between" id="topbar-custom">
                     <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
                         <li class="mx-3 welcome-text">
                             <h3 class="mb-0 fw-bold text-truncate">
-                                Página de Inicio
+                                <i class="fab fa-r-project me-2"></i>
+                                Curso de R y Estadística
                             </h3>
                         </li>
                     </ul>
@@ -55,7 +187,7 @@
             </div>
         </div>
         
-        <!-- =================== STARTBAR (Sidebar) =================== -->
+        <!-- SIDEBAR -->
         <div class="startbar d-print-none">
             <div class="brand">
                 <a href="index.html" class="logo">
@@ -82,23 +214,61 @@
                                     <span>Inicio</span>
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="instalacion.html">
+                                    <i class="fas fa-download menu-icon"></i>
+                                    <span>Instalación</span>
+                                </a>
+                            </li>
         
                             <li class="nav-item">
-                                <a class="nav-link" href="#sidebarComponents" data-bs-toggle="collapse" role="button"
-                                    aria-expanded="false" aria-controls="sidebarComponents">
-                                    <i class="fas fa-box-open menu-icon"></i>
-                                    <span>Temas del Curso</span>
+                                <a class="nav-link" href="#sidebarBasicos" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarBasicos">
+                                    <i class="fas fa-play-circle menu-icon"></i>
+                                    <span>Fundamentos</span>
                                 </a>
-                                <div class="collapse" id="sidebarComponents">
+                                <div class="collapse" id="sidebarBasicos">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Tema 1: Introducción</a>
+                                            <a class="nav-link" href="primeros-pasos.html">Primeros Pasos</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Tema 2: Gráficos</a>
+                                            <a class="nav-link" href="operadores.html">Operadores</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="tipos-datos.html">Tipos de Datos</a>
                                         </li>
                                     </ul>
                                 </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sidebarAvanzado" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarAvanzado">
+                                    <i class="fas fa-chart-line menu-icon"></i>
+                                    <span>Análisis y Gráficos</span>
+                                </a>
+                                <div class="collapse" id="sidebarAvanzado">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="graficos.html">Gráficos</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="estadisticas-basicas.html">Estadísticas</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="ejemplo-practico.html">Ejemplo Completo</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="recursos.html">
+                                    <i class="fas fa-book menu-icon"></i>
+                                    <span>Recursos</span>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -107,42 +277,563 @@
         </div>
         <div class="startbar-overlay d-print-none"></div>
 
-        <!-- =================== CONTENIDO PRINCIPAL =================== -->
+        <!-- CONTENIDO PRINCIPAL -->
         <div class="page-content">
-            <div class="container-fluid">
-                <!-- Fila de bienvenida -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">¡Bienvenido al Recurso de Estadística con R!</h4>
-                                <p class="card-text">
-                                    Esta es la página de inicio. Desde aquí puedes navegar a los diferentes temas del curso.
-                                </p>
-                                <p>
-                                    Puedes editar esta página en el archivo: <code>index.html</code>
-                                </p>
-                                <a href="descargas/mi-guia-de-R.pdf" class="btn btn-primary" download>
-                                    <i class="fas fa-download me-2"></i>Descargar Guía Completa (PDF)
+            
+            <!-- HERO SECTION -->
+            <div class="hero-section">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <h1 class="hero-title">Domina R y Estadística</h1>
+                            <p class="hero-subtitle">
+                                Aprende el lenguaje de programación más poderoso para análisis de datos y estadística. 
+                                Desde conceptos básicos hasta análisis avanzados con ejemplos prácticos.
+                            </p>
+                            <div class="d-flex gap-3 flex-wrap">
+                                <a href="instalacion.html" class="download-button">
+                                    <i class="fas fa-rocket me-2"></i>
+                                    Comenzar Ahora
+                                </a>
+                                <a href="ejemplo-practico.html" class="download-button">
+                                    <i class="fas fa-eye me-2"></i>
+                                    Ver Ejemplo
                                 </a>
                             </div>
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <i class="fab fa-r-project" style="font-size: 8rem; opacity: 0.3;"></i>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- =================== FOOTER =================== -->
-            <!-- El footer está vacío, pero lo dejamos por si quieres añadir algo -->
+
+            <div class="container-fluid">
+                
+                <!-- CARACTERÍSTICAS PRINCIPALES -->
+                <div class="row mb-5">
+                    <div class="col-12 text-center mb-4">
+                        <h2>¿Por qué aprender R con nuestro curso?</h2>
+                        <p class="text-muted">Diseñado especialmente para principiantes con conocimientos básicos de computación</p>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card feature-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-graduation-cap feature-icon"></i>
+                                <h5>Para Principiantes</h5>
+                                <p class="text-muted">
+                                    Explicaciones claras y sencillas. No necesitas experiencia previa en programación.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card feature-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-project-diagram feature-icon"></i>
+                                <h5>Ejemplos Prácticos</h5>
+                                <p class="text-muted">
+                                    Cada concepto viene con ejemplos reales que puedes ejecutar y modificar.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card feature-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-download feature-icon"></i>
+                                <h5>Material Descargable</h5>
+                                <p class="text-muted">
+                                    Códigos, datasets y guías en PDF para que practiques offline.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RUTA DE APRENDIZAJE -->
+                <div class="row mb-5">
+                    <div class="col-12">
+                        <h2 class="text-center mb-4">Ruta de Aprendizaje</h2>
+                        <p class="text-center text-muted mb-5">Sigue este camino paso a paso para dominar R y estadística</p>
+                    </div>
+                    <div class="col-lg-8 mx-auto">
+                        <div class="learning-path">
+                            
+                            <!-- Módulo 1 -->
+                            <div class="card course-module">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start">
+                                        <div class="module-number">1</div>
+                                        <div class="flex-grow-1">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <h5 class="mb-1">
+                                                    <a href="instalacion.html" class="text-decoration-none">
+                                                        Instalación y Configuración
+                                                    </a>
+                                                </h5>
+                                                <span class="difficulty-badge">Básico</span>
+                                            </div>
+                                            <p class="text-muted mb-2">
+                                                Instala R y RStudio, configura tu entorno de trabajo y realiza tu primera sesión.
+                                            </p>
+                                            <div class="d-flex gap-2">
+                                                <small class="text-muted">
+                                                    <i class="fas fa-clock me-1"></i>30 min
+                                                </small>
+                                                <small class="text-muted">
+                                                    <i class="fas fa-tasks me-1"></i>Setup inicial
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Módulo 2 -->
+                            <div class="card course-module">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start">
+                                        <div class="module-number">2</div>
+                                        <div class="flex-grow-1">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <h5 class="mb-1">
+                                                    <a href="primeros-pasos.html" class="text-decoration-none">
+                                                        Primeros Pasos con R
+                                                    </a>
+                                                </h5>
+                                                <span class="difficulty-badge">Básico</span>
+                                            </div>
+                                            <p class="text-muted mb-2">
+                                                Conoce RStudio, maneja directorios, crea variables y realiza operaciones básicas.
+                                            </p>
+                                            <div class="d-flex gap-2">
+                                                <small class="text-muted">
+                                                    <i class="fas fa-clock me-1"></i>45 min
+                                                </small>
+                                                <small class="text-muted">
+                                                    <i class="fas fa-code me-1"></i>Fundamentos
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Módulo 3 -->
+                            <div class="card course-module">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start">
+                                        <div class="module-number">3</div>
+                                        <div class="flex-grow-1">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <h5 class="mb-1">
+                                                    <a href="operadores.html" class="text-decoration-none">
+                                                        Operadores en R
+                                                    </a>
+                                                </h5>
+                                                <span class="difficulty-badge">Básico</span>
+                                            </div>
+                                            <p class="text-muted mb-2">
+                                                Domina los operadores aritméticos, comparativos y lógicos con ejercicios prácticos.
+                                            </p>
+                                            <div class="d-flex gap-2">
+                                                <small class="text-muted">
+                                                    <i class="fas fa-clock me-1"></i>40 min
+                                                </small>
+                                                <small class="text-muted">
+                                                    <i class="fas fa-calculator me-1"></i>Lógica
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Módulo 4 -->
+                            <div class="card course-module">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start">
+                                        <div class="module-number">4</div>
+                                        <div class="flex-grow-1">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <h5 class="mb-1">
+                                                    <a href="graficos.html" class="text-decoration-none">
+                                                        Gráficos y Visualización
+                                                    </a>
+                                                </h5>
+                                                <span class="difficulty-badge intermediate">Intermedio</span>
+                                            </div>
+                                            <p class="text-muted mb-2">
+                                                Crea gráficos profesionales: histogramas, boxplots, dispersión y personalización avanzada.
+                                            </p>
+                                            <div class="d-flex gap-2">
+                                                <small class="text-muted">
+                                                    <i class="fas fa-clock me-1"></i>60 min
+                                                </small>
+                                                <small class="text-muted">
+                                                    <i class="fas fa-chart-line me-1"></i>Visualización
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Módulo 5 -->
+                            <div class="card course-module">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start">
+                                        <div class="module-number">5</div>
+                                        <div class="flex-grow-1">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <h5 class="mb-1">
+                                                    <a href="ejemplo-practico.html" class="text-decoration-none">
+                                                        Proyecto Completo: Análisis de Estaturas
+                                                    </a>
+                                                </h5>
+                                                <span class="difficulty-badge intermediate">Intermedio</span>
+                                            </div>
+                                            <p class="text-muted mb-2">
+                                                Proyecto real paso a paso: desde la carga de datos hasta el análisis estadístico completo.
+                                            </p>
+                                            <div class="d-flex gap-2">
+                                                <small class="text-muted">
+                                                    <i class="fas fa-clock me-1"></i>90 min
+                                                </small>
+                                                <small class="text-muted">
+                                                    <i class="fas fa-project-diagram me-1"></i>Proyecto
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ESTADÍSTICAS DEL CURSO -->
+                <div class="row mb-5">
+                    <div class="col-md-3 col-6">
+                        <div class="stats-card">
+                            <div class="stats-number">8+</div>
+                            <div>Módulos Completos</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stats-card">
+                            <div class="stats-number">50+</div>
+                            <div>Ejemplos Prácticos</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stats-card">
+                            <div class="stats-number">20+</div>
+                            <div>Ejercicios</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stats-card">
+                            <div class="stats-number">100%</div>
+                            <div>Gratis</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LO QUE APRENDERÁS -->
+                <div class="row mb-5">
+                    <div class="col-lg-6">
+                        <h3 class="mb-4">
+                            <i class="fas fa-brain text-primary me-2"></i>
+                            Lo que aprenderás
+                        </h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        Fundamentos de R
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        Manipulación de datos
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        Estadística descriptiva
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        Visualización de datos
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        Análisis de distribuciones
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        Medidas de tendencia central
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        Creación de reportes
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        Buenas prácticas
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h3 class="mb-4">
+                            <i class="fas fa-tools text-warning me-2"></i>
+                            Herramientas que usarás
+                        </h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card mb-3">
+                                    <div class="card-body d-flex align-items-center">
+                                        <i class="fab fa-r-project text-primary me-3" style="font-size: 2rem;"></i>
+                                        <div>
+                                            <h6 class="mb-0">R</h6>
+                                            <small class="text-muted">Lenguaje principal</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card mb-3">
+                                    <div class="card-body d-flex align-items-center">
+                                        <i class="fas fa-desktop text-success me-3" style="font-size: 2rem;"></i>
+                                        <div>
+                                            <h6 class="mb-0">RStudio</h6>
+                                            <small class="text-muted">Entorno de desarrollo</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card mb-3">
+                                    <div class="card-body d-flex align-items-center">
+                                        <i class="fas fa-chart-line text-info me-3" style="font-size: 2rem;"></i>
+                                        <div>
+                                            <h6 class="mb-0">ggplot2</h6>
+                                            <small class="text-muted">Gráficos avanzados</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card mb-3">
+                                    <div class="card-body d-flex align-items-center">
+                                        <i class="fas fa-table text-warning me-3" style="font-size: 2rem;"></i>
+                                        <div>
+                                            <h6 class="mb-0">dplyr</h6>
+                                            <small class="text-muted">Manipulación de datos</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TESTIMONIALES -->
+                <div class="row mb-5">
+                    <div class="col-12 text-center mb-4">
+                        <h3>Lo que dicen nuestros estudiantes</h3>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="testimonial">
+                            <p class="mb-3">
+                                "Excelente curso para principiantes. Las explicaciones son muy claras y los ejemplos prácticos me ayudaron mucho."
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                    <i class="fas fa-user text-white"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">Ana García</h6>
+                                    <small class="text-muted">Estudiante de Economía</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="testimonial">
+                            <p class="mb-3">
+                                "El ejemplo práctico del análisis de estaturas es fantástico. Me ayudó a entender toda la teoría de manera aplicada."
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <div class="bg-success rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                    <i class="fas fa-user text-white"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">Carlos López</h6>
+                                    <small class="text-muted">Analista de Datos</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="testimonial">
+                            <p class="mb-3">
+                                "Perfecto para mi tesis. Los gráficos que aprendí a hacer me sirvieron para presentar mis resultados profesionalmente."
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <div class="bg-warning rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                    <i class="fas fa-user text-white"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">María Rodríguez</h6>
+                                    <small class="text-muted">Estudiante de Maestría</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CALL TO ACTION -->
+                <div class="cta-section text-center">
+                    <div class="container">
+                        <h2 class="mb-3">¿Listo para comenzar tu viaje en R?</h2>
+                        <p class="mb-4" style="font-size: 1.1rem; opacity: 0.9;">
+                            Únete a miles de estudiantes que ya están analizando datos como profesionales
+                        </p>
+                        <div class="d-flex gap-3 justify-content-center flex-wrap">
+                            <a href="instalacion.html" class="download-button">
+                                <i class="fas fa-download me-2"></i>
+                                Comenzar Instalación
+                            </a>
+                            <a href="descargas/mi-guia-de-R.pdf" class="download-button" download>
+                                <i class="fas fa-file-pdf me-2"></i>
+                                Descargar Guía PDF
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RECURSOS ADICIONALES -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5>
+                                    <i class="fas fa-download text-primary me-2"></i>
+                                    Descargas Disponibles
+                                </h5>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <a href="descargas/mi-guia-de-R.pdf" download>
+                                            <i class="fas fa-file-pdf text-danger me-2"></i>
+                                            Guía Completa de R (PDF)
+                                        </a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <a href="descargas/datasets-ejemplo.zip" download>
+                                            <i class="fas fa-database text-info me-2"></i>
+                                            Datasets de Ejemplo
+                                        </a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <a href="descargas/scripts-completos.zip" download>
+                                            <i class="fas fa-code text-success me-2"></i>
+                                            Scripts Completos
+                                        </a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <a href="descargas/cheatsheets.zip" download>
+                                            <i class="fas fa-sticky-note text-warning me-2"></i>
+                                            Hojas de Referencia Rápida
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5>
+                                    <i class="fas fa-question-circle text-success me-2"></i>
+                                    ¿Necesitas ayuda?
+                                </h5>
+                                <p class="text-muted">
+                                    Si tienes preguntas o encuentras algún problema, estos recursos te pueden ayudar:
+                                </p>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <i class="fas fa-book text-primary me-2"></i>
+                                        <a href="recursos.html">Documentación completa</a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-bug text-danger me-2"></i>
+                                        <a href="recursos.html#errores-comunes">Errores comunes y soluciones</a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-external-link-alt text-info me-2"></i>
+                                        <a href="https://cran.r-project.org/" target="_blank">Documentación oficial de R</a>
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-users text-success me-2"></i>
+                                        <a href="https://stackoverflow.com/questions/tagged/r" target="_blank">Comunidad en Stack Overflow</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 
-    <!-- =================== JAVASCRIPT =================== -->
     <script src="assets/js/vendors.min.js"></script>
     <script src="assets/js/app.min.js"></script>
     <script src="assets/js/global.js"></script>
-    
-    <!-- Script para el menú desplegable (si lo necesitas) -->
-    <!-- <script src="assets/js/custom_dropdown.js"></script> -->
+
+    <script>
+        // Animación de números en las estadísticas
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stats-number');
+            numbers.forEach(number => {
+                const target = parseInt(number.textContent);
+                let current = 0;
+                const increment = target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    number.textContent = Math.floor(current) + (number.textContent.includes('+') ? '+' : '') + (number.textContent.includes('%') ? '%' : '');
+                }, 30);
+            });
+        }
+
+        // Ejecutar animación cuando sea visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateNumbers();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const statsSection = document.querySelector('.stats-card').parentElement.parentElement;
+            observer.observe(statsSection);
+        });
+    </script>
 
 </body>
 </html>

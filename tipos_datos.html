@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="es-es" data-bs-theme="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>Tipos de Datos en R | Curso de R</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Aprende todos los tipos de datos en R: character, numeric, integer, logical, factores y más con ejemplos prácticos."/>
+    <link rel="icon" href="assets/images/favicon.ico"/>
+    
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        })();
+    </script>
+
+    <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/icofont@1.0.0/dist/icofont.min.css">
+
+    <style>
+        .data-type-section {
+            border-left: 4px solid #17a2b8;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        .data-type-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(23,162,184,0.1);
+        }
+        .type-number {
+            background: linear-gradient(45deg, #17a2b8, #138496);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        .type-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .code-demo {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        .code-input {
+            background: #e9ecef;
+            padding: 12px 15px;
+            border-bottom: 1px solid #dee2e6;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            position: relative;
+        }
+        .code-output {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #28a745;
+        }
+        [data-bs-theme="dark"] .code-demo {
+            background: #2d3748;
+            border-color: #4a5568;
+        }
+        [data-bs-theme="dark"] .code-input {
+            background: #1a202c;
+            border-color: #4a5568;
+            color: #e2e8f0;
+        }
+        [data-bs-theme="dark"] .code-output {
+            background: #2d3748;
+            color: #68d391;
+        }
+        .type-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            height: 100%;
+        }
+        .type-card:hover {
+            border-color: #17a2b8;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(23,162,184,0.1);
+        }
+        .comparison-table {
+            font-size: 0.9rem;
+        }
+        .type-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .badge-character { background: #e3f2fd; color: #1976d2; }
+        .badge-numeric { background: #e8f5e8; color: #388e3c; }
+        .badge-integer { background: #fff3e0; color: #f57c00; }
+        .badge-logical { background: #fce4ec; color: #c2185b; }
+        .badge-factor { background: #f3e5f5; color: #7b1fa2; }
+        .interactive-demo {
+            background: rgba(23, 162, 184, 0.05);
+            border: 2px dashed rgba(23, 162, 184, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .function-highlight {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            background: #17a2b8;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-wrapper">
+        
+        <!-- TOPBAR -->
+        <div class="topbar d-print-none">
+            <div class="container-xxl">
+                <nav class="topbar-custom d-flex justify-content-between" id="topbar-custom">
+                    <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
+                        <li class="mx-3 welcome-text">
+                            <h3 class="mb-0 fw-bold text-truncate">
+                                <i class="fas fa-database me-2"></i>
+                                Tipos de Datos en R
+                            </h3>
+                        </li>
+                    </ul>
+        
+                    <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
+                        <li class="topbar-item">
+                            <a class="nav-link nav-icon theme-toggle" href="javascript:void(0);">
+                                <i class="icofont-moon"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- SIDEBAR -->
+        <div class="startbar d-print-none">
+            <div class="brand">
+                <a href="index.html" class="logo">
+                    <span>
+                        <img src="assets/images/logo-sm.png" alt="logo-small" class="logo-sm">
+                    </span>
+                    <span class="">
+                        <img src="assets/images/logo-light.png" alt="logo-large" class="logo-lg logo-light">
+                        <img src="assets/images/logo-dark.png" alt="logo-large" class="logo-lg logo-dark">
+                    </span>
+                </a>
+            </div>
+            <div class="startbar-menu">
+                <div class="startbar-collapse" id="startbarCollapse">
+                    <div class="d-flex align-items-start flex-column w-100">
+                        <ul class="navbar-nav mb-auto w-100">
+                            <li class="menu-label pt-0 mt-0">
+                                <span>Menú Principal</span>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">
+                                    <i class="fas fa-home menu-icon"></i>
+                                    <span>Inicio</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link active" href="tipos-datos.html">
+                                    <i class="fas fa-database menu-icon"></i>
+                                    <span>Tipos de Datos</span>
+                                </a>
+                            </li>
+        
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sidebarComponents" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarComponents">
+                                    <i class="fas fa-box-open menu-icon"></i>
+                                    <span>Más Temas</span>
+                                </a>
+                                <div class="collapse" id="sidebarComponents">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="instalacion.html">Instalación</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="primeros-pasos.html">Primeros Pasos</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="operadores.html">Operadores</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="graficos.html">Gráficos</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="startbar-overlay d-print-none"></div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="page-content">
+            <div class="container-fluid">
+                
+                <!-- Introducción -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <i class="fas fa-info-circle text-primary me-2"></i>
+                                    ¿Qué son los Tipos de Datos?
+                                </h4>
+                                <p class="card-text">
+                                    Los tipos de datos definen qué clase de información puede almacenar una variable. 
+                                    R automáticamente detecta el tipo, pero es importante entender cada uno para usar 
+                                    las funciones correctas y evitar errores.
+                                </p>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-lightbulb me-2"></i>
+                                    <strong>¿Por qué es importante?</strong> Cada tipo de dato tiene funciones específicas. 
+                                    Por ejemplo, solo puedes calcular la media de números, no de texto.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumen de Tipos -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h5 class="mb-3">
+                            <i class="fas fa-list text-warning me-2"></i>
+                            Tipos de Datos Principales en R
+                        </h5>
+                    </div>
+                    <div class="col-md-4 col-lg-2 mb-3">
+                        <div class="card type-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-font type-icon text-primary"></i>
+                                <h6>Character</h6>
+                                <span class="type-badge badge-character">Texto</span>
+                                <p class="small text-muted mt-2">Palabras, frases, cualquier texto</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-2 mb-3">
+                        <div class="card type-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-calculator type-icon text-success"></i>
+                                <h6>Numeric</h6>
+                                <span class="type-badge badge-numeric">Decimales</span>
+                                <p class="small text-muted mt-2">Números con decimales</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-2 mb-3">
+                        <div class="card type-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-hashtag type-icon text-warning"></i>
+                                <h6>Integer</h6>
+                                <span class="type-badge badge-integer">Enteros</span>
+                                <p class="small text-muted mt-2">Números sin decimales</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-2 mb-3">
+                        <div class="card type-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-toggle-on type-icon text-danger"></i>
+                                <h6>Logical</h6>
+                                <span class="type-badge badge-logical">Booleano</span>
+                                <p class="small text-muted mt-2">TRUE o FALSE</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-2 mb-3">
+                        <div class="card type-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-tags type-icon text-info"></i>
+                                <h6>Factor</h6>
+                                <span class="type-badge badge-factor">Categorías</span>
+                                <p class="small text-muted mt-2">Datos categóricos</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-2 mb-3">
+                        <div class="card type-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-calendar type-icon text-dark"></i>
+                                <h6>Date</h6>
+                                <span class="type-badge" style="background: #e0e0e0; color: #424242;">Fechas</span>
+                                <p class="small text-muted mt-2">Fechas y tiempos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Character -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card data-type-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="type-number">1</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-font text-primary me-2"></i>
+                                            Character (Texto)
+                                        </h5>
+                                        <p>Almacena texto, palabras, frases o cualquier cadena de caracteres. Siempre va entre comillas.</p>
+                                        
+                                        <h6>Ejemplos Básicos:</h6>
+                                        <div class="code-demo">
+                                            <div class="code-input">
+                                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                                # Crear variables de texto<br>
+                                                nombre <- "María"<br>
+                                                apellido <- "González"<br>
+                                                ciudad <- "Guatemala City"<br>
+                                                mensaje <- "Hola, ¿cómo estás?"<br>
+                                                <br>
+                                                # Ver el tipo<br>
+                                                class(nombre)<br>
+                                                <br>
+                                                # Ver el contenido<br>
+                                                nombre<br>
+                                                mensaje
+                                            </div>
+                                            <div class="code-output">
+                                                [1] "character"<br>
+                                                [1] "María"<br>
+                                                [1] "Hola, ¿cómo estás?"
+                                            </div>
+                                        </div>
+
+                                        <h6>Funciones Útiles para Texto:</h6>
+                                        <div class="code-demo">
+                                            <div class="code-input">
+                                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                                texto <- "Estadística con R"<br>
+                                                <br>
+                                                nchar(texto)           # Contar caracteres<br>
+                                                toupper(texto)         # Convertir a mayúsculas<br>
+                                                tolower(texto)         # Convertir a minúsculas<br>
+                                                substr(texto, 1, 5)    # Extraer caracteres (posición 1 a 5)<br>
+                                                <br>
+                                                # Concatenar texto<br>
+                                                paste(nombre, apellido)        # Unir con espacio<br>
+                                                paste(nombre, apellido, sep = "-")  # Unir con guión
+                                            </div>
+                                            <div class="code-output">
+                                                [1] 17<br>
+                                                [1] "ESTADÍSTICA CON R"<br>
+                                                [1] "estadística con r"<br>
+                                                [1] "Estad"<br>
+                                                [1] "María González"<br>
+                                                [1] "María-González"
+                                            </div>
+                                        </div>
+
+                                        <div class="function-highlight">
+                                            <h6><i class="fas fa-tools text-warning me-2"></i>Funciones Importantes</h6>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <ul class="small mb-0">
+                                                        <li><code>nchar()</code> - Contar caracteres</li>
+                                                        <li><code>paste()</code> - Unir textos</li>
+                                                        <li><code>substr()</code> - Extraer parte del texto</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <ul class="small mb-0">
+                                                        <li><code>toupper()</code> - A mayúsculas</li>
+                                                        <li><code>tolower()</code> - A minúsculas</li>
+                                                        <li><code>gsub()</code> - Reemplazar texto</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Numeric -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card data-type-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="type-number">2</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-calculator text-success me-2"></i>
+                                            Numeric (Números con Decimales)
+                                        </h5>
+                                        <p>Almacena números que pueden tener decimales. Es el tipo más común para cálculos matemáticos.</p>
+                                        
+                                        <div class="code-demo">
+                                            <div class="code-input">
+                                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                                # Crear variables numéricas<br>
+                                                altura <- 1.75<br>
+                                                peso <- 70.5<br>
+                                                temperatura <- 36.8<br>
+                                                precio <- 15.99<br>
+                                                <br>
+                                                # Ver el tipo<br>
+                                                class(altura)<br>
+                                                <br>
+                                                # Operaciones matemáticas<br>
+                                                imc <- peso / (altura ^ 2)<br>
+                                                imc<br>
+                                                <br>
+                                                # Redondear<br>
+                                                round(imc, 2)
+                                            </div>
+                                            <div class="code-output">
+                                                [1] "numeric"<br>
+                                                [1] 23.02041<br>
+                                                [1] 23.02
+                                            </div>
+                                        </div>
+
+                                        <h6>Funciones Matemáticas Comunes:</h6>
+                                        <div class="code-demo">
+                                            <div class="code-input">
+                                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                                numeros <- c(10.5, 15.2, 8.7, 12.1, 9.8)<br>
+                                                <br>
+                                                mean(numeros)      # Media<br>
+                                                median(numeros)    # Mediana<br>
+                                                max(numeros)       # Máximo<br>
+                                                min(numeros)       # Mínimo<br>
+                                                sd(numeros)        # Desviación estándar<br>
+                                                sum(numeros)       # Suma total<br>
+                                                length(numeros)    # Cantidad de elementos
+                                            </div>
+                                            <div class="code-output">
+                                                [1] 11.26<br>
+                                                [1] 10.5<br>
+                                                [1] 15.2<br>
+                                                [1] 8.7<br>
+                                                [1] 2.582<br>
+                                                [1] 56.3<br>
+                                                [1] 5
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Integer -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card data-type-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="type-number">3</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-hashtag text-warning me-2"></i>
+                                            Integer (Números Enteros)
+                                        </h5>
+                                        <p>Números sin decimales. Para crearlos explícitamente, usa <code>L</code> después del número o <code>as.integer()</code>.</p>
+                                        
+                                        <div class="code-demo">
+                                            <div class="code-input">
+                                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                                # Crear enteros explícitamente<br>
+                                                edad <- 25L<br>
+                                                estudiantes <- 150L<br>
+                                                <br>
+                                                # Convertir a entero<br>
+                                                numero_decimal <- 15.7<br>
+                                                numero_entero <- as.integer(numero_decimal)<br>
+                                                <br>
+                                                # Ver los tipos<br>
+                                                class(edad)<br>
+                                                class(numero_entero)<br>
+                                                <br>
+                                                # Ver los valores<br>
+                                                edad<br>
+                                                numero_entero  # Nota: se trunca, no se redondea
+                                            </div>
+                                            <div class="code-output">
+                                                [1] "integer"<br>
+                                                [1] "integer"<br>
+                                                [1] 25<br>
+                                                [1] 15
+                                            </div>
+                                        </div>
+
+                                        <div class="alert alert-warning">
+                                            <i class="fas fa-exclamation-triangle me-2"></i>
+                                            <strong>Importante:</strong> <code>as.integer()</code> trunca (corta) los decimales, no redondea. 
+                                            Para redondear usa <code>round()</code> primero.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logical -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card data-type-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="type-number">4</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-toggle-on text-danger me-2"></i>
+                                            Logical (Booleano)
+                                        </h5>
+                                        <p>Solo puede ser <code>TRUE</code> o <code>FALSE</code>. Resultado de comparaciones y operaciones lógicas.</p>
+                                        
+                                        <div class="code-demo">
+                                            <div class="code-input">
+                                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                                # Crear variables lógicas<br>
+                                                es_estudiante <- TRUE<br>
+                                                tiene_beca <- FALSE<br>
+                                                <br>
+                                                # Resultado de comparaciones<br>
+                                                edad <- 20<br>
+                                                es_mayor_edad <- edad >= 18<br>
+                                                <br>
+                                                # Ver los tipos y valores<br>
+                                                class(es_estudiante)<br>
+                                                es_mayor_edad<br>
+                                                <br>
+                                                # Operaciones lógicas<br>
+                                                puede_votar <- es_mayor_edad & es_estudiante<br>
+                                                puede_votar
+                                            </div>
+                                            <div class="code-output">
+                                                [1] "logical"<br>
+                                                [1] TRUE<br>
+                                                [1] TRUE
+                                            </div>
+                                        </div>
+
+                                        <h6>Conversiones con Logical:</h6>
+                                        <div class="code-demo">
+                                            <div class="code-input">
+                                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                                # Conversiones interesantes<br>
+                                                as.numeric(TRUE)       # TRUE = 1<br>
+                                                as.numeric(FALSE)      # FALSE = 0<br>
+                                                <br>
+                                                as.logical(1)          # 1 = TRUE<br>
+                                                as.logical(0)          # 0 = FALSE<br>
+                                                as.logical(5)          # Cualquier número ≠ 0 = TRUE<br>
+                                                <br>
+                                                # Contar valores TRUE<br>
+                                                valores <- c(TRUE, FALSE, TRUE, TRUE, FALSE)<br>
+                                                sum(valores)           # Cuenta los TRUE
+                                            </div>
+                                            <div class="code-output">
+                                                [1] 1<br>
+                                                [1] 0<br>
+                                                [1] TRUE<br>
+                                                [1] FALSE<br>
+                                                [1] TRUE<br>
+                                                [1] 3
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Factor -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card data-type-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="type-number">5</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-tags text-info me-2"></i>
+                                            Factor (Datos Categóricos)
+                                        </h5>
+                                        <p>Para variables categóricas como género, nivel educativo, etc. R los trata de manera especial en análisis estadísticos.</p>
+                                        
+                                        <div class="code-demo">
+                                            <div class="code-input">
+                                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                                # Crear factores<br>
+                                                genero <- factor(c("Masculino", "Femenino", "Femenino", "Masculino"))<br>
+                                                nivel_educativo <- factor(c("Básico", "Medio", "Superior", "Medio"),<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;levels = c("Básico", "Medio", "Superior"))<br>
+                                                <br>
+                                                # Ver el tipo y estructura<br>
+                                                class(genero)<br>
+                                                genero<br>
+                                                levels(genero)         # Ver las categorías<br>
+                                                <br>
+                                                # Contar frecuencias<br>
+                                                table(genero)
+                                            </div>
+                                            <div class="code-output">
+                                                [1] "factor"<br>
+                                                [1] Masculino Femenino  Femenino  Masculino<br>
+                                                Levels: Femenino Masculino<br>
+                                                [1] "Femenino"  "Masculino"<br>
+                                                genero<br>
+                                                Femenino Masculino<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2
+                                            </div>
+                                        </div>
+
+                                        <h6>¿Cuándo usar Factor?</h6>
+                                        <div class="alert alert-info">
+                                            <h6><i class="fas fa-info-circle me-2"></i>Usa Factor para:</h6>
+                                            <ul class="mb-0">
+                                                <li>Variables categóricas (género, color, región)</li>
+                                                <li>Variables ordinales (bajo, medio, alto)</li>
+                                                <li>Cuando quieras controlar el orden de las categorías</li>
+                                                <li>Para análisis estadísticos (ANOVA, regresión)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Funciones de Verificación -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card data-type-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="type-number">6</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">
+                                            <i class="fas fa-search text-secondary me-2"></i>
+                                            Funciones de Verificación y Conversión
+                                        </h5>
+                                        <p>Funciones para verificar tipos de datos y convertir entre ellos.</p>
+                                        
+                                        <h6>Funciones de Verificación:</h6>
+                                        <div class="code-demo">
+                                            <div class="code-input">
+                                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                                # Crear variables de diferentes tipos<br>
+                                                texto <- "Hola"<br>
+                                                numero <- 15.5<br>
+                                                entero <- 10L<br>
+                                                logico <- TRUE<br>
+                                                <br>
+                                                # Verificar tipos<br>
+                                                is.character(texto)    # ¿Es texto?<br>
+                                                is.numeric(numero)     # ¿Es numérico?<br>
+                                                is.integer(entero)     # ¿Es entero?<br>
+                                                is.logical(logico)     # ¿Es lógico?<br>
+                                                <br>
+                                                # Función general<br>
+                                                class(texto)<br>
+                                                typeof(numero)
+                                            </div>
+                                            <div class="code-output">
+                                                [1] TRUE<br>
+                                                [1] TRUE<br>
+                                                [1] TRUE<br>
+                                                [1] TRUE<br>
+                                                [1] "character"<br>
+                                                [1] "double"
+                                            </div>
+                                        </div>
+
+                                        <h6>Funciones de Conversión:</h6>
+                                        <div class="code-demo">
+                                            <div class="code-input">
+                                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                                # Conversiones comunes<br>
+                                                numero_texto <- "123"<br>
+                                                <br>
+                                                as.numeric(numero_texto)      # Texto a número<br>
+                                                as.character(456)             # Número a texto<br>
+                                                as.logical(1)                 # Número a lógico<br>
+                                                as.integer(15.7)              # Decimal a entero<br>
+                                                <br>
+                                                # Conversión con vectores<br>
+                                                numeros_texto <- c("10", "20", "30")<br>
+                                                numeros_numericos <- as.numeric(numeros_texto)<br>
+                                                numeros_numericos<br>
+                                                class(numeros_numericos)
+                                            </div>
+                                            <div class="code-output">
+                                                [1] 123<br>
+                                                [1] "456"<br>
+                                                [1] TRUE<br>
+                                                [1] 15<br>
+                                                [1] 10 20 30<br>
+                                                [1] "numeric"
+                                            </div>
+                                        </div>
+
+                                        <div class="function-highlight">
+                                            <h6><i class="fas fa-tools text-warning me-2"></i>Funciones Clave</h6>
+                                            <div class="table-responsive">
+                                                <table class="table table-sm comparison-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Verificar</th>
+                                                            <th>Convertir</th>
+                                                            <th>Descripción</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><code>is.character()</code></td>
+                                                            <td><code>as.character()</code></td>
+                                                            <td>Texto/cadenas de caracteres</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><code>is.numeric()</code></td>
+                                                            <td><code>as.numeric()</code></td>
+                                                            <td>Números con decimales</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><code>is.integer()</code></td>
+                                                            <td><code>as.integer()</code></td>
+                                                            <td>Números enteros</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><code>is.logical()</code></td>
+                                                            <td><code>as.logical()</code></td>
+                                                            <td>TRUE/FALSE</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><code>is.factor()</code></td>
+                                                            <td><code>as.factor()</code></td>
+                                                            <td>Variables categóricas</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio Práctico -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card bg-info bg-opacity-10 border-info">
+                            <div class="card-body">
+                                <h5 class="card-title text-info">
+                                    <i class="fas fa-dumbbell me-2"></i>
+                                    Ejercicio Práctico: Análisis de Estudiantes
+                                </h5>
+                                
+                                <div class="interactive-demo">
+                                    <h6>Crea un pequeño dataset con información de estudiantes</h6>
+                                    <p class="text-muted">Practica creando variables de diferentes tipos y analizándolas</p>
+                                    
+                                    <div class="code-demo text-start">
+                                        <div class="code-input">
+                                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                            # Ejercicio: Dataset de estudiantes<br>
+                                            <br>
+                                            # Crea las siguientes variables:<br>
+                                            nombres <- c("Ana", "Luis", "María", "Carlos")<br>
+                                            edades <- c(20, 22, 19, 21)<br>
+                                            alturas <- c(1.65, 1.78, 1.60, 1.82)<br>
+                                            es_becado <- c(TRUE, FALSE, TRUE, FALSE)<br>
+                                            carrera <- factor(c("Medicina", "Ingeniería", "Medicina", "Derecho"))<br>
+                                            <br>
+                                            # Tu tarea:<br>
+                                            # 1. Verifica el tipo de cada variable<br>
+                                            # 2. Calcula la edad promedio<br>
+                                            # 3. Encuentra la altura máxima<br>
+                                            # 4. Cuenta cuántos estudiantes tienen beca<br>
+                                            # 5. Crea una tabla de frecuencias de carreras
+                                        </div>
+                                    </div>
+                                    
+                                    <button class="btn btn-info" onclick="toggleDataSolution()">
+                                        <i class="fas fa-eye me-2"></i>Ver Solución
+                                    </button>
+                                </div>
+
+                                <div id="data-solution" style="display: none;" class="mt-3">
+                                    <h6>Solución del Ejercicio:</h6>
+                                    <div class="code-demo">
+                                        <div class="code-input">
+                                            # Solución completa<br>
+                                            <br>
+                                            # 1. Verificar tipos<br>
+                                            class(nombres)      # "character"<br>
+                                            class(edades)       # "numeric"<br>
+                                            class(alturas)      # "numeric"<br>
+                                            class(es_becado)    # "logical"<br>
+                                            class(carrera)      # "factor"<br>
+                                            <br>
+                                            # 2. Edad promedio<br>
+                                            edad_promedio <- mean(edades)<br>
+                                            cat("Edad promedio:", edad_promedio, "años\n")<br>
+                                            <br>
+                                            # 3. Altura máxima<br>
+                                            altura_maxima <- max(alturas)<br>
+                                            cat("Altura máxima:", altura_maxima, "m\n")<br>
+                                            <br>
+                                            # 4. Contar becados<br>
+                                            total_becados <- sum(es_becado)<br>
+                                            cat("Estudiantes con beca:", total_becados, "\n")<br>
+                                            <br>
+                                            # 5. Tabla de carreras<br>
+                                            tabla_carreras <- table(carrera)<br>
+                                            print(tabla_carreras)
+                                        </div>
+                                        <div class="code-output">
+                                            Edad promedio: 20.5 años<br>
+                                            Altura máxima: 1.82 m<br>
+                                            Estudiantes con beca: 2<br>
+                                            carrera<br>
+                                            Derecho Ingeniería   Medicina<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Próximos Pasos -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card bg-success bg-opacity-10 border-success">
+                            <div class="card-body">
+                                <h5 class="card-title text-success">
+                                    <i class="fas fa-trophy me-2"></i>
+                                    ¡Perfecto! Ahora Dominas los Tipos de Datos
+                                </h5>
+                                <p class="card-text">
+                                    Entender los tipos de datos es fundamental para trabajar eficientemente con R. 
+                                    Ahora sabes cómo R interpreta tu información y qué funciones usar con cada tipo.
+                                </p>
+                                
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h6>Has aprendido a:</h6>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <ul class="list-unstyled">
+                                                    <li><i class="fas fa-check text-success me-2"></i>Identificar tipos de datos</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Trabajar con texto (character)</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Manejar números (numeric/integer)</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <ul class="list-unstyled">
+                                                    <li><i class="fas fa-check text-success me-2"></i>Usar valores lógicos (logical)</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Crear factores (categóricos)</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Convertir entre tipos</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="d-grid gap-2">
+                                            <a href="graficos.html" class="btn btn-success">
+                                                <i class="fas fa-chart-line me-2"></i>
+                                                Aprender Gráficos
+                                            </a>
+                                            <a href="estadisticas-basicas.html" class="btn btn-outline-success">
+                                                <i class="fas fa-calculator me-2"></i>
+                                                Estadísticas Básicas
+                                            </a>
+                                            <a href="descargas/tipos-datos-ejercicios.R" class="btn btn-outline-success" download>
+                                                <i class="fas fa-download me-2"></i>
+                                                Ejercicios Extra
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/vendors.min.js"></script>
+    <script src="assets/js/app.min.js"></script>
+    <script src="assets/js/global.js"></script>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.parentElement;
+            const text = codeBlock.textContent.replace(/Copiar/g, '').trim();
+            
+            navigator.clipboard.writeText(text).then(function() {
+                const originalText = button.textContent;
+                button.textContent = '¡Copiado!';
+                button.style.background = '#28a745';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '#17a2b8';
+                }, 2000);
+            });
+        }
+
+        function toggleDataSolution() {
+            const solution = document.getElementById('data-solution');
+            const btn = event.target;
+            
+            if (solution.style.display === 'none') {
+                solution.style.display = 'block';
+                btn.innerHTML = '<i class="fas fa-eye-slash me-2"></i>Ocultar Solución';
+            } else {
+                solution.style.display = 'none';
+                btn.innerHTML = '<i class="fas fa-eye me-2"></i>Ver Solución';
+            }
+        }
+    </script>
+
+</body>
+</html>

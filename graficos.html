@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="es-es" data-bs-theme="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>Gráficos y Visualización | Curso de R</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Aprende a crear gráficos profesionales en R: histogramas, boxplots, gráficos de dispersión y más."/>
+    <link rel="icon" href="assets/images/favicon.ico"/>
+    
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        })();
+    </script>
+
+    <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/icofont@1.0.0/dist/icofont.min.css">
+
+    <style>
+        .chart-section {
+            border-left: 4px solid #e74c3c;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        .chart-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(231,76,60,0.1);
+        }
+        .chart-number {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        .code-example {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        .code-header {
+            background: #e9ecef;
+            padding: 10px 15px;
+            font-weight: bold;
+            color: #495057;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+        .code-body {
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        [data-bs-theme="dark"] .code-example {
+            background: #2d3748;
+            border-color: #4a5568;
+        }
+        [data-bs-theme="dark"] .code-header {
+            background: #1a202c;
+            border-color: #4a5568;
+            color: #e2e8f0;
+        }
+        [data-bs-theme="dark"] .code-body {
+            color: #e2e8f0;
+        }
+        .chart-preview {
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 15px 0;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        [data-bs-theme="dark"] .chart-preview {
+            background: #2d3748;
+            border-color: #4a5568;
+        }
+        .parameter-table {
+            font-size: 0.85rem;
+        }
+        .parameter-name {
+            font-family: 'Courier New', monospace;
+            background: rgba(0,123,255,0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .chart-type-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .chart-type-card:hover {
+            border-color: #007bff;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,123,255,0.1);
+        }
+        .chart-icon {
+            font-size: 3rem;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        .tips-box {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .copy-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-wrapper">
+        
+        <!-- TOPBAR -->
+        <div class="topbar d-print-none">
+            <div class="container-xxl">
+                <nav class="topbar-custom d-flex justify-content-between" id="topbar-custom">
+                    <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
+                        <li class="mx-3 welcome-text">
+                            <h3 class="mb-0 fw-bold text-truncate">
+                                <i class="fas fa-chart-line me-2"></i>
+                                Gráficos y Visualización
+                            </h3>
+                        </li>
+                    </ul>
+        
+                    <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
+                        <li class="topbar-item">
+                            <a class="nav-link nav-icon theme-toggle" href="javascript:void(0);">
+                                <i class="icofont-moon"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- SIDEBAR -->
+        <div class="startbar d-print-none">
+            <div class="brand">
+                <a href="index.html" class="logo">
+                    <span>
+                        <img src="assets/images/logo-sm.png" alt="logo-small" class="logo-sm">
+                    </span>
+                    <span class="">
+                        <img src="assets/images/logo-light.png" alt="logo-large" class="logo-lg logo-light">
+                        <img src="assets/images/logo-dark.png" alt="logo-large" class="logo-lg logo-dark">
+                    </span>
+                </a>
+            </div>
+            <div class="startbar-menu">
+                <div class="startbar-collapse" id="startbarCollapse">
+                    <div class="d-flex align-items-start flex-column w-100">
+                        <ul class="navbar-nav mb-auto w-100">
+                            <li class="menu-label pt-0 mt-0">
+                                <span>Menú Principal</span>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">
+                                    <i class="fas fa-home menu-icon"></i>
+                                    <span>Inicio</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link active" href="graficos.html">
+                                    <i class="fas fa-chart-line menu-icon"></i>
+                                    <span>Gráficos</span>
+                                </a>
+                            </li>
+        
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sidebarComponents" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarComponents">
+                                    <i class="fas fa-box-open menu-icon"></i>
+                                    <span>Más Temas</span>
+                                </a>
+                                <div class="collapse" id="sidebarComponents">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="instalacion.html">Instalación</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="primeros-pasos.html">Primeros Pasos</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="operadores.html">Operadores</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="startbar-overlay d-print-none"></div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="page-content">
+            <div class="container-fluid">
+                
+                <!-- Introducción -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <i class="fas fa-palette text-primary me-2"></i>
+                                    El Poder de la Visualización de Datos
+                                </h4>
+                                <p class="card-text">
+                                    Los gráficos son fundamentales en el análisis de datos. Permiten identificar patrones, 
+                                    tendencias y anomalías que podrían pasar desapercibidas en tablas de números. 
+                                    En R, crear gráficos profesionales es sorprendentemente fácil.
+                                </p>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-quote-left me-2"></i>
+                                    <em>"Una imagen vale más que mil palabras... y un buen gráfico vale más que mil números."</em>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tipos de Gráficos -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h5 class="mb-3">
+                            <i class="fas fa-chart-pie text-warning me-2"></i>
+                            Tipos de Gráficos en R
+                        </h5>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card chart-type-card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-chart-bar chart-icon"></i>
+                                <h6>Histogramas</h6>
+                                <p class="small text-muted">Para mostrar la distribución de una variable continua</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card chart-type-card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-chart-line chart-icon"></i>
+                                <h6>Gráficos de Dispersión</h6>
+                                <p class="small text-muted">Para explorar la relación entre dos variables</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card chart-type-card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-box chart-icon"></i>
+                                <h6>Boxplots</h6>
+                                <p class="small text-muted">Para visualizar la distribución y detectar valores atípicos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Dispersión -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card chart-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="chart-number">1</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">Gráficos de Dispersión (Scatter Plot)</h5>
+                                        <p>Perfectos para explorar la relación entre dos variables numéricas.</p>
+                                        
+                                        <h6>Ejemplo Básico:</h6>
+                                        <div class="code-example">
+                                            <div class="code-header">
+                                                <span><i class="fas fa-code me-2"></i>Código R</span>
+                                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                            </div>
+                                            <div class="code-body">
+# Crear datos de ejemplo<br>
+X <- c(40, 50, 60, 70, 80, 90, 95)<br>
+Y <- c(25, 30, 40, 50, 60, 70, 85)<br>
+<br>
+# Gráfico básico<br>
+plot(X, Y)<br>
+<br>
+# Gráfico personalizado<br>
+plot(X, Y,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;main = "Comparación MetaScore vs User Review",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xlab = "Meta Score",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ylab = "User Review",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;col = "steelblue",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pch = 19,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cex = 1.5)
+                                            </div>
+                                        </div>
+
+                                        <div class="chart-preview">
+                                            <div>
+                                                <i class="fas fa-chart-line" style="font-size: 4rem; color: #007bff;"></i>
+                                                <p class="mt-3 text-muted">Vista previa del gráfico de dispersión<br>
+                                                <small>Muestra la correlación entre MetaScore y User Review</small></p>
+                                            </div>
+                                        </div>
+
+                                        <h6>Parámetros de Personalización:</h6>
+                                        <div class="table-responsive">
+                                            <table class="table table-sm parameter-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Parámetro</th>
+                                                        <th>Descripción</th>
+                                                        <th>Ejemplo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><span class="parameter-name">col</span></td>
+                                                        <td>Color de los puntos</td>
+                                                        <td><code>"red", "blue", "#FF5733"</code></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span class="parameter-name">pch</span></td>
+                                                        <td>Tipo de punto</td>
+                                                        <td><code>19 (círculo), 1 (círculo vacío), 8 (asterisco)</code></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span class="parameter-name">cex</span></td>
+                                                        <td>Tamaño de los puntos</td>
+                                                        <td><code>0.5 (pequeño), 1 (normal), 2 (grande)</code></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span class="parameter-name">frame</span></td>
+                                                        <td>Mostrar marco</td>
+                                                        <td><code>TRUE (sí), FALSE (no)</code></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="tips-box">
+                                            <h6><i class="fas fa-lightbulb text-success me-2"></i>Consejos Pro</h6>
+                                            <ul class="mb-0 small">
+                                                <li>Usa <strong>diferentes colores</strong> para distinguir grupos</li>
+                                                <li>Ajusta el <strong>tamaño de los puntos</strong> según la importancia</li>
+                                                <li>Siempre incluye <strong>títulos descriptivos</strong> en los ejes</li>
+                                                <li>Considera usar <strong>transparencia</strong> cuando hay muchos puntos</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Histogramas -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card chart-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="chart-number">2</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">Histogramas</h5>
+                                        <p>Muestran la distribución de frecuencias de una variable continua.</p>
+                                        
+                                        <div class="code-example">
+                                            <div class="code-header">
+                                                <span><i class="fas fa-code me-2"></i>Código R</span>
+                                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                            </div>
+                                            <div class="code-body">
+# Datos de ejemplo (estaturas de estudiantes)<br>
+estaturas <- c(165, 170, 168, 172, 175, 169, 171, 167, 173, 166, 174, 170, 168, 169, 172)<br>
+<br>
+# Histograma básico<br>
+hist(estaturas)<br>
+<br>
+# Histograma personalizado<br>
+hist(estaturas,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;main = "Distribución de Estaturas de Estudiantes",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xlab = "Estatura (cm)",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ylab = "Frecuencia",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;col = "lightblue",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;border = "darkblue",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;breaks = 8)<br>
+<br>
+# Agregar línea de la media<br>
+abline(v = mean(estaturas), col = "red", lwd = 2, lty = 2)<br>
+text(mean(estaturas) + 1, 3, "Media", col = "red")
+                                            </div>
+                                        </div>
+
+                                        <div class="chart-preview">
+                                            <div>
+                                                <i class="fas fa-chart-bar" style="font-size: 4rem; color: #28a745;"></i>
+                                                <p class="mt-3 text-muted">Vista previa del histograma<br>
+                                                <small>Distribución de estaturas con línea de la media</small></p>
+                                            </div>
+                                        </div>
+
+                                        <h6>Parámetros Importantes:</h6>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <ul class="small">
+                                                    <li><span class="parameter-name">breaks</span>: Número de barras (ej: <code>breaks = 10</code>)</li>
+                                                    <li><span class="parameter-name">col</span>: Color de relleno (ej: <code>"skyblue"</code>)</li>
+                                                    <li><span class="parameter-name">border</span>: Color del borde (ej: <code>"black"</code>)</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <ul class="small">
+                                                    <li><span class="parameter-name">freq</span>: Mostrar frecuencias (<code>TRUE</code>) o densidad (<code>FALSE</code>)</li>
+                                                    <li><span class="parameter-name">xlim</span>: Límites del eje X (ej: <code>c(160, 180)</code>)</li>
+                                                    <li><span class="parameter-name">ylim</span>: Límites del eje Y (ej: <code>c(0, 5)</code>)</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Boxplots -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card chart-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="chart-number">3</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">Boxplots (Diagramas de Caja)</h5>
+                                        <p>Visualizan la distribución de datos mostrando cuartiles, mediana y valores atípicos.</p>
+                                        
+                                        <div class="code-example">
+                                            <div class="code-header">
+                                                <span><i class="fas fa-code me-2"></i>Código R</span>
+                                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                            </div>
+                                            <div class="code-body">
+# Crear datos de ejemplo<br>
+datos <- data.frame(<br>
+&nbsp;&nbsp;sueldo = c(1200, 1500, 1800, 2000, 2200, 1600, 1900, 2100, 1400, 1700),<br>
+&nbsp;&nbsp;personas = c("A", "B", "A", "B", "A", "B", "A", "B", "A", "B")<br>
+)<br>
+<br>
+# Boxplot básico<br>
+boxplot(datos$sueldo)<br>
+<br>
+# Boxplot agrupado por categorías<br>
+boxplot(sueldo ~ personas, <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data = datos,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;main = "Distribución de Sueldos por Grupo",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xlab = "Grupo",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ylab = "Sueldo ($)",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;col = c("lightcoral", "lightblue"))<br>
+<br>
+# Agregar líneas de cuartiles<br>
+Q1 <- quantile(datos$sueldo, 0.25)<br>
+Q3 <- quantile(datos$sueldo, 0.75)<br>
+abline(h = c(Q1, median(datos$sueldo), Q3), col = "red", lty = 2)
+                                            </div>
+                                        </div>
+
+                                        <div class="chart-preview">
+                                            <div>
+                                                <i class="fas fa-box" style="font-size: 4rem; color: #6610f2;"></i>
+                                                <p class="mt-3 text-muted">Vista previa del boxplot<br>
+                                                <small>Comparación de sueldos entre grupos con cuartiles</small></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="alert alert-info">
+                                            <h6><i class="fas fa-info-circle me-2"></i>¿Cómo leer un Boxplot?</h6>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <ul class="small mb-0">
+                                                        <li><strong>Línea central:</strong> Mediana (Q2)</li>
+                                                        <li><strong>Caja inferior:</strong> Primer cuartil (Q1)</li>
+                                                        <li><strong>Caja superior:</strong> Tercer cuartil (Q3)</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <ul class="small mb-0">
+                                                        <li><strong>Bigotes:</strong> Rango de datos normales</li>
+                                                        <li><strong>Puntos aislados:</strong> Valores atípicos</li>
+                                                        <li><strong>Altura de caja:</strong> Rango intercuartílico (IQR)</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personalización Avanzada -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card chart-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="chart-number">4</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">Personalización Avanzada</h5>
+                                        <p>Técnicas para crear gráficos más profesionales y atractivos.</p>
+                                        
+                                        <h6>Añadir Múltiples Elementos:</h6>
+                                        <div class="code-example">
+                                            <div class="code-header">
+                                                <span><i class="fas fa-code me-2"></i>Gráfico Completo</span>
+                                                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                            </div>
+                                            <div class="code-body">
+# Datos de ejemplo<br>
+x <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)<br>
+y1 <- c(2, 4, 6, 8, 10, 12, 14, 16, 18, 20)<br>
+y2 <- c(1, 3, 5, 7, 9, 11, 13, 15, 17, 19)<br>
+<br>
+# Crear gráfico base<br>
+plot(x, y1, <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type = "b",           # Línea con puntos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;col = "blue",        # Color azul<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pch = 16,            # Puntos sólidos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lwd = 2,             # Línea gruesa<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;main = "Comparación de Tendencias",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xlab = "Tiempo",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ylab = "Valores",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ylim = c(0, 25))     # Rango del eje Y<br>
+<br>
+# Agregar segunda línea<br>
+lines(x, y2, col = "red", type = "b", pch = 17, lwd = 2)<br>
+<br>
+# Agregar líneas de referencia<br>
+abline(h = c(5, 10, 15, 20), col = "gray", lty = 3)<br>
+<br>
+# Agregar leyenda<br>
+legend("topleft", <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;legend = c("Serie 1", "Serie 2"),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;col = c("blue", "red"),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pch = c(16, 17),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lwd = 2)<br>
+<br>
+# Agregar texto personalizado<br>
+text(5, 22, "Punto máximo", col = "darkgreen", cex = 1.2)
+                                            </div>
+                                        </div>
+
+                                        <h6>Funciones de Personalización:</h6>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h6 class="text-primary">Líneas y Puntos</h6>
+                                                <ul class="small">
+                                                    <li><code>lines()</code> - Agregar líneas</li>
+                                                    <li><code>points()</code> - Agregar puntos</li>
+                                                    <li><code>abline()</code> - Líneas de referencia</li>
+                                                    <li><code>segments()</code> - Segmentos específicos</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6 class="text-success">Texto y Anotaciones</h6>
+                                                <ul class="small">
+                                                    <li><code>text()</code> - Agregar texto</li>
+                                                    <li><code>mtext()</code> - Texto en márgenes</li>
+                                                    <li><code>legend()</code> - Leyendas</li>
+                                                    <li><code>title()</code> - Títulos adicionales</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="tips-box">
+                                            <h6><i class="fas fa-magic text-success me-2"></i>Trucos de Personalización</h6>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <h6>Colores</h6>
+                                                    <ul class="small mb-0">
+                                                        <li>Usa <code>colors()</code> para ver todos los colores disponibles</li>
+                                                        <li>Códigos hexadecimales: <code>"#FF5733"</code></li>
+                                                        <li>Transparencia: <code>"red50"</code> o <code>rgb(1,0,0,0.5)</code></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h6>Exportar Gráficos</h6>
+                                                    <ul class="small mb-0">
+                                                        <li><code>png("mi_grafico.png")</code></li>
+                                                        <li><code>pdf("mi_grafico.pdf")</code></li>
+                                                        <li>No olvides <code>dev.off()</code> al final</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejercicio Práctico -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card bg-warning bg-opacity-10 border-warning">
+                            <div class="card-body">
+                                <h5 class="card-title text-warning">
+                                    <i class="fas fa-dumbbell me-2"></i>
+                                    Ejercicio Práctico: Dashboard de Ventas
+                                </h5>
+                                <p>Crea un conjunto de gráficos para analizar datos de ventas:</p>
+                                
+                                <div class="code-example">
+                                    <div class="code-header">
+                                        <span><i class="fas fa-tasks me-2"></i>Datos del Ejercicio</span>
+                                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                    </div>
+                                    <div class="code-body">
+# Datos de ventas de ejemplo<br>
+ventas <- data.frame(<br>
+&nbsp;&nbsp;mes = c("Ene", "Feb", "Mar", "Abr", "May", "Jun"),<br>
+&nbsp;&nbsp;producto_A = c(120, 135, 140, 125, 160, 150),<br>
+&nbsp;&nbsp;producto_B = c(80, 95, 110, 100, 125, 130),<br>
+&nbsp;&nbsp;region = c("Norte", "Sur", "Norte", "Sur", "Norte", "Sur")<br>
+)<br>
+<br>
+# Tu misión:<br>
+# 1. Crea un gráfico de líneas comparando ambos productos<br>
+# 2. Haz un histograma de las ventas del producto A<br>
+# 3. Crea un boxplot comparando regiones<br>
+# 4. Personaliza todos los gráficos con colores y títulos<br>
+<br>
+# ¡Usa tu creatividad!
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-warning" onclick="toggleExerciseSolution()">
+                                    <i class="fas fa-eye me-2"></i>Ver Solución
+                                </button>
+
+                                <div id="exercise-solution" style="display: none;" class="mt-3">
+                                    <div class="code-example">
+                                        <div class="code-header">
+                                            <span><i class="fas fa-check-circle me-2"></i>Solución Completa</span>
+                                        </div>
+                                        <div class="code-body">
+# Configurar ventana de gráficos (2x2)<br>
+par(mfrow = c(2, 2))<br>
+<br>
+# 1. Gráfico de líneas<br>
+plot(1:6, ventas$producto_A, type = "b", col = "blue", lwd = 2,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;main = "Ventas por Mes", xlab = "Mes", ylab = "Ventas",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ylim = c(50, 180), xaxt = "n")<br>
+lines(1:6, ventas$producto_B, type = "b", col = "red", lwd = 2)<br>
+axis(1, at = 1:6, labels = ventas$mes)<br>
+legend("topleft", c("Producto A", "Producto B"), <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;col = c("blue", "red"), lwd = 2)<br>
+<br>
+# 2. Histograma<br>
+hist(ventas$producto_A, col = "lightblue", border = "darkblue",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;main = "Distribución Ventas Producto A", xlab = "Ventas")<br>
+<br>
+# 3. Boxplot por región<br>
+boxplot(producto_A ~ region, data = ventas, <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;col = c("lightcoral", "lightgreen"),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;main = "Ventas por Región", xlab = "Región")<br>
+<br>
+# 4. Gráfico de barras<br>
+barplot(ventas$producto_A, names.arg = ventas$mes,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;col = rainbow(6), main = "Ventas Mensuales Producto A")<br>
+<br>
+# Restaurar configuración<br>
+par(mfrow = c(1, 1))
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Próximos Pasos -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card bg-success bg-opacity-10 border-success">
+                            <div class="card-body">
+                                <h5 class="card-title text-success">
+                                    <i class="fas fa-graduation-cap me-2"></i>
+                                    ¡Felicidades! Ahora Puedes Crear Gráficos Profesionales
+                                </h5>
+                                <p class="card-text">
+                                    Has aprendido a crear los gráficos más importantes en R: dispersión, histogramas y boxplots. 
+                                    También sabes cómo personalizarlos para que se vean profesionales.
+                                </p>
+                                
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h6>Dominas estas habilidades:</h6>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <ul class="list-unstyled">
+                                                    <li><i class="fas fa-check text-success me-2"></i>Gráficos de dispersión</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Histogramas de distribución</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Boxplots comparativos</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <ul class="list-unstyled">
+                                                    <li><i class="fas fa-check text-success me-2"></i>Personalización con colores</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Títulos y etiquetas</li>
+                                                    <li><i class="fas fa-check text-success me-2"></i>Leyendas y anotaciones</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="d-grid gap-2">
+                                            <a href="ejemplo-practico.html" class="btn btn-success">
+                                                <i class="fas fa-chart-line me-2"></i>
+                                                Ejemplo Completo
+                                            </a>
+                                            <a href="descargas/graficos-cheatsheet.pdf" class="btn btn-outline-success" download>
+                                                <i class="fas fa-download me-2"></i>
+                                                Cheat Sheet de Gráficos
+                                            </a>
+                                            <a href="descargas/codigo-graficos.R" class="btn btn-outline-success" download>
+                                                <i class="fas fa-code me-2"></i>
+                                                Código de Ejemplos
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/vendors.min.js"></script>
+    <script src="assets/js/app.min.js"></script>
+    <script src="assets/js/global.js"></script>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.parentElement.nextElementSibling;
+            const text = codeBlock.textContent.replace(/\n\s*\n/g, '\n').trim();
+            
+            navigator.clipboard.writeText(text).then(function() {
+                const originalText = button.textContent;
+                button.textContent = '¡Copiado!';
+                button.style.background = '#28a745';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '#007bff';
+                }, 2000);
+            });
+        }
+
+        function toggleExerciseSolution() {
+            const solution = document.getElementById('exercise-solution');
+            const btn = event.target;
+            
+            if (solution.style.display === 'none') {
+                solution.style.display = 'block';
+                btn.innerHTML = '<i class="fas fa-eye-slash me-2"></i>Ocultar Solución';
+            } else {
+                solution.style.display = 'none';
+                btn.innerHTML = '<i class="fas fa-eye me-2"></i>Ver Solución';
+            }
+        }
+    </script>
+
+</body>
+</html>

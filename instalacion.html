@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es-es" data-bs-theme="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>Instalación y Configuración | Curso de R</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Aprende a instalar R y RStudio paso a paso. Guía completa para principiantes."/>
+    <meta name="author" content="Curso de R"/>
+    <link rel="icon" href="assets/images/favicon.ico"/>
+    
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        })();
+    </script>
+
+    <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/icofont@1.0.0/dist/icofont.min.css">
+
+    <style>
+        .step-card {
+            border-left: 4px solid #007bff;
+            transition: all 0.3s ease;
+        }
+        .step-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,123,255,0.1);
+        }
+        .step-number {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .download-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(40,167,69,0.3);
+            color: white;
+        }
+        .requirement-item {
+            background: rgba(13, 110, 253, 0.1);
+            border: 1px solid rgba(13, 110, 253, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        .warning-box {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .code-snippet {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        [data-bs-theme="dark"] .code-snippet {
+            background: #2d3748;
+            border-color: #4a5568;
+            color: #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-wrapper">
+        
+        <!-- TOPBAR -->
+        <div class="topbar d-print-none">
+            <div class="container-xxl">
+                <nav class="topbar-custom d-flex justify-content-between" id="topbar-custom">
+                    <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
+                        <li class="mx-3 welcome-text">
+                            <h3 class="mb-0 fw-bold text-truncate">
+                                <i class="fas fa-download me-2"></i>
+                                Instalación y Configuración
+                            </h3>
+                        </li>
+                    </ul>
+        
+                    <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
+                        <li class="topbar-item">
+                            <a class="nav-link nav-icon theme-toggle" href="javascript:void(0);">
+                                <i class="icofont-moon"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- SIDEBAR -->
+        <div class="startbar d-print-none">
+            <div class="brand">
+                <a href="index.html" class="logo">
+                    <span>
+                        <img src="assets/images/logo-sm.png" alt="logo-small" class="logo-sm">
+                    </span>
+                    <span class="">
+                        <img src="assets/images/logo-light.png" alt="logo-large" class="logo-lg logo-light">
+                        <img src="assets/images/logo-dark.png" alt="logo-large" class="logo-lg logo-dark">
+                    </span>
+                </a>
+            </div>
+            <div class="startbar-menu">
+                <div class="startbar-collapse" id="startbarCollapse">
+                    <div class="d-flex align-items-start flex-column w-100">
+                        <ul class="navbar-nav mb-auto w-100">
+                            <li class="menu-label pt-0 mt-0">
+                                <span>Menú Principal</span>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">
+                                    <i class="fas fa-home menu-icon"></i>
+                                    <span>Inicio</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link active" href="instalacion.html">
+                                    <i class="fas fa-download menu-icon"></i>
+                                    <span>Instalación</span>
+                                </a>
+                            </li>
+        
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sidebarComponents" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarComponents">
+                                    <i class="fas fa-box-open menu-icon"></i>
+                                    <span>Temas del Curso</span>
+                                </a>
+                                <div class="collapse" id="sidebarComponents">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="primeros-pasos.html">Primeros Pasos</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="operadores.html">Operadores</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="graficos.html">Gráficos</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="startbar-overlay d-print-none"></div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="page-content">
+            <div class="container-fluid">
+                
+                <!-- Introducción -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <i class="fas fa-info-circle text-primary me-2"></i>
+                                    ¿Qué vamos a instalar?
+                                </h4>
+                                <p class="card-text">
+                                    Para comenzar a trabajar con R necesitamos instalar dos programas esenciales:
+                                </p>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="requirement-item">
+                                            <h6><i class="fab fa-r-project text-info me-2"></i><strong>R</strong></h6>
+                                            <p class="mb-0 small">El lenguaje de programación y entorno estadístico principal.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="requirement-item">
+                                            <h6><i class="fas fa-desktop text-success me-2"></i><strong>RStudio</strong></h6>
+                                            <p class="mb-0 small">Un entorno de desarrollo integrado (IDE) que hace más fácil trabajar con R.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Requisitos del Sistema -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fas fa-laptop text-warning me-2"></i>
+                                    Requisitos del Sistema
+                                </h5>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h6><i class="fab fa-windows text-primary"></i> Windows</h6>
+                                        <ul class="small">
+                                            <li>Windows 10 o superior</li>
+                                            <li>2 GB RAM mínimo</li>
+                                            <li>500 MB espacio libre</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6><i class="fab fa-apple text-dark"></i> macOS</h6>
+                                        <ul class="small">
+                                            <li>macOS 10.15 o superior</li>
+                                            <li>2 GB RAM mínimo</li>
+                                            <li>500 MB espacio libre</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6><i class="fab fa-linux text-danger"></i> Linux</h6>
+                                        <ul class="small">
+                                            <li>Ubuntu 18.04+ / CentOS 7+</li>
+                                            <li>2 GB RAM mínimo</li>
+                                            <li>500 MB espacio libre</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 1: Instalar R -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card step-card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="step-number">1</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">Descargar e Instalar R</h5>
+                                        <p class="mb-3">R es el núcleo del sistema. Siempre debemos instalarlo primero.</p>
+                                        
+                                        <div class="mb-3">
+                                            <a href="https://cran.r-project.org/bin/windows/base/" target="_blank" class="download-btn">
+                                                <i class="fab fa-r-project"></i>
+                                                Descargar R para Windows
+                                            </a>
+                                        </div>
+
+                                        <div class="warning-box">
+                                            <h6><i class="fas fa-exclamation-triangle text-warning me-2"></i>Importante</h6>
+                                            <p class="mb-0 small">Descarga siempre la versión más reciente desde el sitio oficial de CRAN. Evita descargas de sitios no oficiales.</p>
+                                        </div>
+
+                                        <h6 class="mt-3">Pasos de Instalación:</h6>
+                                        <ol class="small">
+                                            <li>Haz clic en el enlace de descarga</li>
+                                            <li>Selecciona "Download R for Windows"</li>
+                                            <li>Haz clic en "base"</li>
+                                            <li>Descarga el archivo .exe</li>
+                                            <li>Ejecuta el instalador como administrador</li>
+                                            <li>Acepta todas las opciones predeterminadas</li>
+                                            <li>Espera a que termine la instalación</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 2: Instalar RStudio -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card step-card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="step-number">2</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">Descargar e Instalar RStudio</h5>
+                                        <p class="mb-3">RStudio es nuestro entorno de trabajo visual. Hace que trabajar con R sea mucho más fácil.</p>
+                                        
+                                        <div class="mb-3">
+                                            <a href="https://posit.co/download/rstudio-desktop/" target="_blank" class="download-btn">
+                                                <i class="fas fa-desktop"></i>
+                                                Descargar RStudio Desktop
+                                            </a>
+                                        </div>
+
+                                        <h6 class="mt-3">Pasos de Instalación:</h6>
+                                        <ol class="small">
+                                            <li>Haz clic en el enlace de descarga</li>
+                                            <li>Selecciona "RStudio Desktop" (versión gratuita)</li>
+                                            <li>Elige tu sistema operativo</li>
+                                            <li>Descarga el archivo instalador</li>
+                                            <li>Ejecuta el instalador</li>
+                                            <li>Sigue las instrucciones en pantalla</li>
+                                            <li>Deja las opciones predeterminadas</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 3: Primera Configuración -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card step-card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="step-number">3</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">Primera Configuración</h5>
+                                        <p class="mb-3">Ahora vamos a abrir RStudio y hacer algunas configuraciones básicas.</p>
+                                        
+                                        <h6>Abriendo RStudio por primera vez:</h6>
+                                        <ol class="small">
+                                            <li>Busca "RStudio" en el menú de inicio</li>
+                                            <li>Haz clic para abrir la aplicación</li>
+                                            <li>RStudio debería detectar automáticamente R</li>
+                                            <li>Verás una interfaz dividida en varias ventanas</li>
+                                        </ol>
+
+                                        <h6 class="mt-3">Verificar que todo funciona:</h6>
+                                        <p class="small">Escribe este comando en la Consola (ventana inferior izquierda):</p>
+                                        <div class="code-snippet">
+                                            <code>print("¡Hola, R!")</code>
+                                        </div>
+                                        <p class="small">Si aparece <code>[1] "¡Hola, R!"</code> ¡felicidades! Todo está instalado correctamente.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 4: Personalización -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card step-card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="step-number">4</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">Personalizar RStudio</h5>
+                                        <p class="mb-3">Vamos a personalizar RStudio para que sea más cómodo trabajar.</p>
+                                        
+                                        <h6>Cambiar el tema y apariencia:</h6>
+                                        <ol class="small">
+                                            <li>Ve a <strong>Tools → Global Options</strong></li>
+                                            <li>En la sección <strong>Appearance</strong>:</li>
+                                            <ul>
+                                                <li><strong>Editor theme:</strong> Elige un tema que te guste (ej: "Cobalt", "Tomorrow Night")</li>
+                                                <li><strong>Editor font size:</strong> Cambia el tamaño (recomendado: 12-14)</li>
+                                                <li><strong>Editor font:</strong> Cambia la fuente si deseas</li>
+                                            </ul>
+                                            <li>Haz clic en <strong>Apply</strong> y <strong>OK</strong></li>
+                                        </ol>
+
+                                        <div class="warning-box">
+                                            <h6><i class="fas fa-lightbulb text-warning me-2"></i>Consejo</h6>
+                                            <p class="mb-0 small">Un tema oscuro puede ser más cómodo para sesiones largas de trabajo. Los temas claros son mejores para presentaciones.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Configurar Directorio de Trabajo -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card step-card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="step-number">5</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">Configurar Directorio de Trabajo</h5>
+                                        <p class="mb-3">El directorio de trabajo es la carpeta donde R buscará y guardará archivos por defecto.</p>
+                                        
+                                        <h6>Ver directorio actual:</h6>
+                                        <div class="code-snippet">
+                                            <code>getwd()</code>
+                                        </div>
+
+                                        <h6 class="mt-3">Cambiar directorio:</h6>
+                                        <div class="code-snippet">
+                                            <code>setwd("C:/Mi_Proyecto_R")</code>
+                                        </div>
+                                        
+                                        <h6 class="mt-3">Ver archivos en el directorio:</h6>
+                                        <div class="code-snippet">
+                                            <code>list.files()</code>
+                                        </div>
+
+                                        <div class="warning-box">
+                                            <h6><i class="fas fa-info-circle text-info me-2"></i>Recomendación</h6>
+                                            <p class="mb-0 small">Crea una carpeta específica para tus proyectos de R, por ejemplo "Documentos/Proyectos_R". Usa siempre barras inclinadas "/" en las rutas, incluso en Windows.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Próximos Pasos -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card bg-success bg-opacity-10 border-success">
+                            <div class="card-body">
+                                <h5 class="card-title text-success">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    ¡Instalación Completada!
+                                </h5>
+                                <p class="card-text">
+                                    Excelente, ya tienes R and RStudio instalados y configurados. Ahora estás listo para comenzar a programar.
+                                </p>
+                                <div class="d-flex gap-3 flex-wrap">
+                                    <a href="primeros-pasos.html" class="btn btn-success">
+                                        <i class="fas fa-play me-2"></i>
+                                        Primeros Pasos con R
+                                    </a>
+                                    <a href="descargas/guia-instalacion.pdf" class="btn btn-outline-success" download>
+                                        <i class="fas fa-download me-2"></i>
+                                        Descargar Guía PDF
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/vendors.min.js"></script>
+    <script src="assets/js/app.min.js"></script>
+    <script src="assets/js/global.js"></script>
+
+</body>
+</html>

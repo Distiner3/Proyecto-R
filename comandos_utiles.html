@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="es-es" data-bs-theme="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>Comandos Útiles en R | Curso de R</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Referencia completa de comandos útiles en R: funciones matemáticas, manipulación de texto, vectores, DataFrames y más."/>
+    <link rel="icon" href="assets/images/favicon.ico"/>
+    
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        })();
+    </script>
+
+    <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/icofont@1.0.0/dist/icofont.min.css">
+
+    <style>
+        .command-section {
+            border-left: 4px solid #6f42c1;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+        .command-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(111,66,193,0.1);
+        }
+        .section-icon {
+            background: linear-gradient(45deg, #6f42c1, #563d7c);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        .command-table {
+            font-size: 0.85rem;
+        }
+        .command-name {
+            font-family: 'Courier New', monospace;
+            background: rgba(111,66,193,0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #6f42c1;
+        }
+        .command-example {
+            font-family: 'Courier New', monospace;
+            background: rgba(40,167,69,0.1);
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+        .quick-nav {
+            position: sticky;
+            top: 20px;
+            background: rgba(255,255,255,0.95);
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        [data-bs-theme="dark"] .quick-nav {
+            background: rgba(45,55,72,0.95);
+            border-color: #4a5568;
+        }
+        .nav-link-custom {
+            color: #6f42c1;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: block;
+            font-size: 0.9rem;
+        }
+        .nav-link-custom:hover {
+            background: rgba(111,66,193,0.1);
+            color: #563d7c;
+        }
+        .search-box {
+            margin-bottom: 20px;
+        }
+        .search-input {
+            border: 2px solid #6f42c1;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(111,66,193,0.3);
+        }
+        .highlight {
+            background: yellow;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .function-category {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .copy-all-btn {
+            background: #6f42c1;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            float: right;
+            margin-bottom: 10px;
+        }
+        .usage-tip {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 0 5px 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-wrapper">
+        
+        <!-- TOPBAR -->
+        <div class="topbar d-print-none">
+            <div class="container-xxl">
+                <nav class="topbar-custom d-flex justify-content-between" id="topbar-custom">
+                    <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
+                        <li class="mx-3 welcome-text">
+                            <h3 class="mb-0 fw-bold text-truncate">
+                                <i class="fas fa-terminal me-2"></i>
+                                Comandos Útiles en R
+                            </h3>
+                        </li>
+                    </ul>
+        
+                    <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
+                        <li class="topbar-item">
+                            <a class="nav-link nav-icon theme-toggle" href="javascript:void(0);">
+                                <i class="icofont-moon"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- SIDEBAR -->
+        <div class="startbar d-print-none">
+            <div class="brand">
+                <a href="index.html" class="logo">
+                    <span>
+                        <img src="assets/images/logo-sm.png" alt="logo-small" class="logo-sm">
+                    </span>
+                    <span class="">
+                        <img src="assets/images/logo-light.png" alt="logo-large" class="logo-lg logo-light">
+                        <img src="assets/images/logo-dark.png" alt="logo-large" class="logo-lg logo-dark">
+                    </span>
+                </a>
+            </div>
+            <div class="startbar-menu">
+                <div class="startbar-collapse" id="startbarCollapse">
+                    <div class="d-flex align-items-start flex-column w-100">
+                        <ul class="navbar-nav mb-auto w-100">
+                            <li class="menu-label pt-0 mt-0">
+                                <span>Menú Principal</span>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">
+                                    <i class="fas fa-home menu-icon"></i>
+                                    <span>Inicio</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link active" href="comandos-utiles.html">
+                                    <i class="fas fa-terminal menu-icon"></i>
+                                    <span>Comandos Útiles</span>
+                                </a>
+                            </li>
+        
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sidebarComponents" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarComponents">
+                                    <i class="fas fa-box-open menu-icon"></i>
+                                    <span>Más Temas</span>
+                                </a>
+                                <div class="collapse" id="sidebarComponents">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="primeros-pasos.html">Primeros Pasos</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="tipos-datos.html">Tipos de Datos</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="graficos.html">Gráficos</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="startbar-overlay d-print-none"></div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="page-content">
+            <div class="container-fluid">
+                
+                <div class="row">
+                    <!-- NAVEGACIÓN RÁPIDA -->
+                    <div class="col-lg-3 col-xl-2">
+                        <div class="quick-nav">
+                            <h6><i class="fas fa-list me-2"></i>Navegación Rápida</h6>
+                            <div class="search-box">
+                                <input type="text" id="searchInput" class="form-control search-input" placeholder="Buscar comando...">
+                            </div>
+                            <nav class="nav flex-column">
+                                <a class="nav-link-custom" href="#matematicas">
+                                    <i class="fas fa-calculator me-2"></i>Funciones Matemáticas
+                                </a>
+                                <a class="nav-link-custom" href="#texto">
+                                    <i class="fas fa-font me-2"></i>Manipulación de Texto
+                                </a>
+                                <a class="nav-link-custom" href="#vectores">
+                                    <i class="fas fa-list-ol me-2"></i>Trabajo con Vectores
+                                </a>
+                                <a class="nav-link-custom" href="#dataframes">
+                                    <i class="fas fa-table me-2"></i>DataFrames
+                                </a>
+                                <a class="nav-link-custom" href="#archivos">
+                                    <i class="fas fa-file me-2"></i>Manejo de Archivos
+                                </a>
+                                <a class="nav-link-custom" href="#scripts">
+                                    <i class="fas fa-code me-2"></i>Scripts y Flujo
+                                </a>
+                                <a class="nav-link-custom" href="#estadisticas">
+                                    <i class="fas fa-chart-bar me-2"></i>Estadísticas Básicas
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- CONTENIDO PRINCIPAL -->
+                    <div class="col-lg-9 col-xl-10">
+                        
+                        <!-- Introducción -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">
+                                            <i class="fas fa-book text-primary me-2"></i>
+                                            Referencia Rápida de Comandos en R
+                                        </h4>
+                                        <p class="card-text">
+                                            Esta es tu cheat sheet completa de R. Encuentra rápidamente la función que necesitas, 
+                                            con ejemplos prácticos y explicaciones claras. Usa el buscador para encontrar comandos específicos.
+                                        </p>
+                                        <div class="alert alert-info">
+                                            <i class="fas fa-star me-2"></i>
+                                            <strong>Consejo:</strong> Guarda esta página en tus favoritos. Te servirá como referencia rápida 
+                                            mientras programas en R.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Funciones Matemáticas -->
+                        <div id="matematicas" class="row mb-4">
+                            <div class="col-12">
+                                <div class="card command-section">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start">
+                                            <div class="section-icon">
+                                                <i class="fas fa-calculator"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="function-category">
+                                                    <i class="fas fa-calculator me-2"></i>Funciones Matemáticas
+                                                </div>
+                                                <button class="copy-all-btn" onclick="copyAllMath()">Copiar Todas</button>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover command-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 20%;">Función</th>
+                                                                <th style="width: 30%;">Descripción</th>
+                                                                <th style="width: 25%;">Ejemplo</th>
+                                                                <th style="width: 25%;">Resultado</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><span class="command-name">log()</span></td>
+                                                                <td>Logaritmo natural</td>
+                                                                <td><span class="command-example">log(10)</span></td>
+                                                                <td>2.302585</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">abs()</span></td>
+                                                                <td>Valor absoluto</td>
+                                                                <td><span class="command-example">abs(-5)</span></td>
+                                                                <td>5</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">sin(), cos()</span></td>
+                                                                <td>Funciones trigonométricas</td>
+                                                                <td><span class="command-example">sin(pi/2)</span></td>
+                                                                <td>1</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">round()</span></td>
+                                                                <td>Redondear valores</td>
+                                                                <td><span class="command-example">round(3.14159, 2)</span></td>
+                                                                <td>3.14</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">sqrt()</span></td>
+                                                                <td>Raíz cuadrada</td>
+                                                                <td><span class="command-example">sqrt(16)</span></td>
+                                                                <td>4</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">ceiling()</span></td>
+                                                                <td>Redondeo hacia arriba</td>
+                                                                <td><span class="command-example">ceiling(3.2)</span></td>
+                                                                <td>4</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">floor()</span></td>
+                                                                <td>Redondeo hacia abajo</td>
+                                                                <td><span class="command-example">floor(3.8)</span></td>
+                                                                <td>3</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">trunc()</span></td>
+                                                                <td>Eliminar parte decimal</td>
+                                                                <td><span class="command-example">trunc(3.14159)</span></td>
+                                                                <td>3</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="usage-tip">
+                                                    <i class="fas fa-lightbulb text-warning me-2"></i>
+                                                    <strong>Tip:</strong> Usa <code>round(x, digits = n)</code> para controlar el número de decimales.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Manipulación de Texto -->
+                        <div id="texto" class="row mb-4">
+                            <div class="col-12">
+                                <div class="card command-section">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start">
+                                            <div class="section-icon">
+                                                <i class="fas fa-font"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="function-category">
+                                                    <i class="fas fa-font me-2"></i>Manipulación de Texto
+                                                </div>
+                                                <button class="copy-all-btn" onclick="copyAllText()">Copiar Todas</button>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover command-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 20%;">Función</th>
+                                                                <th style="width: 30%;">Descripción</th>
+                                                                <th style="width: 30%;">Ejemplo</th>
+                                                                <th style="width: 20%;">Resultado</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><span class="command-name">nchar()</span></td>
+                                                                <td>Contar caracteres</td>
+                                                                <td><span class="command-example">nchar("Hola")</span></td>
+                                                                <td>4</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">tolower()</span></td>
+                                                                <td>Convertir a minúsculas</td>
+                                                                <td><span class="command-example">tolower("HOLA")</span></td>
+                                                                <td>"hola"</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">toupper()</span></td>
+                                                                <td>Convertir a mayúsculas</td>
+                                                                <td><span class="command-example">toupper("hola")</span></td>
+                                                                <td>"HOLA"</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">substr()</span></td>
+                                                                <td>Extraer texto</td>
+                                                                <td><span class="command-example">substr("manzana", 1, 4)</span></td>
+                                                                <td>"manz"</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">sub()</span></td>
+                                                                <td>Sustituir primer valor</td>
+                                                                <td><span class="command-example">sub("a", "A", "casa")</span></td>
+                                                                <td>"cAsa"</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">gsub()</span></td>
+                                                                <td>Sustituir todos los valores</td>
+                                                                <td><span class="command-example">gsub("a", "A", "casa")</span></td>
+                                                                <td>"cAsA"</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">paste()</span></td>
+                                                                <td>Concatenar strings</td>
+                                                                <td><span class="command-example">paste("Hola", "mundo")</span></td>
+                                                                <td>"Hola mundo"</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">strsplit()</span></td>
+                                                                <td>Separar texto</td>
+                                                                <td><span class="command-example">strsplit("a,b,c", ",")</span></td>
+                                                                <td>["a","b","c"]</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="usage-tip">
+                                                    <i class="fas fa-lightbulb text-warning me-2"></i>
+                                                    <strong>Tip:</strong> Usa <code>paste(..., sep = "")</code> para unir sin espacios, o <code>paste0()</code> como atajo.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Trabajo con Vectores -->
+                        <div id="vectores" class="row mb-4">
+                            <div class="col-12">
+                                <div class="card command-section">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start">
+                                            <div class="section-icon">
+                                                <i class="fas fa-list-ol"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="function-category">
+                                                    <i class="fas fa-list-ol me-2"></i>Trabajo con Vectores
+                                                </div>
+                                                <button class="copy-all-btn" onclick="copyAllVectors()">Copiar Todas</button>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover command-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 20%;">Función</th>
+                                                                <th style="width: 30%;">Descripción</th>
+                                                                <th style="width: 30%;">Ejemplo</th>
+                                                                <th style="width: 20%;">Resultado</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><span class="command-name">c()</span></td>
+                                                                <td>Crear vector</td>
+                                                                <td><span class="command-example">c(1, 2, 3, 4)</span></td>
+                                                                <td>[1 2 3 4]</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">length()</span></td>
+                                                                <td>Cantidad de elementos</td>
+                                                                <td><span class="command-example">length(c(1,2,3))</span></td>
+                                                                <td>3</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">max()</span></td>
+                                                                <td>Valor máximo</td>
+                                                                <td><span class="command-example">max(c(1,5,3))</span></td>
+                                                                <td>5</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">min()</span></td>
+                                                                <td>Valor mínimo</td>
+                                                                <td><span class="command-example">min(c(1,5,3))</span></td>
+                                                                <td>1</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">mean()</span></td>
+                                                                <td>Promedio</td>
+                                                                <td><span class="command-example">mean(c(1,2,3))</span></td>
+                                                                <td>2</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">sum()</span></td>
+                                                                <td>Suma todos los valores</td>
+                                                                <td><span class="command-example">sum(c(1,2,3))</span></td>
+                                                                <td>6</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">sort()</span></td>
+                                                                <td>Ordenar de menor a mayor</td>
+                                                                <td><span class="command-example">sort(c(3,1,2))</span></td>
+                                                                <td>[1 2 3]</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">which()</span></td>
+                                                                <td>Posiciones donde condición es TRUE</td>
+                                                                <td><span class="command-example">which(c(1,5,3) > 2)</span></td>
+                                                                <td>[2 3]</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">union()</span></td>
+                                                                <td>Unir vectores sin repetir</td>
+                                                                <td><span class="command-example">union(c(1,2), c(2,3))</span></td>
+                                                                <td>[1 2 3]</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">intersect()</span></td>
+                                                                <td>Elementos en común</td>
+                                                                <td><span class="command-example">intersect(c(1,2), c(2,3))</span></td>
+                                                                <td>[2]</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">setdiff()</span></td>
+                                                                <td>Elementos que tiene A y no B</td>
+                                                                <td><span class="command-example">setdiff(c(1,2), c(2,3))</span></td>
+                                                                <td>[1]</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">%in%</span></td>
+                                                                <td>Verificar si está en el vector</td>
+                                                                <td><span class="command-example">"a" %in% c("a","b")</span></td>
+                                                                <td>TRUE</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="usage-tip">
+                                                    <i class="fas fa-lightbulb text-warning me-2"></i>
+                                                    <strong>Tip:</strong> Usa <code>sort(x, decreasing = TRUE)</code> para ordenar de mayor a menor.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DataFrames -->
+                        <div id="dataframes" class="row mb-4">
+                            <div class="col-12">
+                                <div class="card command-section">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start">
+                                            <div class="section-icon">
+                                                <i class="fas fa-table"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="function-category">
+                                                    <i class="fas fa-table me-2"></i>Trabajo con DataFrames
+                                                </div>
+                                                <button class="copy-all-btn" onclick="copyAllDataFrames()">Copiar Todas</button>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover command-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 20%;">Función</th>
+                                                                <th style="width: 30%;">Descripción</th>
+                                                                <th style="width: 30%;">Ejemplo</th>
+                                                                <th style="width: 20%;">Resultado</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><span class="command-name">data.frame()</span></td>
+                                                                <td>Crear DataFrame</td>
+                                                                <td><span class="command-example">data.frame(x=c(1,2), y=c(3,4))</span></td>
+                                                                <td>Tabla con columnas x, y</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">View()</span></td>
+                                                                <td>Ver datos en ventana</td>
+                                                                <td><span class="command-example">View(datos)</span></td>
+                                                                <td>Abre ventana con tabla</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">head()</span></td>
+                                                                <td>Primeras 6 filas</td>
+                                                                <td><span class="command-example">head(datos)</span></td>
+                                                                <td>Muestra primeras filas</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">nrow()</span></td>
+                                                                <td>Número de filas</td>
+                                                                <td><span class="command-example">nrow(datos)</span></td>
+                                                                <td>Cantidad de filas</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">ncol()</span></td>
+                                                                <td>Número de columnas</td>
+                                                                <td><span class="command-example">ncol(datos)</span></td>
+                                                                <td>Cantidad de columnas</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">str()</span></td>
+                                                                <td>Estructura de la tabla</td>
+                                                                <td><span class="command-example">str(datos)</span></td>
+                                                                <td>Tipos de datos y preview</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">summary()</span></td>
+                                                                <td>Resumen estadístico</td>
+                                                                <td><span class="command-example">summary(datos)</span></td>
+                                                                <td>Min, Max, Mean, etc.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">rbind()</span></td>
+                                                                <td>Agregar filas</td>
+                                                                <td><span class="command-example">rbind(df1, df2)</span></td>
+                                                                <td>Combina por filas</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">table()</span></td>
+                                                                <td>Tabla de frecuencias</td>
+                                                                <td><span class="command-example">table(datos$columna)</span></td>
+                                                                <td>Cuenta valores únicos</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="usage-tip">
+                                                    <i class="fas fa-lightbulb text-warning me-2"></i>
+                                                    <strong>Tip:</strong> Usa <code>datos$columna</code> para acceder a una columna específica.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Manejo de Archivos -->
+                        <div id="archivos" class="row mb-4">
+                            <div class="col-12">
+                                <div class="card command-section">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start">
+                                            <div class="section-icon">
+                                                <i class="fas fa-file"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="function-category">
+                                                    <i class="fas fa-file me-2"></i>Manejo de Archivos
+                                                </div>
+                                                <button class="copy-all-btn" onclick="copyAllFiles()">Copiar Todas</button>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover command-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 25%;">Función</th>
+                                                                <th style="width: 35%;">Descripción</th>
+                                                                <th style="width: 40%;">Ejemplo</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><span class="command-name">getwd()</span></td>
+                                                                <td>Ver directorio actual</td>
+                                                                <td><span class="command-example">getwd()</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">setwd()</span></td>
+                                                                <td>Cambiar directorio</td>
+                                                                <td><span class="command-example">setwd("C:/Mi_Proyecto")</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">list.files()</span></td>
+                                                                <td>Listar archivos del directorio</td>
+                                                                <td><span class="command-example">list.files()</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">read.csv()</span></td>
+                                                                <td>Leer archivo CSV</td>
+                                                                <td><span class="command-example">read.csv("datos.csv")</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">write.csv()</span></td>
+                                                                <td>Escribir archivo CSV</td>
+                                                                <td><span class="command-example">write.csv(datos, "salida.csv")</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">write.table()</span></td>
+                                                                <td>Escribir tabla con opciones</td>
+                                                                <td><span class="command-example">write.table(datos, "archivo.csv", sep=";")</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">scan()</span></td>
+                                                                <td>Leer datos simples</td>
+                                                                <td><span class="command-example">scan("numeros.txt")</span></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="usage-tip">
+                                                    <i class="fas fa-lightbulb text-warning me-2"></i>
+                                                    <strong>Tip:</strong> Usa <code>row.names = FALSE</code> en write.csv para evitar números de fila.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scripts y Flujo -->
+                        <div id="scripts" class="row mb-4">
+                            <div class="col-12">
+                                <div class="card command-section">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start">
+                                            <div class="section-icon">
+                                                <i class="fas fa-code"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="function-category">
+                                                    <i class="fas fa-code me-2"></i>Scripts y Control de Flujo
+                                                </div>
+                                                <button class="copy-all-btn" onclick="copyAllScripts()">Copiar Todas</button>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover command-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 25%;">Función</th>
+                                                                <th style="width: 35%;">Descripción</th>
+                                                                <th style="width: 40%;">Ejemplo</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><span class="command-name">rm()</span></td>
+                                                                <td>Eliminar objetos</td>
+                                                                <td><span class="command-example">rm(variable)</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">ls()</span></td>
+                                                                <td>Listar objetos en memoria</td>
+                                                                <td><span class="command-example">ls()</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">cat()</span></td>
+                                                                <td>Imprimir texto</td>
+                                                                <td><span class="command-example">cat("Hola mundo\n")</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">print()</span></td>
+                                                                <td>Imprimir objetos</td>
+                                                                <td><span class="command-example">print(datos)</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">help()</span></td>
+                                                                <td>Obtener ayuda</td>
+                                                                <td><span class="command-example">help(mean)</span> o <span class="command-example">?mean</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">install.packages()</span></td>
+                                                                <td>Instalar paquetes</td>
+                                                                <td><span class="command-example">install.packages("ggplot2")</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">library()</span></td>
+                                                                <td>Cargar paquetes</td>
+                                                                <td><span class="command-example">library(ggplot2)</span></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="usage-tip">
+                                                    <i class="fas fa-lightbulb text-warning me-2"></i>
+                                                    <strong>Tip:</strong> Usa <code>Ctrl+Enter</code> para ejecutar la línea actual en un script.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Estadísticas Básicas -->
+                        <div id="estadisticas" class="row mb-4">
+                            <div class="col-12">
+                                <div class="card command-section">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start">
+                                            <div class="section-icon">
+                                                <i class="fas fa-chart-bar"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="function-category">
+                                                    <i class="fas fa-chart-bar me-2"></i>Estadísticas y Análisis
+                                                </div>
+                                                <button class="copy-all-btn" onclick="copyAllStats()">Copiar Todas</button>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover command-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 20%;">Función</th>
+                                                                <th style="width: 30%;">Descripción</th>
+                                                                <th style="width: 30%;">Ejemplo</th>
+                                                                <th style="width: 20%;">Uso</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><span class="command-name">mean()</span></td>
+                                                                <td>Media aritmética</td>
+                                                                <td><span class="command-example">mean(datos$edad)</span></td>
+                                                                <td>Tendencia central</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">median()</span></td>
+                                                                <td>Mediana</td>
+                                                                <td><span class="command-example">median(datos$edad)</span></td>
+                                                                <td>Tendencia central</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">sd()</span></td>
+                                                                <td>Desviación estándar</td>
+                                                                <td><span class="command-example">sd(ventas)</span></td>
+                                                                <td>Dispersión</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">var()</span></td>
+                                                                <td>Varianza</td>
+                                                                <td><span class="command-example">var(ventas)</span></td>
+                                                                <td>Dispersión</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">quantile()</span></td>
+                                                                <td>Cuartiles y percentiles</td>
+                                                                <td><span class="command-example">quantile(datos, 0.25)</span></td>
+                                                                <td>Posición</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">cor()</span></td>
+                                                                <td>Correlación de Pearson</td>
+                                                                <td><span class="command-example">cor(x, y)</span></td>
+                                                                <td>Relación lineal</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">cov()</span></td>
+                                                                <td>Covarianza</td>
+                                                                <td><span class="command-example">cov(a, b)</span></td>
+                                                                <td>Variación conjunta</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">hist()</span></td>
+                                                                <td>Histograma</td>
+                                                                <td><span class="command-example">hist(datos$variable)</span></td>
+                                                                <td>Distribución</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">boxplot()</span></td>
+                                                                <td>Diagrama de cajas</td>
+                                                                <td><span class="command-example">boxplot(y ~ x, data=df)</span></td>
+                                                                <td>Comparar grupos</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">plot()</span></td>
+                                                                <td>Gráfico de dispersión</td>
+                                                                <td><span class="command-example">plot(x, y)</span></td>
+                                                                <td>Relación entre variables</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="usage-tip">
+                                                    <i class="fas fa-lightbulb text-warning me-2"></i>
+                                                    <strong>Tip:</strong> Usa <code>na.rm = TRUE</code> en funciones estadísticas para ignorar valores faltantes.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Conversiones de Tipos -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card command-section">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start">
+                                            <div class="section-icon">
+                                                <i class="fas fa-exchange-alt"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="function-category">
+                                                    <i class="fas fa-exchange-alt me-2"></i>Conversiones de Tipos
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover command-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 25%;">Función</th>
+                                                                <th style="width: 35%;">Descripción</th>
+                                                                <th style="width: 40%;">Ejemplo</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><span class="command-name">as.character()</span></td>
+                                                                <td>Convertir a texto</td>
+                                                                <td><span class="command-example">as.character(5.6)</span> → "5.6"</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">as.numeric()</span></td>
+                                                                <td>Convertir a número</td>
+                                                                <td><span class="command-example">as.numeric("520")</span> → 520</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">as.integer()</span></td>
+                                                                <td>Convertir a entero</td>
+                                                                <td><span class="command-example">as.integer(5.7)</span> → 5</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">as.logical()</span></td>
+                                                                <td>Convertir a lógico</td>
+                                                                <td><span class="command-example">as.logical(10)</span> → TRUE</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="command-name">as.factor()</span></td>
+                                                                <td>Convertir a factor</td>
+                                                                <td><span class="command-example">as.factor(c("A","B","A"))</span></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="usage-tip">
+                                                    <i class="fas fa-lightbulb text-warning me-2"></i>
+                                                    <strong>Tip:</strong> Siempre verifica el tipo con <code>class()</code> antes y después de convertir.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/vendors.min.js"></script>
+    <script src="assets/js/app.min.js"></script>
+    <script src="assets/js/global.js"></script>
+
+    <script>
+        // Funcionalidad de búsqueda
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const tables = document.querySelectorAll('.command-table tbody tr');
+            
+            tables.forEach(row => {
+                const commandName = row.querySelector('.command-name').textContent.toLowerCase();
+                const description = row.cells[1].textContent.toLowerCase();
+                
+                if (commandName.includes(searchTerm) || description.includes(searchTerm)) {
+                    row.style.display = '';
+                    // Resaltar término de búsqueda
+                    if (searchTerm) {
+                        const regex = new RegExp(`(${searchTerm})`, 'gi');
+                        row.cells[1].innerHTML = row.cells[1].textContent.replace(regex, '<span class="highlight">$1</span>');
+                    }
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Funciones para copiar grupos de comandos
+        function copyAllMath() {
+            const commands = `# Funciones Matemáticas en R
+log(10)           # Logaritmo natural
+abs(-5)           # Valor absoluto
+sin(pi/2)         # Seno
+cos(0)            # Coseno
+round(3.14159, 2) # Redondear
+sqrt(16)          # Raíz cuadrada
+ceiling(3.2)      # Redondear hacia arriba
+floor(3.8)        # Redondear hacia abajo
+trunc(3.14159)    # Eliminar decimales`;
+            
+            copyToClipboard(commands);
+        }
+
+        function copyAllText() {
+            const commands = `# Manipulación de Texto en R
+nchar("Hola")                    # Contar caracteres
+tolower("HOLA")                  # A minúsculas
+toupper("hola")                  # A mayúsculas
+substr("manzana", 1, 4)          # Extraer texto
+sub("a", "A", "casa")            # Sustituir primer valor
+gsub("a", "A", "casa")           # Sustituir todos
+paste("Hola", "mundo")           # Concatenar
+strsplit("a,b,c", ",")           # Separar texto`;
+            
+            copyToClipboard(commands);
+        }
+
+        function copyAllVectors() {
+            const commands = `# Trabajo con Vectores en R
+c(1, 2, 3, 4)                    # Crear vector
+length(c(1,2,3))                 # Cantidad de elementos
+max(c(1,5,3))                    # Valor máximo
+min(c(1,5,3))                    # Valor mínimo
+mean(c(1,2,3))                   # Promedio
+sum(c(1,2,3))                    # Suma total
+sort(c(3,1,2))                   # Ordenar
+which(c(1,5,3) > 2)              # Posiciones TRUE
+union(c(1,2), c(2,3))            # Unión sin repetir
+intersect(c(1,2), c(2,3))        # Elementos comunes
+"a" %in% c("a","b")              # Verificar pertenencia`;
+            
+            copyToClipboard(commands);
+        }
+
+        function copyAllDataFrames() {
+            const commands = `# Trabajo con DataFrames en R
+data.frame(x=c(1,2), y=c(3,4))   # Crear DataFrame
+View(datos)                      # Ver en ventana
+head(datos)                      # Primeras 6 filas
+nrow(datos)                      # Número de filas
+ncol(datos)                      # Número de columnas
+str(datos)                       # Estructura
+summary(datos)                   # Resumen estadístico
+table(datos$columna)             # Tabla de frecuencias
+rbind(df1, df2)                  # Combinar por filas`;
+            
+            copyToClipboard(commands);
+        }
+
+        function copyAllFiles() {
+            const commands = `# Manejo de Archivos en R
+getwd()                          # Ver directorio actual
+setwd("C:/Mi_Proyecto")          # Cambiar directorio
+list.files()                     # Listar archivos
+read.csv("datos.csv")            # Leer CSV
+write.csv(datos, "salida.csv")   # Escribir CSV
+write.table(datos, "archivo.csv", sep=";", row.names=FALSE)
+scan("numeros.txt")              # Leer datos simples`;
+            
+            copyToClipboard(commands);
+        }
+
+        function copyAllScripts() {
+            const commands = `# Scripts y Control en R
+rm(variable)                     # Eliminar objetos
+ls()                             # Listar objetos
+cat("Hola mundo\\n")              # Imprimir texto
+print(datos)                     # Imprimir objetos
+help(mean)                       # Obtener ayuda
+?mean                            # Ayuda rápida
+install.packages("ggplot2")      # Instalar paquetes
+library(ggplot2)                 # Cargar paquetes`;
+            
+            copyToClipboard(commands);
+        }
+
+        function copyAllStats() {
+            const commands = `# Estadísticas y Análisis en R
+mean(datos$edad)                 # Media aritmética
+median(datos$edad)               # Mediana
+sd(ventas)                       # Desviación estándar
+var(ventas)                      # Varianza
+quantile(datos, 0.25)            # Cuartiles
+cor(x, y)                        # Correlación
+cov(a, b)                        # Covarianza
+hist(datos$variable)             # Histograma
+boxplot(y ~ x, data=df)          # Boxplot
+plot(x, y)                       # Gráfico dispersión`;
+            
+            copyToClipboard(commands);
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                // Mostrar notificación
+                const notification = document.createElement('div');
+                notification.textContent = '¡Comandos copiados al portapapeles!';
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #28a745;
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 5px;
+                    z-index: 9999;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 3000);
+            });
+        }
+
+        // Smooth scroll para navegación
+        document.querySelectorAll('.nav-link-custom').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
