@@ -23,16 +23,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/icofont@1.0.0/dist/icofont.min.css">
 
     <style>
-        /* ESTILO AÑADIDO PARA DESPLAZAMIENTO SUAVE */
-        html {
-            scroll-behavior: smooth;
-        }
-
         .data-type-section {
             border-left: 4px solid #17a2b8;
             transition: all 0.3s ease;
             margin-bottom: 2rem;
-            scroll-margin-top: 90px;
         }
 
         .data-type-section:hover {
@@ -390,83 +384,71 @@
                         </h5>
                     </div>
                     <div class="col-md-4 col-lg-2 mb-3">
-                        <a href="#seccion-character" class="text-decoration-none">
-                            <div class="card type-card">
-                                <div class="card-body text-center">
-                                    <i class="fas fa-font type-icon text-primary"></i>
-                                    <h6>Character</h6>
-                                    <span class="type-badge badge-character">Texto</span>
-                                    <p class="small text-muted mt-2">Palabras, frases, cualquier texto</p>
-                                </div>
+                        <div class="card type-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-font type-icon text-primary"></i>
+                                <h6>Character</h6>
+                                <span class="type-badge badge-character">Texto</span>
+                                <p class="small text-muted mt-2">Palabras, frases, cualquier texto</p>
                             </div>
-                        </a>
+                        </div>
                     </div>
                     <div class="col-md-4 col-lg-2 mb-3">
-                        <a href="#seccion-numeric" class="text-decoration-none">
-                            <div class="card type-card">
-                                <div class="card-body text-center">
-                                    <i class="fas fa-calculator type-icon text-success"></i>
-                                    <h6>Numeric</h6>
-                                    <span class="type-badge badge-numeric">Decimales</span>
-                                    <p class="small text-muted mt-2">Números con decimales</p>
-                                </div>
+                        <div class="card type-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-calculator type-icon text-success"></i>
+                                <h6>Numeric</h6>
+                                <span class="type-badge badge-numeric">Decimales</span>
+                                <p class="small text-muted mt-2">Números con decimales</p>
                             </div>
-                        </a>
+                        </div>
                     </div>
                     <div class="col-md-4 col-lg-2 mb-3">
-                        <a href="#seccion-integer" class="text-decoration-none">
-                            <div class="card type-card">
-                                <div class="card-body text-center">
-                                    <i class="fas fa-hashtag type-icon text-warning"></i>
-                                    <h6>Integer</h6>
-                                    <span class="type-badge badge-integer">Enteros</span>
-                                    <p class="small text-muted mt-2">Números sin decimales</p>
-                                </div>
+                        <div class="card type-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-hashtag type-icon text-warning"></i>
+                                <h6>Integer</h6>
+                                <span class="type-badge badge-integer">Enteros</span>
+                                <p class="small text-muted mt-2">Números sin decimales</p>
                             </div>
-                        </a>
+                        </div>
                     </div>
                     <div class="col-md-4 col-lg-2 mb-3">
-                        <a href="#seccion-logical" class="text-decoration-none">
-                            <div class="card type-card">
-                                <div class="card-body text-center">
-                                    <i class="fas fa-toggle-on type-icon text-danger"></i>
-                                    <h6>Logical</h6>
-                                    <span class="type-badge badge-logical">Booleano</span>
-                                    <p class="small text-muted mt-2">TRUE o FALSE</p>
-                                </div>
+                        <div class="card type-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-toggle-on type-icon text-danger"></i>
+                                <h6>Logical</h6>
+                                <span class="type-badge badge-logical">Booleano</span>
+                                <p class="small text-muted mt-2">TRUE o FALSE</p>
                             </div>
-                        </a>
+                        </div>
                     </div>
                     <div class="col-md-4 col-lg-2 mb-3">
-                        <a href="#seccion-factor" class="text-decoration-none">
-                            <div class="card type-card">
-                                <div class="card-body text-center">
-                                    <i class="fas fa-tags type-icon text-info"></i>
-                                    <h6>Factor</h6>
-                                    <span class="type-badge badge-factor">Categorías</span>
-                                    <p class="small text-muted mt-2">Datos categóricos</p>
-                                </div>
+                        <div class="card type-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-tags type-icon text-info"></i>
+                                <h6>Factor</h6>
+                                <span class="type-badge badge-factor">Categorías</span>
+                                <p class="small text-muted mt-2">Datos categóricos</p>
                             </div>
-                        </a>
+                        </div>
                     </div>
                     <div class="col-md-4 col-lg-2 mb-3">
-                        <a href="#seccion-verificacion" class="text-decoration-none">
-                            <div class="card type-card">
-                                <div class="card-body text-center">
-                                    <i class="fas fa-calendar type-icon text-dark"></i>
-                                    <h6>Date</h6>
-                                    <span class="type-badge" style="background: #e0e0e0; color: #424242;">Fechas</span>
-                                    <p class="small text-muted mt-2">Fechas y tiempos</p>
-                                </div>
+                        <div class="card type-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-calendar type-icon text-dark"></i>
+                                <h6>Date</h6>
+                                <span class="type-badge" style="background: #e0e0e0; color: #424242;">Fechas</span>
+                                <p class="small text-muted mt-2">Fechas y tiempos</p>
                             </div>
-                        </a>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Character -->
                 <div class="row mb-4">
                     <div class="col-12">
-                        <div class="card data-type-section" id="seccion-character">
+                        <div class="card data-type-section">
                             <div class="card-body">
                                 <div class="d-flex align-items-start">
                                     <div class="type-number">1</div>
@@ -556,7 +538,7 @@
                 <!-- Numeric -->
                 <div class="row mb-4">
                     <div class="col-12">
-                        <div class="card data-type-section" id="seccion-numeric">
+                        <div class="card data-type-section">
                             <div class="card-body">
                                 <div class="d-flex align-items-start">
                                     <div class="type-number">2</div>
@@ -628,7 +610,7 @@
                 <!-- Integer -->
                 <div class="row mb-4">
                     <div class="col-12">
-                        <div class="card data-type-section" id="seccion-integer">
+                        <div class="card data-type-section">
                             <div class="card-body">
                                 <div class="d-flex align-items-start">
                                     <div class="type-number">3</div>
@@ -683,7 +665,7 @@
                 <!-- Logical -->
                 <div class="row mb-4">
                     <div class="col-12">
-                        <div class="card data-type-section" id="seccion-logical">
+                        <div class="card data-type-section">
                             <div class="card-body">
                                 <div class="d-flex align-items-start">
                                     <div class="type-number">4</div>
@@ -756,7 +738,7 @@
                 <!-- Factor -->
                 <div class="row mb-4">
                     <div class="col-12">
-                        <div class="card data-type-section" id="seccion-factor">
+                        <div class="card data-type-section">
                             <div class="card-body">
                                 <div class="d-flex align-items-start">
                                     <div class="type-number">5</div>
@@ -776,7 +758,7 @@
                                                     ))<br>
                                                     nivel_educativo <- factor(c("Básico", "Medio" , "Superior" , "Medio"
                                                         ),<br>
-                                                                                       levels
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;levels
                                                         = c("Básico", "Medio", "Superior"))<br>
                                                         <br>
                                                         # Ver el tipo y estructura<br>
@@ -794,7 +776,7 @@
                                                 [1] "Femenino" "Masculino"<br>
                                                 genero<br>
                                                 Femenino Masculino<br>
-                                                        2          2
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2
                                             </div>
                                         </div>
 
@@ -818,7 +800,7 @@
                 <!-- Funciones de Verificación -->
                 <div class="row mb-4">
                     <div class="col-12">
-                        <div class="card data-type-section" id="seccion-verificacion">
+                        <div class="card data-type-section">
                             <div class="card-body">
                                 <div class="d-flex align-items-start">
                                     <div class="type-number">6</div>
@@ -1012,7 +994,7 @@
                                             Estudiantes con beca: 2<br>
                                             carrera<br>
                                             Derecho Ingeniería Medicina<br>
-                                                  1          1          2
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2
                                         </div>
                                     </div>
                                 </div>

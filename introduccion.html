@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="es-es" data-bs-theme="light">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>¿Qué es R? | Curso de R</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content="Introducción a R: qué es, por qué usarlo, ventajas y casos de uso reales en estadística y análisis de datos."/>
-    <link rel="icon" href="assets/images/favicon.ico"/>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Introducción a R: qué es, por qué usarlo, ventajas y casos de uso reales en estadística y análisis de datos." />
+    <link rel="icon" href="assets/images/favicon.ico" />
+
     <script>
-        (function() {
+        (function () {
             const theme = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-bs-theme', theme);
         })();
@@ -24,32 +26,38 @@
         .hero-section {
             background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
             color: white;
-            padding: 80px 0;
+            padding: 80px 40px;
             margin-bottom: 50px;
             border-radius: 20px;
         }
+
         .feature-card {
             transition: all 0.3s ease;
             height: 100%;
             border: none;
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
         }
+
         .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
+
         .comparison-table {
             font-size: 0.9rem;
         }
+
         .pro-item {
             color: #16a34a;
             font-weight: 600;
         }
+
         .con-item {
             color: #dc2626;
             font-weight: 600;
         }
+
         .use-case-card {
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             border-radius: 15px;
@@ -57,18 +65,22 @@
             margin-bottom: 20px;
             transition: all 0.3s ease;
         }
+
         [data-bs-theme="dark"] .use-case-card {
             background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
         }
+
         .use-case-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(79,70,229,0.1);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1);
         }
+
         .timeline-item {
             position: relative;
             padding-left: 40px;
             margin-bottom: 30px;
         }
+
         .timeline-item::before {
             content: '';
             position: absolute;
@@ -78,6 +90,7 @@
             height: 100%;
             background: linear-gradient(to bottom, #4f46e5, #7c3aed);
         }
+
         .timeline-item::after {
             content: '';
             position: absolute;
@@ -90,6 +103,7 @@
             border: 3px solid white;
             box-shadow: 0 0 0 3px #4f46e5;
         }
+
         .stat-box {
             background: linear-gradient(45deg, #4f46e5, #7c3aed);
             color: white;
@@ -97,7 +111,12 @@
             border-radius: 15px;
             text-align: center;
             margin-bottom: 20px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
+
         .stat-number {
             font-size: 2.5rem;
             font-weight: 700;
@@ -105,13 +124,14 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="page-wrapper">
-        
+
         <!-- TOPBAR -->
         <div class="topbar d-print-none">
-            <div class="container-xxl">
+            <div class="container-fluid">
                 <nav class="topbar-custom d-flex justify-content-between" id="topbar-custom">
                     <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
                         <li class="mx-3 welcome-text">
@@ -121,7 +141,7 @@
                             </h3>
                         </li>
                     </ul>
-        
+
                     <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
                         <li class="topbar-item">
                             <a class="nav-link nav-icon theme-toggle" href="javascript:void(0);">
@@ -132,7 +152,7 @@
                 </nav>
             </div>
         </div>
-        
+
         <!-- SIDEBAR (UNIFICADO) -->
         <div class="startbar d-print-none">
             <div class="brand">
@@ -153,7 +173,7 @@
                             <li class="menu-label pt-0 mt-0">
                                 <span>Menú Principal</span>
                             </li>
-                            
+
                             <li class="nav-item">
                                 <a class="nav-link" href="index.html">
                                     <i class="fas fa-home menu-icon"></i>
@@ -209,7 +229,8 @@
                                 <div class="collapse" id="sidebarAnalisis">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="estadisticas-basicas.html">Estadísticas Básicas</a>
+                                            <a class="nav-link" href="estadisticas-basicas.html">Estadísticas
+                                                Básicas</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="graficos.html">Gráficos y Visualización</a>
@@ -227,7 +248,8 @@
                                 <div class="collapse" id="sidebarProyectos">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="ejemplo-practico.html">Ejemplo: Análisis Estaturas</a>
+                                            <a class="nav-link" href="ejemplo-practico.html">Ejemplo: Análisis
+                                                Estaturas</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="proyecto-final.html">Proyecto Final</a>
@@ -273,16 +295,16 @@
 
         <!-- CONTENIDO PRINCIPAL -->
         <div class="page-content">
-            <div class="container-fluid">
-                
+            <div class="container">
+
                 <!-- Hero Section -->
                 <div class="hero-section">
                     <div class="row align-items-center">
                         <div class="col-lg-8">
                             <h1 class="display-4 fw-bold mb-4">¿Qué es R y por qué aprenderlo?</h1>
                             <p class="lead mb-4">
-                                R es el lenguaje de programación más poderoso para estadística y análisis de datos. 
-                                Usado por científicos, analistas y empresas en todo el mundo para tomar decisiones 
+                                R es el lenguaje de programación más poderoso para estadística y análisis de datos.
+                                Usado por científicos, analistas y empresas en todo el mundo para tomar decisiones
                                 basadas en datos.
                             </p>
                             <div class="d-flex gap-3 flex-wrap">
@@ -318,17 +340,22 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <p class="lead">
-                                            R es un lenguaje de programación y entorno de software especializado en 
+                                            R es un lenguaje de programación y entorno de software especializado en
                                             estadística, análisis de datos y visualización.
                                         </p>
+                                        <br>
                                         <p>
-                                            Creado en 1993 por Ross Ihaka y Robert Gentleman en la Universidad de Auckland, 
-                                            R se ha convertido en el estándar mundial para análisis estadístico. Es como 
-                                            tener una calculadora súper poderosa que además puede crear gráficos profesionales 
+                                            Creado en 1993 por Ross Ihaka y Robert Gentleman en la Universidad de
+                                            Auckland,
+                                            R se ha convertido en el estándar mundial para análisis estadístico. Es como
+                                            tener una calculadora súper poderosa que además puede crear gráficos
+                                            profesionales
                                             y manejar enormes cantidades de datos.
                                         </p>
+                                        <br>
                                         <p>
-                                            Lo que hace especial a R es que fue diseñado <strong>por estadísticos, para estadísticos</strong>, 
+                                            Lo que hace especial a R es que fue diseñado <strong>por estadísticos, para
+                                                estadísticos</strong>,
                                             pero es lo suficientemente versátil para que cualquier persona pueda usarlo.
                                         </p>
                                     </div>
@@ -362,7 +389,7 @@
                                 <i class="fas fa-gift text-success" style="font-size: 3rem; margin-bottom: 20px;"></i>
                                 <h5>100% Gratuito</h5>
                                 <p class="text-muted">
-                                    R es completamente gratuito y open source. No necesitas licencias costosas 
+                                    R es completamente gratuito y open source. No necesitas licencias costosas
                                     como otros software estadísticos.
                                 </p>
                             </div>
@@ -371,10 +398,11 @@
                     <div class="col-md-4 mb-3">
                         <div class="feature-card card">
                             <div class="card-body text-center">
-                                <i class="fas fa-puzzle-piece text-info" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                                <i class="fas fa-puzzle-piece text-info"
+                                    style="font-size: 3rem; margin-bottom: 20px;"></i>
                                 <h5>18,000+ Paquetes</h5>
                                 <p class="text-muted">
-                                    Enorma biblioteca de paquetes para cualquier tipo de análisis: desde machine 
+                                    Enorma biblioteca de paquetes para cualquier tipo de análisis: desde machine
                                     learning hasta bioinformática.
                                 </p>
                             </div>
@@ -383,10 +411,11 @@
                     <div class="col-md-4 mb-3">
                         <div class="feature-card card">
                             <div class="card-body text-center">
-                                <i class="fas fa-chart-line text-warning" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                                <i class="fas fa-chart-line text-warning"
+                                    style="font-size: 3rem; margin-bottom: 20px;"></i>
                                 <h5>Gráficos Profesionales</h5>
                                 <p class="text-muted">
-                                    Crea visualizaciones de nivel publicación con pocas líneas de código. 
+                                    Crea visualizaciones de nivel publicación con pocas líneas de código.
                                     Desde gráficos simples hasta dashboards interactivos.
                                 </p>
                             </div>
@@ -398,7 +427,7 @@
                                 <i class="fas fa-users text-primary" style="font-size: 3rem; margin-bottom: 20px;"></i>
                                 <h5>Comunidad Enorme</h5>
                                 <p class="text-muted">
-                                    Millones de usuarios en todo el mundo. Encuentra ayuda, tutoriales y 
+                                    Millones de usuarios en todo el mundo. Encuentra ayuda, tutoriales y
                                     soluciones fácilmente.
                                 </p>
                             </div>
@@ -407,10 +436,11 @@
                     <div class="col-md-4 mb-3">
                         <div class="feature-card card">
                             <div class="card-body text-center">
-                                <i class="fas fa-building text-danger" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                                <i class="fas fa-building text-danger"
+                                    style="font-size: 3rem; margin-bottom: 20px;"></i>
                                 <h5>Usado en la Industria</h5>
                                 <p class="text-muted">
-                                    Empresas como Google, Facebook, Microsoft y bancos importantes usan R 
+                                    Empresas como Google, Facebook, Microsoft y bancos importantes usan R
                                     para sus análisis críticos.
                                 </p>
                             </div>
@@ -419,10 +449,11 @@
                     <div class="col-md-4 mb-3">
                         <div class="feature-card card">
                             <div class="card-body text-center">
-                                <i class="fas fa-graduation-cap text-success" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                                <i class="fas fa-graduation-cap text-success"
+                                    style="font-size: 3rem; margin-bottom: 20px;"></i>
                                 <h5>Skill Valorado</h5>
                                 <p class="text-muted">
-                                    R está entre las habilidades más demandadas en ciencia de datos, 
+                                    R está entre las habilidades más demandadas en ciencia de datos,
                                     con salarios competitivos.
                                 </p>
                             </div>
@@ -440,10 +471,11 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="use-case-card">
-                            <img src="assets/images/logo-netflix.png" alt="Logo de Netflix" style="height: 30px; float: right; opacity: 0.7;">
+                            <img src="assets/images/logo-netflix.png" alt="Logo de Netflix"
+                                style="height: 30px; float: right; opacity: 0.7;">
                             <h5><i class="fas fa-chart-pie text-primary me-2"></i>Análisis de Mercado</h5>
                             <p class="mb-2">
-                                <strong>Ejemplo:</strong> Netflix usa R para analizar patrones de visualización 
+                                <strong>Ejemplo:</strong> Netflix usa R para analizar patrones de visualización
                                 y recomendar contenido personalizado.
                             </p>
                             <p class="small text-muted">
@@ -455,7 +487,7 @@
                         <div class="use-case-card">
                             <h5><i class="fas fa-heartbeat text-danger me-2"></i>Investigación Médica</h5>
                             <p class="mb-2">
-                                <strong>Ejemplo:</strong> Análisis de efectividad de medicamentos, estudios clínicos, 
+                                <strong>Ejemplo:</strong> Análisis de efectividad de medicamentos, estudios clínicos,
                                 epidemiología del COVID-19.
                             </p>
                             <p class="small text-muted">
@@ -467,7 +499,7 @@
                         <div class="use-case-card">
                             <h5><i class="fas fa-money-bill-wave text-success me-2"></i>Finanzas y Banca</h5>
                             <p class="mb-2">
-                                <strong>Ejemplo:</strong> JPMorgan Chase usa R para análisis de riesgo crediticio 
+                                <strong>Ejemplo:</strong> JPMorgan Chase usa R para análisis de riesgo crediticio
                                 y detección de fraudes.
                             </p>
                             <p class="small text-muted">
@@ -479,7 +511,7 @@
                         <div class="use-case-card">
                             <h5><i class="fas fa-graduation-cap text-warning me-2"></i>Investigación Académica</h5>
                             <p class="mb-2">
-                                <strong>Ejemplo:</strong> Universidades usan R para analizar datos de experimentos 
+                                <strong>Ejemplo:</strong> Universidades usan R para analizar datos de experimentos
                                 en psicología, sociología, economía.
                             </p>
                             <p class="small text-muted">
@@ -498,7 +530,7 @@
                                     <i class="fas fa-balance-scale text-primary me-2"></i>
                                     R vs Otras Herramientas
                                 </h3>
-                                
+
                                 <div class="table-responsive">
                                     <table class="table table-bordered comparison-table">
                                         <thead class="table-light">
@@ -553,8 +585,10 @@
                                 <div class="alert alert-info">
                                     <h6><i class="fas fa-lightbulb me-2"></i>¿Cuándo elegir R?</h6>
                                     <p class="mb-0">
-                                        R es ideal si tu enfoque principal es <strong>análisis estadístico y visualización</strong>. 
-                                        Si necesitas más programación general, considera Python. Si solo necesitas análisis básicos, 
+                                        R es ideal si tu enfoque principal es <strong>análisis estadístico y
+                                            visualización</strong>.
+                                        Si necesitas más programación general, considera Python. Si solo necesitas
+                                        análisis básicos,
                                         Excel puede ser suficiente.
                                     </p>
                                 </div>
@@ -574,29 +608,35 @@
                     <div class="col-md-6">
                         <div class="timeline-item">
                             <h5><strong>Semana 1-2: Fundamentos</strong></h5>
-                            <p>Instalación, sintaxis básica, tipos de datos, operadores. Al final podrás hacer cálculos básicos y manejar datos simples.</p>
+                            <p>Instalación, sintaxis básica, tipos de datos, operadores. Al final podrás hacer cálculos
+                                básicos y manejar datos simples.</p>
                         </div>
                         <div class="timeline-item">
                             <h5><strong>Semana 3-4: Manipulación de Datos</strong></h5>
-                            <p>Cargar archivos, limpiar datos, crear subconjuntos. Podrás trabajar con datasets reales y prepararlos para análisis.</p>
+                            <p>Cargar archivos, limpiar datos, crear subconjuntos. Podrás trabajar con datasets reales y
+                                prepararlos para análisis.</p>
                         </div>
                         <div class="timeline-item">
                             <h5><strong>Semana 5-6: Estadística Básica</strong></h5>
-                            <p>Estadísticas descriptivas, correlaciones, distribuciones. Entenderás tus datos a nivel estadístico.</p>
+                            <p>Estadísticas descriptivas, correlaciones, distribuciones. Entenderás tus datos a nivel
+                                estadístico.</p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="timeline-item">
                             <h5><strong>Semana 7-8: Visualización</strong></h5>
-                            <p>Gráficos básicos y avanzados con ggplot2. Crearás visualizaciones profesionales que comuniquen insights claramente.</p>
+                            <p>Gráficos básicos y avanzados con ggplot2. Crearás visualizaciones profesionales que
+                                comuniquen insights claramente.</p>
                         </div>
                         <div class="timeline-item">
                             <h5><strong>Semana 9-10: Análisis Avanzado</strong></h5>
-                            <p>Regresión, análisis de varianza, tests estadísticos. Podrás hacer análisis estadísticos completos.</p>
+                            <p>Regresión, análisis de varianza, tests estadísticos. Podrás hacer análisis estadísticos
+                                completos.</p>
                         </div>
                         <div class="timeline-item">
                             <h5><strong>Semana 11-12: Proyecto Real</strong></h5>
-                            <p>Aplicar todo lo aprendido en un proyecto completo. Tendrás un portafolio para mostrar tus habilidades.</p>
+                            <p>Aplicar todo lo aprendido en un proyecto completo. Tendrás un portafolio para mostrar tus
+                                habilidades.</p>
                         </div>
                     </div>
                 </div>
@@ -608,15 +648,17 @@
                             <div class="card-body text-center py-5">
                                 <h2 class="mb-4">¿Listo para comenzar tu aventura con R?</h2>
                                 <p class="lead mb-4">
-                                    Únete a millones de profesionales que usan R para tomar decisiones basadas en datos. 
+                                    Únete a millones de profesionales que usan R para tomar decisiones basadas en datos.
                                     El primer paso es instalar R y RStudio.
                                 </p>
+                                <!-- Call to Action -->
                                 <div class="d-flex gap-3 justify-content-center flex-wrap">
                                     <a href="instalacion.html" class="btn btn-light btn-lg">
                                         <i class="fas fa-download me-2"></i>
                                         Instalar R Ahora
                                     </a>
-                                    <a href="ejemplo-practico.html" class="btn btn-outline-light btn-lg">
+                                    <a href="ejemplo-practico.html" class="btn btn-light btn-lg">
+                                        <!-- ¡Clase corregida! -->
                                         <i class="fas fa-eye me-2"></i>
                                         Ver Ejemplo Completo
                                     </a>
@@ -635,4 +677,5 @@
     <script src="assets/js/global.js"></script>
 
 </body>
+
 </html>
