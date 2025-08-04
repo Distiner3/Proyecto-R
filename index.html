@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="es-es" data-bs-theme="light">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>Página de Inicio | Curso de R y Estadística</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content="Aprende R y estadística desde cero. Curso completo con ejemplos prácticos, ejercicios y proyectos reales."/>
-    <meta name="author" content="Curso de R"/>
-    <link rel="icon" href="assets/images/favicon.ico"/>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Aprende R y estadística desde cero. Curso completo con ejemplos prácticos, ejercicios y proyectos reales." />
+    <meta name="author" content="Curso de R" />
+    <link rel="icon" href="assets/images/favicon.ico" />
+
     <script>
-        (function() {
+        (function () {
             const theme = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-bs-theme', theme);
         })();
@@ -28,16 +30,19 @@
             padding: 60px 0;
             margin-bottom: 50px;
         }
+
         .hero-title {
             font-size: 3rem;
             font-weight: 700;
             margin-bottom: 20px;
         }
+
         .hero-subtitle {
             font-size: 1.3rem;
             opacity: 0.9;
             margin-bottom: 30px;
         }
+
         .feature-card {
             transition: all 0.3s ease;
             height: 100%;
@@ -45,24 +50,29 @@
             border-radius: 15px;
             overflow: hidden;
         }
+
         .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
+
         .feature-icon {
             font-size: 3rem;
             margin-bottom: 20px;
             color: #667eea;
         }
+
         .course-module {
             border-left: 4px solid #667eea;
             transition: all 0.3s ease;
             margin-bottom: 20px;
         }
+
         .course-module:hover {
             transform: translateX(5px);
-            box-shadow: 0 5px 15px rgba(102,126,234,0.1);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
         }
+
         .module-number {
             background: linear-gradient(45deg, #667eea, #764ba2);
             color: white;
@@ -76,6 +86,7 @@
             margin-right: 15px;
             flex-shrink: 0;
         }
+
         .stats-card {
             background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
             color: white;
@@ -84,11 +95,13 @@
             text-align: center;
             margin-bottom: 20px;
         }
+
         .stats-number {
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 10px;
         }
+
         .cta-section {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             color: white;
@@ -96,8 +109,9 @@
             border-radius: 20px;
             margin: 40px 0;
         }
+
         .download-button {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             border: 2px solid white;
             color: white;
             padding: 15px 30px;
@@ -107,16 +121,19 @@
             text-decoration: none;
             display: inline-block;
         }
+
         .download-button:hover {
             background: white;
             color: #4facfe;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
+
         .learning-path {
             position: relative;
             padding: 20px 0;
         }
+
         .learning-path::before {
             content: '';
             position: absolute;
@@ -126,13 +143,15 @@
             width: 2px;
             background: linear-gradient(to bottom, #667eea, #764ba2);
         }
+
         .testimonial {
-            background: rgba(102,126,234,0.1);
+            background: rgba(102, 126, 234, 0.1);
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 20px;
             position: relative;
         }
+
         .testimonial::before {
             content: '"';
             font-size: 4rem;
@@ -142,6 +161,7 @@
             left: 20px;
             opacity: 0.3;
         }
+
         .difficulty-badge {
             background: #28a745;
             color: white;
@@ -150,19 +170,22 @@
             font-size: 0.8rem;
             font-weight: 600;
         }
+
         .difficulty-badge.intermediate {
             background: #ffc107;
             color: #212529;
         }
+
         .difficulty-badge.advanced {
             background: #dc3545;
         }
     </style>
 </head>
+
 <body>
 
     <div class="page-wrapper">
-        
+
         <!-- TOPBAR -->
         <div class="topbar d-print-none">
             <div class="container-xxl">
@@ -175,7 +198,7 @@
                             </h3>
                         </li>
                     </ul>
-        
+
                     <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
                         <li class="topbar-item">
                             <a class="nav-link nav-icon theme-toggle" href="javascript:void(0);">
@@ -186,7 +209,8 @@
                 </nav>
             </div>
         </div>
-        
+
+
         <!-- SIDEBAR -->
         <div class="startbar d-print-none">
             <div class="brand">
@@ -207,28 +231,39 @@
                             <li class="menu-label pt-0 mt-0">
                                 <span>Menú Principal</span>
                             </li>
-                            
+
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.html">
+                                <a class="nav-link" href="index.html">
                                     <i class="fas fa-home menu-icon"></i>
                                     <span>Inicio</span>
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="instalacion.html">
-                                    <i class="fas fa-download menu-icon"></i>
-                                    <span>Instalación</span>
+                                <a class="nav-link" href="#sidebarIntro" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarIntro">
+                                    <i class="fas fa-rocket menu-icon"></i>
+                                    <span>Comenzando</span>
                                 </a>
+                                <div class="collapse" id="sidebarIntro">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="introduccion.html">¿Qué es R?</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="instalacion.html">Instalación</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
-        
+
                             <li class="nav-item">
-                                <a class="nav-link" href="#sidebarBasicos" data-bs-toggle="collapse" role="button"
-                                    aria-expanded="false" aria-controls="sidebarBasicos">
+                                <a class="nav-link" href="#sidebarFundamentos" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarFundamentos">
                                     <i class="fas fa-play-circle menu-icon"></i>
-                                    <span>Fundamentos</span>
+                                    <span>Fundamentos de R</span>
                                 </a>
-                                <div class="collapse" id="sidebarBasicos">
+                                <div class="collapse" id="sidebarFundamentos">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
                                             <a class="nav-link" href="primeros-pasos.html">Primeros Pasos</a>
@@ -244,30 +279,69 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="#sidebarAvanzado" data-bs-toggle="collapse" role="button"
-                                    aria-expanded="false" aria-controls="sidebarAvanzado">
+                                <a class="nav-link" href="#sidebarAnalisis" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarAnalisis">
                                     <i class="fas fa-chart-line menu-icon"></i>
                                     <span>Análisis y Gráficos</span>
                                 </a>
-                                <div class="collapse" id="sidebarAvanzado">
+                                <div class="collapse" id="sidebarAnalisis">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="graficos.html">Gráficos</a>
+                                            <a class="nav-link" href="estadisticas-basicas.html">Estadísticas
+                                                Básicas</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="estadisticas-basicas.html">Estadísticas</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="ejemplo-practico.html">Ejemplo Completo</a>
+                                            <a class="nav-link" href="graficos.html">Gráficos y Visualización</a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
 
                             <li class="nav-item">
+                                <a class="nav-link" href="#sidebarProyectos" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarProyectos">
+                                    <i class="fas fa-trophy menu-icon"></i>
+                                    <span>Proyectos</span>
+                                </a>
+                                <div class="collapse" id="sidebarProyectos">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="ejemplo-practico.html">Ejemplo: Análisis
+                                                Estaturas</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="proyecto-final.html">Proyecto Final</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="menu-label">
+                                <span>Recursos y Ayuda</span>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="comandos-utiles.html">
+                                    <i class="fas fa-terminal menu-icon"></i>
+                                    <span>Comandos Útiles</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="buenas-practicas.html">
+                                    <i class="fas fa-star menu-icon"></i>
+                                    <span>Buenas Prácticas</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="errores-comunes.html">
+                                    <i class="fas fa-bug menu-icon"></i>
+                                    <span>Errores Comunes</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="recursos.html">
                                     <i class="fas fa-book menu-icon"></i>
-                                    <span>Recursos</span>
+                                    <span>Recursos y Descargas</span>
                                 </a>
                             </li>
                         </ul>
@@ -277,9 +351,11 @@
         </div>
         <div class="startbar-overlay d-print-none"></div>
 
+
+
         <!-- CONTENIDO PRINCIPAL -->
         <div class="page-content">
-            
+
             <!-- HERO SECTION -->
             <div class="hero-section">
                 <div class="container-fluid">
@@ -287,11 +363,11 @@
                         <div class="col-lg-8">
                             <h1 class="hero-title">Domina R y Estadística</h1>
                             <p class="hero-subtitle">
-                                Aprende el lenguaje de programación más poderoso para análisis de datos y estadística. 
+                                Aprende el lenguaje de programación más poderoso para análisis de datos y estadística.
                                 Desde conceptos básicos hasta análisis avanzados con ejemplos prácticos.
                             </p>
                             <div class="d-flex gap-3 flex-wrap">
-                                <a href="instalacion.html" class="download-button">
+                                <a href="introduccion.html" class="download-button">
                                     <i class="fas fa-rocket me-2"></i>
                                     Comenzar Ahora
                                 </a>
@@ -309,12 +385,13 @@
             </div>
 
             <div class="container-fluid">
-                
+
                 <!-- CARACTERÍSTICAS PRINCIPALES -->
                 <div class="row mb-5">
                     <div class="col-12 text-center mb-4">
                         <h2>¿Por qué aprender R con nuestro curso?</h2>
-                        <p class="text-muted">Diseñado especialmente para principiantes con conocimientos básicos de computación</p>
+                        <p class="text-muted">Diseñado especialmente para principiantes con conocimientos básicos de
+                            computación</p>
                     </div>
                     <div class="col-md-4 mb-4">
                         <div class="card feature-card">
@@ -355,11 +432,12 @@
                 <div class="row mb-5">
                     <div class="col-12">
                         <h2 class="text-center mb-4">Ruta de Aprendizaje</h2>
-                        <p class="text-center text-muted mb-5">Sigue este camino paso a paso para dominar R y estadística</p>
+                        <p class="text-center text-muted mb-5">Sigue este camino paso a paso para dominar R y
+                            estadística</p>
                     </div>
                     <div class="col-lg-8 mx-auto">
                         <div class="learning-path">
-                            
+
                             <!-- Módulo 1 -->
                             <div class="card course-module">
                                 <div class="card-body">
@@ -375,7 +453,8 @@
                                                 <span class="difficulty-badge">Básico</span>
                                             </div>
                                             <p class="text-muted mb-2">
-                                                Instala R y RStudio, configura tu entorno de trabajo y realiza tu primera sesión.
+                                                Instala R y RStudio, configura tu entorno de trabajo y realiza tu
+                                                primera sesión.
                                             </p>
                                             <div class="d-flex gap-2">
                                                 <small class="text-muted">
@@ -405,7 +484,8 @@
                                                 <span class="difficulty-badge">Básico</span>
                                             </div>
                                             <p class="text-muted mb-2">
-                                                Conoce RStudio, maneja directorios, crea variables y realiza operaciones básicas.
+                                                Conoce RStudio, maneja directorios, crea variables y realiza operaciones
+                                                básicas.
                                             </p>
                                             <div class="d-flex gap-2">
                                                 <small class="text-muted">
@@ -435,7 +515,8 @@
                                                 <span class="difficulty-badge">Básico</span>
                                             </div>
                                             <p class="text-muted mb-2">
-                                                Domina los operadores aritméticos, comparativos y lógicos con ejercicios prácticos.
+                                                Domina los operadores aritméticos, comparativos y lógicos con ejercicios
+                                                prácticos.
                                             </p>
                                             <div class="d-flex gap-2">
                                                 <small class="text-muted">
@@ -465,7 +546,8 @@
                                                 <span class="difficulty-badge intermediate">Intermedio</span>
                                             </div>
                                             <p class="text-muted mb-2">
-                                                Crea gráficos profesionales: histogramas, boxplots, dispersión y personalización avanzada.
+                                                Crea gráficos profesionales: histogramas, boxplots, dispersión y
+                                                personalización avanzada.
                                             </p>
                                             <div class="d-flex gap-2">
                                                 <small class="text-muted">
@@ -495,7 +577,8 @@
                                                 <span class="difficulty-badge intermediate">Intermedio</span>
                                             </div>
                                             <p class="text-muted mb-2">
-                                                Proyecto real paso a paso: desde la carga de datos hasta el análisis estadístico completo.
+                                                Proyecto real paso a paso: desde la carga de datos hasta el análisis
+                                                estadístico completo.
                                             </p>
                                             <div class="d-flex gap-2">
                                                 <small class="text-muted">
@@ -654,10 +737,12 @@
                     <div class="col-md-4">
                         <div class="testimonial">
                             <p class="mb-3">
-                                "Excelente curso para principiantes. Las explicaciones son muy claras y los ejemplos prácticos me ayudaron mucho."
+                                "Excelente curso para principiantes. Las explicaciones son muy claras y los ejemplos
+                                prácticos me ayudaron mucho."
                             </p>
                             <div class="d-flex align-items-center">
-                                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3"
+                                    style="width: 40px; height: 40px;">
                                     <i class="fas fa-user text-white"></i>
                                 </div>
                                 <div>
@@ -670,10 +755,12 @@
                     <div class="col-md-4">
                         <div class="testimonial">
                             <p class="mb-3">
-                                "El ejemplo práctico del análisis de estaturas es fantástico. Me ayudó a entender toda la teoría de manera aplicada."
+                                "El ejemplo práctico del análisis de estaturas es fantástico. Me ayudó a entender toda
+                                la teoría de manera aplicada."
                             </p>
                             <div class="d-flex align-items-center">
-                                <div class="bg-success rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                <div class="bg-success rounded-circle d-flex align-items-center justify-content-center me-3"
+                                    style="width: 40px; height: 40px;">
                                     <i class="fas fa-user text-white"></i>
                                 </div>
                                 <div>
@@ -686,10 +773,12 @@
                     <div class="col-md-4">
                         <div class="testimonial">
                             <p class="mb-3">
-                                "Perfecto para mi tesis. Los gráficos que aprendí a hacer me sirvieron para presentar mis resultados profesionalmente."
+                                "Perfecto para mi tesis. Los gráficos que aprendí a hacer me sirvieron para presentar
+                                mis resultados profesionalmente."
                             </p>
                             <div class="d-flex align-items-center">
-                                <div class="bg-warning rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                <div class="bg-warning rounded-circle d-flex align-items-center justify-content-center me-3"
+                                    style="width: 40px; height: 40px;">
                                     <i class="fas fa-user text-white"></i>
                                 </div>
                                 <div>
@@ -780,11 +869,13 @@
                                     </li>
                                     <li class="mb-2">
                                         <i class="fas fa-external-link-alt text-info me-2"></i>
-                                        <a href="https://cran.r-project.org/" target="_blank">Documentación oficial de R</a>
+                                        <a href="https://cran.r-project.org/" target="_blank">Documentación oficial de
+                                            R</a>
                                     </li>
                                     <li class="mb-2">
                                         <i class="fas fa-users text-success me-2"></i>
-                                        <a href="https://stackoverflow.com/questions/tagged/r" target="_blank">Comunidad en Stack Overflow</a>
+                                        <a href="https://stackoverflow.com/questions/tagged/r" target="_blank">Comunidad
+                                            en Stack Overflow</a>
                                     </li>
                                 </ul>
                             </div>
@@ -836,4 +927,5 @@
     </script>
 
 </body>
+
 </html>

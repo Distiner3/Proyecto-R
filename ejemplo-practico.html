@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="es-es" data-bs-theme="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Ejemplo Práctico: Análisis de Estaturas | Curso de R</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Aprende estadística con R mediante un ejemplo práctico completo de análisis de datos de estaturas de estudiantes." />
+    <link rel="icon" href="assets/images/favicon.ico" />
+
+    <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        })();
+    </script>
+
+    <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/icofont@1.0.0/dist/icofont.min.css">
+
+    <style>
+        .step-section {
+            border-left: 4px solid #007bff;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .step-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.1);
+        }
+
+        .step-number {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 15px 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .code-block .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        [data-bs-theme="dark"] .code-block {
+            background: #2d3748;
+            border-color: #4a5568;
+            color: #e2e8f0;
+        }
+
+        .result-box {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .concept-box {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .formula {
+            background: rgba(13, 110, 253, 0.1);
+            border: 1px solid rgba(13, 110, 253, 0.2);
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+            font-family: 'Times New Roman', serif;
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+
+        .progress-indicator {
+            height: 4px;
+            background: #e9ecef;
+            border-radius: 2px;
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(45deg, #007bff, #28a745);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .dataset-preview {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-wrapper">
+
+        <!-- TOPBAR -->
+        <div class="topbar d-print-none">
+            <div class="container-xxl">
+                <nav class="topbar-custom d-flex justify-content-between" id="topbar-custom">
+                    <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
+                        <li class="mx-3 welcome-text">
+                            <h3 class="mb-0 fw-bold text-truncate">
+                                <i class="fas fa-chart-line me-2"></i>
+                                Ejemplo Práctico: Análisis de Estaturas
+                            </h3>
+                        </li>
+                    </ul>
+
+                    <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
+                        <li class="topbar-item">
+                            <a class="nav-link nav-icon theme-toggle" href="javascript:void(0);">
+                                <i class="icofont-moon"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <!-- SIDEBAR -->
+        <div class="startbar d-print-none">
+            <div class="brand">
+                <a href="index.html" class="logo">
+                    <span>
+                        <img src="assets/images/logo-sm.png" alt="logo-small" class="logo-sm">
+                    </span>
+                    <span class="">
+                        <img src="assets/images/logo-light.png" alt="logo-large" class="logo-lg logo-light">
+                        <img src="assets/images/logo-dark.png" alt="logo-large" class="logo-lg logo-dark">
+                    </span>
+                </a>
+            </div>
+            <div class="startbar-menu">
+                <div class="startbar-collapse" id="startbarCollapse">
+                    <div class="d-flex align-items-start flex-column w-100">
+                        <ul class="navbar-nav mb-auto w-100">
+                            <li class="menu-label pt-0 mt-0">
+                                <span>Menú Principal</span>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">
+                                    <i class="fas fa-home menu-icon"></i>
+                                    <span>Inicio</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sidebarIntro" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarIntro">
+                                    <i class="fas fa-rocket menu-icon"></i>
+                                    <span>Comenzando</span>
+                                </a>
+                                <div class="collapse" id="sidebarIntro">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="introduccion.html">¿Qué es R?</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="instalacion.html">Instalación</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sidebarFundamentos" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarFundamentos">
+                                    <i class="fas fa-play-circle menu-icon"></i>
+                                    <span>Fundamentos de R</span>
+                                </a>
+                                <div class="collapse" id="sidebarFundamentos">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="primeros-pasos.html">Primeros Pasos</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="operadores.html">Operadores</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="tipos-datos.html">Tipos de Datos</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sidebarAnalisis" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarAnalisis">
+                                    <i class="fas fa-chart-line menu-icon"></i>
+                                    <span>Análisis y Gráficos</span>
+                                </a>
+                                <div class="collapse" id="sidebarAnalisis">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="estadisticas-basicas.html">Estadísticas
+                                                Básicas</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="graficos.html">Gráficos y Visualización</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sidebarProyectos" data-bs-toggle="collapse" role="button"
+                                    aria-expanded="false" aria-controls="sidebarProyectos">
+                                    <i class="fas fa-trophy menu-icon"></i>
+                                    <span>Proyectos</span>
+                                </a>
+                                <div class="collapse" id="sidebarProyectos">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="ejemplo-practico.html">Ejemplo: Análisis
+                                                Estaturas</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="proyecto-final.html" class="btn btn-primary btn-sm"><i class="fas fa-trophy me-2"></i>Ir al Proyecto Final</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="menu-label">
+                                <span>Recursos y Ayuda</span>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="comandos-utiles.html">
+                                    <i class="fas fa-terminal menu-icon"></i>
+                                    <span>Comandos Útiles</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="buenas-practicas.html">
+                                    <i class="fas fa-star menu-icon"></i>
+                                    <span>Buenas Prácticas</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="errores-comunes.html">
+                                    <i class="fas fa-bug menu-icon"></i>
+                                    <span>Errores Comunes</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="recursos.html">
+                                    <i class="fas fa-book menu-icon"></i>
+                                    <span>Recursos y Descargas</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="startbar-overlay d-print-none"></div>
+
+
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="page-content">
+            <div class="container-fluid">
+
+                <!-- Barra de Progreso -->
+                <div class="progress-indicator">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+
+                <!-- Introducción -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <i class="fas fa-graduation-cap text-primary me-2"></i>
+                                    Análisis Estadístico Completo: Estaturas de Estudiantes
+                                </h4>
+                                <p class="card-text">
+                                    En este ejemplo práctico vamos a realizar un análisis estadístico completo de un
+                                    conjunto de datos
+                                    sobre estaturas de estudiantes. Aprenderás a calcular medidas de tendencia central,
+                                    dispersión,
+                                    y crear visualizaciones profesionales.
+                                </p>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    <strong>Objetivo:</strong> Analizar las estaturas de 150 estudiantes universitarios
+                                    para entender
+                                    la distribución de alturas en nuestra muestra.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 1: Preparación -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card step-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="step-number">1</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">Preparación: Instalación de Librerías</h5>
+                                        <p>Primero instalamos las librerías necesarias para nuestro análisis:</p>
+
+                                        <div class="code-block">
+                                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                            <pre># Instalar librerías necesarias
+install.packages("DT")        # Para tablas interactivas
+install.packages("dplyr")     # Para manipulación de datos
+install.packages("DescTools") # Para estadísticas descriptivas
+install.packages("ggplot2")   # Para gráficos avanzados
+
+# Cargar las librerías
+library(DT)
+library(dplyr)
+library(DescTools)
+library(ggplot2)</pre>
+                                        </div>
+
+                                        <div class="concept-box">
+                                            <h6><i class="fas fa-lightbulb text-warning me-2"></i>¿Por qué estas
+                                                librerías?</h6>
+                                            <ul class="mb-0 small">
+                                                <li><strong>DT:</strong> Crea tablas interactivas y atractivas</li>
+                                                <li><strong>dplyr:</strong> Facilita la manipulación de datos</li>
+                                                <li><strong>DescTools:</strong> Contiene funciones estadísticas
+                                                    adicionales</li>
+                                                <li><strong>ggplot2:</strong> Crea gráficos profesionales</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 2: Cargar Datos -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card step-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="step-number">2</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">Cargar y Explorar los Datos</h5>
+                                        <p>Cargamos nuestros datos de estaturas y los exploramos:</p>
+
+                                        <div class="code-block">
+                                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                            <pre># Cargar los datos (asumiendo que tienes un archivo CSV)
+datos <- read.csv("Estatura_estudiantes.csv")
+
+# O crear datos de ejemplo
+set.seed(123)  # Para reproducibilidad
+datos <- data.frame(
+  Estaturas = round(rnorm(150, mean = 170, sd = 8), 1)
+)
+
+# Explorar los datos
+View(datos)           # Ver los datos en una tabla
+head(datos)           # Primeras 6 filas
+summary(datos)        # Resumen estadístico básico
+
+# Crear vector con las estaturas
+num <- datos$Estaturas</pre>
+                                        </div>
+
+                                        <div class="result-box">
+                                            <h6><i class="fas fa-chart-bar text-success me-2"></i>Vista Previa de los
+                                                Datos</h6>
+                                            <div class="dataset-preview">
+                                                <table class="table table-sm table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Estudiante</th>
+                                                            <th>Estatura (cm)</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td>165.3</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>2</td>
+                                                            <td>172.8</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>3</td>
+                                                            <td>168.1</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>4</td>
+                                                            <td>175.4</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>5</td>
+                                                            <td>169.9</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>...</td>
+                                                            <td>...</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 3: Estadísticas Básicas -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card step-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="step-number">3</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">Calcular Estadísticas Básicas</h5>
+                                        <p>Calculamos las estadísticas descriptivas fundamentales:</p>
+
+                                        <div class="code-block">
+                                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                            <pre># Estadísticas básicas
+N <- length(num)        # Cantidad de datos (tamaño muestral)
+Dm <- max(num)          # Dato mayor (máximo)
+Dn <- min(num)          # Dato menor (mínimo)
+R <- (Dm - Dn)          # Rango
+
+# Número de clases usando la regla de Sturges
+K <- 1 + 3.322 * log10(N)  
+I <- round(R / K)       # Intervalo de clase
+
+# Mostrar resultados
+cat("Estadísticas Básicas:\n")
+cat("N (tamaño muestral):", N, "\n")
+cat("Valor máximo:", Dm, "cm\n")
+cat("Valor mínimo:", Dn, "cm\n")
+cat("Rango:", R, "cm\n")
+cat("Número de clases:", round(K), "\n")
+cat("Intervalo de clase:", I, "cm\n")</pre>
+                                        </div>
+
+                                        <div class="result-box">
+                                            <h6><i class="fas fa-calculator text-success me-2"></i>Resultados</h6>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <ul class="list-unstyled">
+                                                        <li><strong>N:</strong> 150 estudiantes</li>
+                                                        <li><strong>Máximo:</strong> 185.2 cm</li>
+                                                        <li><strong>Mínimo:</strong> 152.1 cm</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <ul class="list-unstyled">
+                                                        <li><strong>Rango:</strong> 33.1 cm</li>
+                                                        <li><strong>Clases:</strong> 8</li>
+                                                        <li><strong>Intervalo:</strong> 4 cm</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="concept-box">
+                                            <h6><i class="fas fa-question-circle text-warning me-2"></i>¿Qué es la Regla
+                                                de Sturges?</h6>
+                                            <div class="formula">K = 1 + 3.322 × log₁₀(N)</div>
+                                            <p class="mb-0 small">Es una fórmula para determinar el número óptimo de
+                                                intervalos (clases)
+                                                en un histograma, basándose en el tamaño de la muestra.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 4: Medidas de Tendencia Central -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card step-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="step-number">4</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">Medidas de Tendencia Central</h5>
+                                        <p>Calculamos la media, mediana y moda para datos agrupados:</p>
+
+                                        <div class="code-block">
+                                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                            <pre># Crear intervalos y calcular frecuencias
+lai <- seq(Dn, Dm, by = I)  # Límites aparentes inferiores
+lai <- lai[lai <= Dm]
+las <- lai + I - 1          # Límites aparentes superiores
+
+# Límites reales
+lri <- lai - 0.5
+lrs <- las + 0.5
+
+# Calcular frecuencias
+frec <- Freq(num, breaks = c(lai, max(las) + 1), right = FALSE)
+frecuencia <- frec$freq
+frecuencia_acumulada <- cumsum(frecuencia)
+
+# Puntos medios de los intervalos
+xi <- (lai + las) / 2
+fxi <- frecuencia * xi
+
+# MEDIA ARITMÉTICA
+media_agrupada <- sum(fxi) / N
+
+# MEDIANA
+n_2 <- N / 2
+clase_mediana <- which(frecuencia_acumulada >= n_2)[1]
+Li_med <- lri[clase_mediana]
+Fi_anterior <- if(clase_mediana > 1) frecuencia_acumulada[clase_mediana - 1] else 0
+fi_med <- frecuencia[clase_mediana]
+A_med <- I
+
+mediana_agrupada <- Li_med + ((n_2 - Fi_anterior) / fi_med) * A_med
+
+# MODA
+clase_modal <- which.max(frecuencia)
+Li <- lri[clase_modal]
+fi <- frecuencia[clase_modal]
+fi_anterior <- if(clase_modal > 1) frecuencia[clase_modal - 1] else 0
+fi_posterior <- if(clase_modal < length(frecuencia)) frecuencia[clase_modal + 1] else 0
+A <- I
+
+moda_agrupada <- Li + ((fi - fi_anterior) / ((fi - fi_anterior) + (fi - fi_posterior))) * A
+
+# Mostrar resultados
+cat("MEDIDAS DE TENDENCIA CENTRAL:\n")
+cat("Media:", round(media_agrupada, 2), "cm\n")
+cat("Mediana:", round(mediana_agrupada, 2), "cm\n")
+cat("Moda:", round(moda_agrupada, 2), "cm\n")</pre>
+                                        </div>
+
+                                        <div class="result-box">
+                                            <h6><i class="fas fa-bullseye text-success me-2"></i>Medidas de Tendencia
+                                                Central</h6>
+                                            <div class="row text-center">
+                                                <div class="col-md-4">
+                                                    <div class="border rounded p-3">
+                                                        <h5 class="text-primary">Media</h5>
+                                                        <h3>170.1 cm</h3>
+                                                        <small>Promedio aritmético</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="border rounded p-3">
+                                                        <h5 class="text-info">Mediana</h5>
+                                                        <h3>169.8 cm</h3>
+                                                        <small>Valor central</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="border rounded p-3">
+                                                        <h5 class="text-warning">Moda</h5>
+                                                        <h3>168.5 cm</h3>
+                                                        <small>Valor más frecuente</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="concept-box">
+                                            <h6><i class="fas fa-info-circle text-warning me-2"></i>Interpretación</h6>
+                                            <p class="mb-0 small">Los tres valores son muy similares (170.1, 169.8,
+                                                168.5),
+                                                lo que sugiere que nuestra distribución es aproximadamente simétrica y
+                                                normal.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 5: Cuartiles -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card step-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="step-number">5</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">Cuartiles y Medidas de Posición</h5>
+                                        <p>Calculamos los cuartiles para entender cómo se distribuyen los datos:</p>
+
+                                        <div class="code-block">
+                                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                            <pre># CUARTIL 1 (Q1)
+n_4 <- N / 4
+clase_Q1 <- which(frecuencia_acumulada >= n_4)[1]
+Li_Q1 <- lri[clase_Q1]
+fa_anterior_Q1 <- if(clase_Q1 > 1) frecuencia_acumulada[clase_Q1 - 1] else 0
+f_Q1 <- frecuencia[clase_Q1]
+A_Q1 <- I
+
+Q1 <- Li_Q1 + ((n_4 - fa_anterior_Q1) / f_Q1) * A_Q1
+
+# CUARTIL 3 (Q3)
+n_3_4 <- 3 * (N / 4)
+clase_Q3 <- which(frecuencia_acumulada >= n_3_4)[1]
+Li_Q3 <- lri[clase_Q3]
+fa_anterior_Q3 <- if(clase_Q3 > 1) frecuencia_acumulada[clase_Q3 - 1] else 0
+f_Q3 <- frecuencia[clase_Q3]
+A_Q3 <- I
+
+Q3 <- Li_Q3 + ((n_3_4 - fa_anterior_Q3) / f_Q3) * A_Q3
+
+# RANGOS
+RQ <- Q3 - Q1      # Rango Intercuartílico
+RQS <- RQ / 2      # Rango Semi-intercuartílico
+
+cat("CUARTILES Y RANGOS:\n")
+cat("Q1 (Cuartil 1):", round(Q1, 2), "cm\n")
+cat("Q2 (Mediana):", round(mediana_agrupada, 2), "cm\n")
+cat("Q3 (Cuartil 3):", round(Q3, 2), "cm\n")
+cat("Rango Intercuartílico:", round(RQ, 2), "cm\n")
+cat("Rango Semi-intercuartílico:", round(RQS, 2), "cm\n")</pre>
+                                        </div>
+
+                                        <div class="result-box">
+                                            <h6><i class="fas fa-chart-area text-success me-2"></i>Cuartiles</h6>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <ul class="list-unstyled">
+                                                        <li><strong>Q1:</strong> 164.5 cm (25% de los datos están por
+                                                            debajo)</li>
+                                                        <li><strong>Q2:</strong> 169.8 cm (mediana, 50% por debajo)</li>
+                                                        <li><strong>Q3:</strong> 175.2 cm (75% de los datos están por
+                                                            debajo)</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <ul class="list-unstyled">
+                                                        <li><strong>RIC:</strong> 10.7 cm</li>
+                                                        <li><strong>RSC:</strong> 5.35 cm</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="concept-box">
+                                            <h6><i class="fas fa-question-circle text-warning me-2"></i>¿Qué nos dicen
+                                                los cuartiles?</h6>
+                                            <p class="mb-0 small">Los cuartiles dividen nuestros datos en 4 partes
+                                                iguales.
+                                                El rango intercuartílico (RIC) nos dice que el 50% central de los
+                                                estudiantes
+                                                tiene estaturas entre 164.5 cm y 175.2 cm.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 6: Medidas de Dispersión -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card step-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="step-number">6</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">Medidas de Dispersión</h5>
+                                        <p>Calculamos medidas que nos indican qué tan dispersos están los datos:</p>
+
+                                        <div class="code-block">
+                                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                            <pre># DESVIACIÓN MEDIA
+xi_media <- xi - media_agrupada
+abs_xi_media <- abs(xi_media)
+f_abs_xi_media <- abs_xi_media * frecuencia
+Des_M <- sum(f_abs_xi_media) / N
+
+# VARIANZA Y DESVIACIÓN ESTÁNDAR
+xi_media_cuadrado <- xi_media^2
+f_xi_media_cuadrado <- frecuencia * xi_media_cuadrado
+varianza <- sum(f_xi_media_cuadrado) / N
+desviacion_estandar <- sqrt(varianza)
+
+# COEFICIENTE DE VARIACIÓN
+CV <- desviacion_estandar / media_agrupada
+
+# ASIMETRÍA (usando el tercer momento)
+xi_media_cubo <- xi_media^3
+f_xi_media_cubo <- frecuencia * xi_media_cubo
+asimetria <- sum(f_xi_media_cubo) / (N * desviacion_estandar^3)
+
+# CURTOSIS (usando el cuarto momento)
+xi_media_4 <- xi_media^4
+f_xi_media_4 <- frecuencia * xi_media_4
+curtosis <- sum(f_xi_media_4) / (N * desviacion_estandar^4)
+
+cat("MEDIDAS DE DISPERSIÓN:\n")
+cat("Desviación Media:", round(Des_M, 2), "cm\n")
+cat("Varianza:", round(varianza, 2), "cm²\n")
+cat("Desviación Estándar:", round(desviacion_estandar, 2), "cm\n")
+cat("Coeficiente de Variación:", round(CV * 100, 2), "%\n")
+cat("Asimetría:", round(asimetria, 3), "\n")
+cat("Curtosis:", round(curtosis, 3), "\n")</pre>
+                                        </div>
+
+                                        <div class="result-box">
+                                            <h6><i class="fas fa-expand-arrows-alt text-success me-2"></i>Medidas de
+                                                Dispersión</h6>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <ul class="list-unstyled">
+                                                        <li><strong>Desviación Media:</strong> 6.4 cm</li>
+                                                        <li><strong>Varianza:</strong> 64.2 cm²</li>
+                                                        <li><strong>Desviación Estándar:</strong> 8.0 cm</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <ul class="list-unstyled">
+                                                        <li><strong>Coef. de Variación:</strong> 4.7%</li>
+                                                        <li><strong>Asimetría:</strong> 0.12</li>
+                                                        <li><strong>Curtosis:</strong> 2.89</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="concept-box">
+                                            <h6><i class="fas fa-info-circle text-warning me-2"></i>Interpretación de
+                                                las Medidas</h6>
+                                            <ul class="mb-0 small">
+                                                <li><strong>CV = 4.7%:</strong> Baja variabilidad (< 15% es considerado
+                                                        bajo)</li>
+                                                <li><strong>Asimetría ≈ 0:</strong> Distribución aproximadamente
+                                                    simétrica</li>
+                                                <li><strong>Curtosis ≈ 3:</strong> Distribución similar a la normal
+                                                    (mesocúrtica)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 7: Visualizaciones -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card step-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="step-number">7</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">Crear Visualizaciones</h5>
+                                        <p>Creamos gráficos para visualizar nuestros datos:</p>
+
+                                        <div class="code-block">
+                                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                            <pre># HISTOGRAMA
+hist(num, 
+     breaks = 10,
+     main = "Histograma de Estaturas de Estudiantes",
+     xlab = "Estatura (cm)",
+     ylab = "Frecuencia",
+     col = "skyblue",
+     border = "darkblue")
+
+# Agregar líneas de las medidas de tendencia central
+abline(v = media_agrupada, col = "red", lwd = 2, lty = 1)
+abline(v = mediana_agrupada, col = "green", lwd = 2, lty = 2)
+abline(v = moda_agrupada, col = "blue", lwd = 2, lty = 3)
+
+# Leyenda
+legend("topright", 
+       c("Media", "Mediana", "Moda"), 
+       col = c("red", "green", "blue"), 
+       lty = c(1, 2, 3), 
+       lwd = 2)
+
+# BOXPLOT (Diagrama de Cajas)
+boxplot(num, 
+        main = "Boxplot de Estaturas",
+        ylab = "Estatura (cm)",
+        col = "lightgreen",
+        border = "darkgreen")
+
+# Agregar líneas de cuartiles
+abline(h = c(Q1, mediana_agrupada, Q3), col = "red", lty = 2)
+text(x = 1.4, y = c(Q1, mediana_agrupada, Q3), 
+     labels = c("Q1", "Q2", "Q3"), col = "blue")</pre>
+                                        </div>
+
+                                        <div class="result-box">
+                                            <h6><i class="fas fa-chart-bar text-success me-2"></i>Interpretación de los
+                                                Gráficos</h6>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <h6>Histograma</h6>
+                                                    <ul class="small">
+                                                        <li>Muestra la distribución de frecuencias</li>
+                                                        <li>Forma aproximadamente normal</li>
+                                                        <li>Mayor concentración alrededor de 170 cm</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h6>Boxplot</h6>
+                                                    <ul class="small">
+                                                        <li>Visualiza los cuartiles y valores atípicos</li>
+                                                        <li>La caja representa el 50% central de los datos</li>
+                                                        <li>Los bigotes muestran la dispersión</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 8: Tabla de Frecuencias -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card step-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="step-number">8</div>
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title">Crear Tabla de Frecuencias Profesional</h5>
+                                        <p>Organizamos todos nuestros resultados en una tabla interactiva:</p>
+
+                                        <div class="code-block">
+                                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                                            <pre># Crear dataframe con todos los resultados
+tabla_frecuencias <- data.frame(
+  "Intervalo" = paste(lai, "-", las),
+  "Límites_Reales" = paste(round(lri, 1), "-", round(lrs, 1)),
+  "Punto_Medio" = round(xi, 1),
+  "Frecuencia" = frecuencia,
+  "Frec_Acumulada" = frecuencia_acumulada,
+  "Frec_Relativa" = round(frecuencia / N, 3),
+  "Frec_Rel_Acum" = round(frecuencia_acumulada / N, 3)
+)
+
+# Crear tabla interactiva
+datatable(tabla_frecuencias,
+          options = list(
+            pageLength = 10,
+            autoWidth = TRUE,
+            scrollX = TRUE
+          ),
+          rownames = FALSE,
+          caption = "Tabla de Distribución de Frecuencias - Estaturas de Estudiantes")
+
+# Resumen final
+cat("\n=== RESUMEN DEL ANÁLISIS ===\n")
+cat("Muestra:", N, "estudiantes\n")
+cat("Estatura promedio:", round(media_agrupada, 1), "cm\n")
+cat("Desviación estándar:", round(desviacion_estandar, 1), "cm\n")
+cat("El 50% central de estudiantes mide entre", round(Q1, 1), "y", round(Q3, 1), "cm\n")
+cat("Distribución: Aproximadamente normal y simétrica\n")</pre>
+                                        </div>
+
+                                        <div class="result-box">
+                                            <h6><i class="fas fa-table text-success me-2"></i>Tabla de Frecuencias
+                                                (Ejemplo)</h6>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Intervalo</th>
+                                                            <th>Límites Reales</th>
+                                                            <th>Punto Medio</th>
+                                                            <th>Frecuencia</th>
+                                                            <th>Frec. Acumulada</th>
+                                                            <th>Frec. Relativa</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>152-155</td>
+                                                            <td>151.5-155.5</td>
+                                                            <td>153.5</td>
+                                                            <td>8</td>
+                                                            <td>8</td>
+                                                            <td>0.053</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>156-159</td>
+                                                            <td>155.5-159.5</td>
+                                                            <td>157.5</td>
+                                                            <td>15</td>
+                                                            <td>23</td>
+                                                            <td>0.100</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>160-163</td>
+                                                            <td>159.5-163.5</td>
+                                                            <td>161.5</td>
+                                                            <td>22</td>
+                                                            <td>45</td>
+                                                            <td>0.147</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>164-167</td>
+                                                            <td>163.5-167.5</td>
+                                                            <td>165.5</td>
+                                                            <td>28</td>
+                                                            <td>73</td>
+                                                            <td>0.187</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>168-171</td>
+                                                            <td>167.5-171.5</td>
+                                                            <td>169.5</td>
+                                                            <td>35</td>
+                                                            <td>108</td>
+                                                            <td>0.233</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>172-175</td>
+                                                            <td>171.5-175.5</td>
+                                                            <td>173.5</td>
+                                                            <td>25</td>
+                                                            <td>133</td>
+                                                            <td>0.167</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>176-179</td>
+                                                            <td>175.5-179.5</td>
+                                                            <td>177.5</td>
+                                                            <td>12</td>
+                                                            <td>145</td>
+                                                            <td>0.080</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>180-183</td>
+                                                            <td>179.5-183.5</td>
+                                                            <td>181.5</td>
+                                                            <td>5</td>
+                                                            <td>150</td>
+                                                            <td>0.033</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conclusiones -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card bg-success bg-opacity-10 border-success">
+                            <div class="card-body">
+                                <h5 class="card-title text-success">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    Conclusiones del Análisis
+                                </h5>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h6>Principales Hallazgos:</h6>
+                                        <ul>
+                                            <li>La estatura promedio de los estudiantes es <strong>170.1 cm</strong>
+                                            </li>
+                                            <li>La distribución es <strong>aproximadamente normal</strong> y simétrica
+                                            </li>
+                                            <li>La variabilidad es <strong>baja</strong> (CV = 4.7%)</li>
+                                            <li>El 50% central de estudiantes mide entre <strong>164.5 y 175.2
+                                                    cm</strong></li>
+                                            <li>No hay evidencia significativa de asimetría o curtosis extrema</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6>Archivos de Descarga:</h6>
+                                        <div class="d-grid gap-2">
+                                            <a href="descargas/codigo-completo-estaturas.R"
+                                                class="btn btn-success btn-sm" download>
+                                                <i class="fas fa-download me-2"></i>Código R Completo
+                                            </a>
+                                            <a href="descargas/dataset-estaturas.csv"
+                                                class="btn btn-outline-success btn-sm" download>
+                                                <i class="fas fa-table me-2"></i>Dataset de Ejemplo
+                                            </a>
+                                            <a href="descargas/reporte-estaturas.pdf"
+                                                class="btn btn-outline-success btn-sm" download>
+                                                <i class="fas fa-file-pdf me-2"></i>Reporte Completo
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/vendors.min.js"></script>
+    <script src="assets/js/app.min.js"></script>
+    <script src="assets/js/global.js"></script>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.nextElementSibling;
+            const text = codeBlock.textContent;
+
+            navigator.clipboard.writeText(text).then(function () {
+                const originalText = button.textContent;
+                button.textContent = '¡Copiado!';
+                button.style.background = '#28a745';
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '#007bff';
+                }, 2000);
+            });
+        }
+
+        // Simular progreso mientras se hace scroll
+        window.addEventListener('scroll', function () {
+            const scrolled = window.pageYOffset;
+            const max = document.body.scrollHeight - window.innerHeight;
+            const progress = (scrolled / max) * 100;
+
+            document.getElementById('progressBar').style.width = progress + '%';
+        });
+
+        // Inicializar progreso
+        document.getElementById('progressBar').style.width = '0%';
+    </script>
+
+</body>
+
+</html>

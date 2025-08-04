@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="es-es" data-bs-theme="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>Errores Comunes en R | Curso de R</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Guía completa de errores comunes en R y sus soluciones. Troubleshooting para principiantes con ejemplos prácticos."/>
+    <link rel="icon" href="assets/images/favicon.ico"/>
+    
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        })();
+    </script>
+
+    <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/icofont@1.0.0/dist/icofont.min.css">
+
+    <style>
+        .error-section {
+            border-left: 4px solid #dc3545;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        .error-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(220,53,69,0.1);
+        }
+        .error-icon {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-right: 25px;
+            flex-shrink: 0;
+        }
+        .error-message {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 10px 0;
+        }
+        [data-bs-theme="dark"] .error-message {
+            background: #2d1b1b;
+            border-color: #5a2a2a;
+            color: #f8d7da;
+        }
+        .solution-box {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        [data-bs-theme="dark"] .solution-box {
+            background: #1b2d1b;
+            border-color: #2a5a2a;
+            color: #d4edda;
+        }
+        .code-wrong {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 8px 0;
+        }
+        .code-right {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 8px 0;
+        }
+        [data-bs-theme="dark"] .code-wrong {
+            background: #2d1b1b;
+            border-color: #5a2a2a;
+            color: #f8d7da;
+        }
+        [data-bs-theme="dark"] .code-right {
+            background: #1b2d1b;
+            border-color: #2a5a2a;
+            color: #d4edda;
+        }
+        .category-header {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .severity-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        .severity-low { background: #28a745; color: white; }
+        .severity-medium { background: #ffc107; color: #212529; }
+        .severity-high { background: #dc3545; color: white; }
+        .prevention-tip {
+            background: rgba(23, 162, 184, 0.1);
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .search-error {
+            background: rgba(102, 126, 234, 0.1);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .search-input {
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 10px 15px;
+        }
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+        .quick-fix {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            border-radius: 6px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .copy-solution {
+            background: #17a2b8;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            float: right;
+            margin-bottom: 10px;
+        }
+        .error-frequency {
+            font-size: 0.8rem;
+            color: #6c757d;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-wrapper">
+        
+        <!-- TOPBAR -->
+        <div class="topbar d-print-none">
+            <div class="container-xxl">
+                <nav class="topbar-custom d-flex justify-content-between" id="topbar-custom">
+                    <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
+                        <li class="mx-3 welcome-text">
+                            <h3 class="mb-0 fw-bold text-truncate">
+                                <i class="fas fa-bug me-2"></i>
+                                Errores Comunes en R
+                            </h3>
+                        </li>
+                    </ul>
+        
+                    <ul class="topbar-item list-unstyled d-inline-flex align-items-center mb-0">
+                        <li class="topbar-item">
+                            <a class="nav-link nav-icon theme-toggle" href="javascript:void(0);">
+                                <i class="icofont-moon"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        
+      
+<!-- SIDEBAR -->
+<div class="startbar d-print-none">
+    <div class="brand">
+        <a href="index.html" class="logo">
+            <span>
+                <img src="assets/images/logo-sm.png" alt="logo-small" class="logo-sm">
+            </span>
+            <span class="">
+                <img src="assets/images/logo-light.png" alt="logo-large" class="logo-lg logo-light">
+                <img src="assets/images/logo-dark.png" alt="logo-large" class="logo-lg logo-dark">
+            </span>
+        </a>
+    </div>
+    <div class="startbar-menu">
+        <div class="startbar-collapse" id="startbarCollapse">
+            <div class="d-flex align-items-start flex-column w-100">
+                <ul class="navbar-nav mb-auto w-100">
+                    <li class="menu-label pt-0 mt-0">
+                        <span>Menú Principal</span>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home menu-icon"></i>
+                            <span>Inicio</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sidebarIntro" data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="sidebarIntro">
+                            <i class="fas fa-rocket menu-icon"></i>
+                            <span>Comenzando</span>
+                        </a>
+                        <div class="collapse" id="sidebarIntro">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="introduccion.html">¿Qué es R?</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="instalacion.html">Instalación</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sidebarFundamentos" data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="sidebarFundamentos">
+                            <i class="fas fa-play-circle menu-icon"></i>
+                            <span>Fundamentos de R</span>
+                        </a>
+                        <div class="collapse" id="sidebarFundamentos">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="primeros-pasos.html">Primeros Pasos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="operadores.html">Operadores</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="tipos-datos.html">Tipos de Datos</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sidebarAnalisis" data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="sidebarAnalisis">
+                            <i class="fas fa-chart-line menu-icon"></i>
+                            <span>Análisis y Gráficos</span>
+                        </a>
+                        <div class="collapse" id="sidebarAnalisis">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="estadisticas-basicas.html">Estadísticas Básicas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="graficos.html">Gráficos y Visualización</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sidebarProyectos" data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="sidebarProyectos">
+                            <i class="fas fa-trophy menu-icon"></i>
+                            <span>Proyectos</span>
+                        </a>
+                        <div class="collapse" id="sidebarProyectos">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="ejemplo-practico.html">Ejemplo: Análisis Estaturas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="proyecto-final.html">Proyecto Final</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="menu-label">
+                        <span>Recursos y Ayuda</span>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="comandos-utiles.html">
+                            <i class="fas fa-terminal menu-icon"></i>
+                            <span>Comandos Útiles</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="buenas-practicas.html">
+                            <i class="fas fa-star menu-icon"></i>
+                            <span>Buenas Prácticas</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="errores-comunes.html">
+                            <i class="fas fa-bug menu-icon"></i>
+                            <span>Errores Comunes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="recursos.html">
+                            <i class="fas fa-book menu-icon"></i>
+                            <span>Recursos y Descargas</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="startbar-overlay d-print-none"></div>
+
+    
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="page-content">
+            <div class="container-fluid">
+                
+                <!-- Introducción -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <i class="fas fa-first-aid text-primary me-2"></i>
+                                    Guía de Troubleshooting para R
+                                </h4>
+                                <p class="card-text">
+                                    ¡No te preocupes! Todos los programadores enfrentan errores. Esta guía te ayudará a 
+                                    identificar y solucionar los errores más comunes en R. Aprende a leer los mensajes 
+                                    de error y encuentra soluciones rápidas.
+                                </p>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-lightbulb me-2"></i>
+                                    <strong>Consejo Pro:</strong> Los errores son oportunidades de aprendizaje. 
+                                    Cada error que resuelves te hace mejor programador.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buscador de Errores -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="search-error">
+                            <h5><i class="fas fa-search text-primary me-2"></i>Buscar Error Específico</h5>
+                            <p class="text-muted">Ingresa parte del mensaje de error que estás viendo:</p>
+                            <input type="text" id="errorSearch" class="form-control search-input" 
+                                   placeholder="Ej: 'object not found', 'could not find function', etc...">
+                            <small class="text-muted mt-2 d-block">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Tip: No necesitas escribir el mensaje completo, solo las palabras clave.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Errores de Objetos y Variables -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card error-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="error-icon">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="category-header">
+                                            <i class="fas fa-cube me-2"></i>Errores de Objetos y Variables
+                                        </div>
+                                        
+                                        <!-- Error 1: Object not found -->
+                                        <div class="mb-4">
+                                            <span class="severity-badge severity-high">Muy Común</span>
+                                            <h6><strong>Error: "object 'x' not found"</strong></h6>
+                                            <div class="error-frequency">⭐ Uno de los errores más frecuentes para principiantes</div>
+                                            
+                                            <div class="error-message">
+                                                Error: object 'datos' not found
+                                            </div>
+                                            
+                                            <p><strong>¿Qué significa?</strong> R no puede encontrar el objeto (variable) que estás intentando usar.</p>
+                                            
+                                            <p><strong>Causas comunes:</strong></p>
+                                            <ul class="small">
+                                                <li>No has creado la variable aún</li>
+                                                <li>Error en el nombre (mayúsculas/minúsculas)</li>
+                                                <li>La variable está en otro entorno</li>
+                                                <li>Escribiste mal el nombre</li>
+                                            </ul>
+
+                                            <div class="solution-box">
+                                                <button class="copy-solution" onclick="copySolution(this)">Copiar</button>
+                                                <h6><i class="fas fa-check-circle text-success me-2"></i>Soluciones:</h6>
+                                                
+                                                <p><strong>1. Verificar que la variable existe:</strong></p>
+                                                <div class="code-right">
+                                                    ls()  # Ver todos los objetos en memoria<br>
+                                                    exists("datos")  # Verificar si 'datos' existe
+                                                </div>
+
+                                                <p><strong>2. Crear la variable si no existe:</strong></p>
+                                                <div class="code-right">
+                                                    datos <- read.csv("mi_archivo.csv")  # O como sea apropiado
+                                                </div>
+
+                                                <p><strong>3. Verificar ortografía (R distingue mayúsculas):</strong></p>
+                                                <div class="code-wrong">❌ Datos  # Incorrecto si creaste 'datos'</div>
+                                                <div class="code-right">✅ datos  # Correcto</div>
+                                            </div>
+
+                                            <div class="prevention-tip">
+                                                <h6><i class="fas fa-shield-alt text-info me-2"></i>Prevención</h6>
+                                                <p class="mb-0">Usa nombres descriptivos y consistentes. Siempre verifica que tus variables se crearon correctamente después de ejecutar el código.</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Error 2: Wrong variable name -->
+                                        <div class="mb-4">
+                                            <span class="severity-badge severity-medium">Común</span>
+                                            <h6><strong>Error en nombres de columnas</strong></h6>
+                                            
+                                            <div class="error-message">
+                                                Error in datos$edad : $ operator is invalid for atomic vectors
+                                            </div>
+                                            
+                                            <p><strong>¿Qué significa?</strong> Estás intentando acceder a una columna de algo que no es un data frame.</p>
+                                            
+                                            <div class="solution-box">
+                                                <button class="copy-solution" onclick="copySolution(this)">Copiar</button>
+                                                <h6><i class="fas fa-check-circle text-success me-2"></i>Soluciones:</h6>
+                                                
+                                                <p><strong>1. Verificar el tipo de objeto:</strong></p>
+                                                <div class="code-right">
+                                                    class(datos)  # Debe ser "data.frame"<br>
+                                                    str(datos)    # Ver estructura completa
+                                                </div>
+
+                                                <p><strong>2. Si es un vector, usa índices:</strong></p>
+                                                <div class="code-wrong">❌ datos$edad  # No funciona con vectores</div>
+                                                <div class="code-right">✅ datos[1]    # Primer elemento del vector</div>
+
+                                                <p><strong>3. Ver nombres de columnas disponibles:</strong></p>
+                                                <div class="code-right">
+                                                    names(datos)     # Ver nombres de columnas<br>
+                                                    colnames(datos)  # Alternativa
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Errores de Funciones -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card error-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="error-icon">
+                                        <i class="fas fa-code"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="category-header">
+                                            <i class="fas fa-code me-2"></i>Errores de Funciones
+                                        </div>
+                                        
+                                        <!-- Error: Could not find function -->
+                                        <div class="mb-4">
+                                            <span class="severity-badge severity-high">Muy Común</span>
+                                            <h6><strong>Error: "could not find function"</strong></h6>
+                                            
+                                            <div class="error-message">
+                                                Error: could not find function "ggplot"
+                                            </div>
+                                            
+                                            <p><strong>¿Qué significa?</strong> R no reconoce la función que estás intentando usar.</p>
+                                            
+                                            <div class="solution-box">
+                                                <button class="copy-solution" onclick="copySolution(this)">Copiar</button>
+                                                <h6><i class="fas fa-check-circle text-success me-2"></i>Soluciones:</h6>
+                                                
+                                                <p><strong>1. Instalar el paquete necesario:</strong></p>
+                                                <div class="code-right">
+                                                    install.packages("ggplot2")  # Instalar paquete<br>
+                                                    library(ggplot2)             # Cargar paquete
+                                                </div>
+
+                                                <p><strong>2. Verificar ortografía de la función:</strong></p>
+                                                <div class="code-wrong">❌ gplot()   # Función inexistente</div>
+                                                <div class="code-right">✅ ggplot()  # Función correcta</div>
+
+                                                <p><strong>3. Verificar paquetes cargados:</strong></p>
+                                                <div class="code-right">
+                                                    search()  # Ver paquetes cargados
+                                                </div>
+                                            </div>
+
+                                            <div class="quick-fix">
+                                                <strong>Solución Rápida:</strong> Si ves este error, casi siempre necesitas hacer <code>library(nombre_paquete)</code> antes de usar la función.
+                                            </div>
+                                        </div>
+
+                                        <!-- Error: Wrong number of arguments -->
+                                        <div class="mb-4">
+                                            <span class="severity-badge severity-medium">Común</span>
+                                            <h6><strong>Error en argumentos de funciones</strong></h6>
+                                            
+                                            <div class="error-message">
+                                                Error in mean(datos, edad) : 2 arguments passed to 'mean' which requires 1
+                                            </div>
+                                            
+                                            <p><strong>¿Qué significa?</strong> Estás pasando más (o menos) argumentos de los que la función espera.</p>
+                                            
+                                            <div class="solution-box">
+                                                <button class="copy-solution" onclick="copySolution(this)">Copiar</button>
+                                                <h6><i class="fas fa-check-circle text-success me-2"></i>Soluciones:</h6>
+                                                
+                                                <p><strong>1. Verificar la sintaxis correcta:</strong></p>
+                                                <div class="code-wrong">❌ mean(datos, edad)    # Incorrecto</div>
+                                                <div class="code-right">✅ mean(datos$edad)    # Correcto</div>
+
+                                                <p><strong>2. Consultar la ayuda de la función:</strong></p>
+                                                <div class="code-right">
+                                                    ?mean     # Ver documentación<br>
+                                                    help(mean) # Alternativa
+                                                </div>
+
+                                                <p><strong>3. Ver ejemplo de uso:</strong></p>
+                                                <div class="code-right">
+                                                    example(mean)  # Ver ejemplos
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Errores de Sintaxis -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card error-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="error-icon">
+                                        <i class="fas fa-spell-check"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="category-header">
+                                            <i class="fas fa-spell-check me-2"></i>Errores de Sintaxis
+                                        </div>
+                                        
+                                        <!-- Error: Unexpected symbol -->
+                                        <div class="mb-4">
+                                            <span class="severity-badge severity-high">Muy Común</span>
+                                            <h6><strong>Error: "unexpected symbol/character"</strong></h6>
+                                            
+                                            <div class="error-message">
+                                                Error: unexpected symbol in "datos <- read.csv"archivo.csv""
+                                            </div>
+                                            
+                                            <p><strong>¿Qué significa?</strong> Hay un error de sintaxis en tu código.</p>
+                                            
+                                            <div class="solution-box">
+                                                <button class="copy-solution" onclick="copySolution(this)">Copiar</button>
+                                                <h6><i class="fas fa-check-circle text-success me-2"></i>Soluciones Comunes:</h6>
+                                                
+                                                <p><strong>1. Verificar paréntesis y comillas:</strong></p>
+                                                <div class="code-wrong">❌ datos <- read.csv"archivo.csv"   # Falta paréntesis</div>
+                                                <div class="code-right">✅ datos <- read.csv("archivo.csv") # Correcto</div>
+
+                                                <p><strong>2. Comillas mal cerradas:</strong></p>
+                                                <div class="code-wrong">❌ nombre <- "Juan   # Comilla no cerrada</div>
+                                                <div class="code-right">✅ nombre <- "Juan"  # Correcto</div>
+
+                                                <p><strong>3. Operadores mal escritos:</strong></p>
+                                                <div class="code-wrong">❌ x < - 5    # Espacios en el operador</div>
+                                                <div class="code-right">✅ x <- 5     # Correcto</div>
+                                            </div>
+
+                                            <div class="prevention-tip">
+                                                <h6><i class="fas fa-shield-alt text-info me-2"></i>Prevención</h6>
+                                                <p class="mb-0">Usa un editor que resalte la sintaxis (como RStudio). Los colores te ayudarán a identificar errores de sintaxis rápidamente.</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Error: Missing comma -->
+                                        <div class="mb-4">
+                                            <span class="severity-badge severity-medium">Común</span>
+                                            <h6><strong>Error por comas faltantes</strong></h6>
+                                            
+                                            <div class="error-message">
+                                                Error: unexpected symbol in "c(1 2 3)"
+                                            </div>
+                                            
+                                            <div class="solution-box">
+                                                <button class="copy-solution" onclick="copySolution(this)">Copiar</button>
+                                                <h6><i class="fas fa-check-circle text-success me-2"></i>Solución:</h6>
+                                                
+                                                <div class="code-wrong">❌ c(1 2 3)        # Faltan comas</div>
+                                                <div class="code-right">✅ c(1, 2, 3)      # Correcto</div>
+                                                
+                                                <div class="code-wrong">❌ data.frame(x=c(1,2) y=c(3,4))  # Falta coma</div>
+                                                <div class="code-right">✅ data.frame(x=c(1,2), y=c(3,4)) # Correcto</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Errores de Datos -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card error-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="error-icon">
+                                        <i class="fas fa-database"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="category-header">
+                                            <i class="fas fa-database me-2"></i>Errores con Datos
+                                        </div>
+                                        
+                                        <!-- Error: Cannot open file -->
+                                        <div class="mb-4">
+                                            <span class="severity-badge severity-high">Muy Común</span>
+                                            <h6><strong>Error: "cannot open file"</strong></h6>
+                                            
+                                            <div class="error-message">
+                                                Error in file(file, "rt") : cannot open the connection<br>
+                                                Warning: cannot open file 'datos.csv': No such file or directory
+                                            </div>
+                                            
+                                            <p><strong>¿Qué significa?</strong> R no puede encontrar el archivo que intentas abrir.</p>
+                                            
+                                            <div class="solution-box">
+                                                <button class="copy-solution" onclick="copySolution(this)">Copiar</button>
+                                                <h6><i class="fas fa-check-circle text-success me-2"></i>Soluciones:</h6>
+                                                
+                                                <p><strong>1. Verificar directorio actual y archivos:</strong></p>
+                                                <div class="code-right">
+                                                    getwd()        # Ver directorio actual<br>
+                                                    list.files()   # Ver archivos disponibles
+                                                </div>
+
+                                                <p><strong>2. Cambiar al directorio correcto:</strong></p>
+                                                <div class="code-right">
+                                                    setwd("C:/ruta/a/tus/datos")  # Cambiar directorio
+                                                </div>
+
+                                                <p><strong>3. Usar ruta completa:</strong></p>
+                                                <div class="code-right">
+                                                    datos <- read.csv("C:/ruta/completa/datos.csv")
+                                                </div>
+
+                                                <p><strong>4. Verificar nombre del archivo:</strong></p>
+                                                <div class="code-wrong">❌ "datos.csv"   # Si el archivo se llama "Datos.csv"</div>
+                                                <div class="code-right">✅ "Datos.csv"   # Nombre exacto</div>
+                                            </div>
+
+                                            <div class="quick-fix">
+                                                <strong>Tip Rápido:</strong> En RStudio, puedes usar el panel "Files" para navegar y hacer clic en "More → Set As Working Directory".
+                                            </div>
+                                        </div>
+
+                                        <!-- Error: NA values -->
+                                        <div class="mb-4">
+                                            <span class="severity-badge severity-medium">Común</span>
+                                            <h6><strong>Problemas con valores NA (faltantes)</strong></h6>
+                                            
+                                            <div class="error-message">
+                                                Warning: NAs produced by coercion
+                                            </div>
+                                            
+                                            <div class="solution-box">
+                                                <button class="copy-solution" onclick="copySolution(this)">Copiar</button>
+                                                <h6><i class="fas fa-check-circle text-success me-2"></i>Soluciones:</h6>
+                                                
+                                                <p><strong>1. Identificar valores NA:</strong></p>
+                                                <div class="code-right">
+                                                    is.na(datos)           # Ver dónde hay NA<br>
+                                                    sum(is.na(datos))      # Contar NA<br>
+                                                    complete.cases(datos)  # Filas completas
+                                                </div>
+
+                                                <p><strong>2. Remover NA en cálculos:</strong></p>
+                                                <div class="code-wrong">❌ mean(datos$edad)              # Devuelve NA si hay faltantes</div>
+                                                <div class="code-right">✅ mean(datos$edad, na.rm = TRUE) # Ignora NA</div>
+
+                                                <p><strong>3. Limpiar datos:</strong></p>
+                                                <div class="code-right">
+                                                    datos_limpios <- na.omit(datos)  # Remover filas con NA
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Errores de Gráficos -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card error-section">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <div class="error-icon">
+                                        <i class="fas fa-chart-bar"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="category-header">
+                                            <i class="fas fa-chart-bar me-2"></i>Errores en Gráficos
+                                        </div>
+                                        
+                                        <!-- Error: Plot window -->
+                                        <div class="mb-4">
+                                            <span class="severity-badge severity-low">Ocasional</span>
+                                            <h6><strong>Problemas con ventana de gráficos</strong></h6>
+                                            
+                                            <div class="error-message">
+                                                Error in plot.new() : figure margins too large
+                                            </div>
+                                            
+                                            <div class="solution-box">
+                                                <button class="copy-solution" onclick="copySolution(this)">Copiar</button>
+                                                <h6><i class="fas fa-check-circle text-success me-2"></i>Soluciones:</h6>
+                                                
+                                                <p><strong>1. Agrandar ventana de gráficos en RStudio</strong></p>
+                                                <p><strong>2. Reiniciar dispositivo gráfico:</strong></p>
+                                                <div class="code-right">
+                                                    dev.off()  # Cerrar dispositivo gráfico actual
+                                                </div>
+
+                                                <p><strong>3. Ajustar márgenes:</strong></p>
+                                                <div class="code-right">
+                                                    par(mar = c(5, 4, 4, 2))  # Ajustar márgenes
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Error: Colors -->
+                                        <div class="mb-3">
+                                            <span class="severity-badge severity-low">Ocasional</span>
+                                            <h6><strong>Error: "invalid color name"</strong></h6>
+                                            
+                                            <div class="solution-box">
+                                                <button class="copy-solution" onclick="copySolution(this)">Copiar</button>
+                                                <h6><i class="fas fa-check-circle text-success me-2"></i>Solución:</h6>
+                                                
+                                                <p><strong>Ver colores disponibles:</strong></p>
+                                                <div class="code-right">
+                                                    colors()  # Ver todos los nombres de colores<br>
+                                                    # O usar códigos hexadecimales<br>
+                                                    plot(x, y, col = "#FF5733")
+                                                </div>
+
+                                                <div class="code-wrong">❌ plot(x, y, col = "azul")     # No existe "azul"</div>
+                                                <div class="code-right">✅ plot(x, y, col = "blue")    # Correcto</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Consejos Generales -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card bg-info bg-opacity-10 border-info">
+                            <div class="card-body">
+                                <h5 class="card-title text-info">
+                                    <i class="fas fa-lightbulb me-2"></i>
+                                    Consejos Generales para Depurar Código
+                                </h5>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6><i class="fas fa-search text-info me-2"></i>Estrategias de Debugging</h6>
+                                        <ul>
+                                            <li><strong>Lee el mensaje completo:</strong> Los errores suelen indicar la línea exacta del problema</li>
+                                            <li><strong>Ejecuta línea por línea:</strong> Encuentra exactamente dónde ocurre el error</li>
+                                            <li><strong>Verifica tipos de datos:</strong> Usa <code>class()</code> y <code>str()</code></li>
+                                            <li><strong>Simplifica:</strong> Prueba con datos más pequeños primero</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6><i class="fas fa-tools text-info me-2"></i>Herramientas Útiles</h6>
+                                        <ul>
+                                            <li><code>traceback()</code> - Ver dónde ocurrió el error</li>
+                                            <li><code>browser()</code> - Pausar ejecución y explorar</li>
+                                            <li><code>debug(función)</code> - Debuggear función específica</li>
+                                            <li><code>options(error = recover)</code> - Debugging avanzado</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="alert alert-warning mt-3">
+                                    <h6><i class="fas fa-graduation-cap me-2"></i>Recuerda</h6>
+                                    <p class="mb-0">
+                                        <strong>Los errores son normales y útiles.</strong> Cada error que resuelves te ayuda a entender mejor R. 
+                                        No te frustres, ¡incluso los programadores expertos consultan estos errores regularmente!
+                                    </p>
+                                </div>
+
+                                <div class="text-center">
+                                    <a href="recursos.html" class="btn btn-info">
+                                        <i class="fas fa-download me-2"></i>
+                                        Descargar Guía Completa de Errores
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/vendors.min.js"></script>
+    <script src="assets/js/app.min.js"></script>
+    <script src="assets/js/global.js"></script>
+
+    <script>
+        // Funcionalidad de búsqueda de errores
+        document.getElementById('errorSearch').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const errorSections = document.querySelectorAll('.error-section .mb-4');
+            
+            errorSections.forEach(section => {
+                const title = section.querySelector('h6').textContent.toLowerCase();
+                const errorMessage = section.querySelector('.error-message').textContent.toLowerCase();
+                const content = section.textContent.toLowerCase();
+                
+                if (searchTerm === '' || 
+                    title.includes(searchTerm) || 
+                    errorMessage.includes(searchTerm) || 
+                    content.includes(searchTerm)) {
+                    section.style.display = '';
+                    // Resaltar término si hay búsqueda
+                    if (searchTerm && searchTerm.length > 2) {
+                        highlightText(section, searchTerm);
+                    }
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+            
+            // Mostrar mensaje si no hay resultados
+            const visibleSections = document.querySelectorAll('.error-section .mb-4[style=""]');
+            if (searchTerm && visibleSections.length === 0) {
+                showNoResults();
+            } else {
+                hideNoResults();
+            }
+        });
+
+        function highlightText(element, term) {
+            const regex = new RegExp(`(${term})`, 'gi');
+            const textNodes = getTextNodes(element);
+            
+            textNodes.forEach(node => {
+                if (node.nodeValue && node.nodeValue.toLowerCase().includes(term)) {
+                    const parent = node.parentNode;
+                    const wrapper = document.createElement('span');
+                    wrapper.innerHTML = node.nodeValue.replace(regex, '<mark>$1</mark>');
+                    parent.replaceChild(wrapper, node);
+                }
+            });
+        }
+
+        function getTextNodes(element) {
+            const textNodes = [];
+            const walker = document.createTreeWalker(
+                element,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+            
+            let node;
+            while (node = walker.nextNode()) {
+                textNodes.push(node);
+            }
+            
+            return textNodes;
+        }
+
+        function showNoResults() {
+            let noResultsDiv = document.getElementById('noResults');
+            if (!noResultsDiv) {
+                noResultsDiv = document.createElement('div');
+                noResultsDiv.id = 'noResults';
+                noResultsDiv.className = 'alert alert-warning text-center';
+                noResultsDiv.innerHTML = `
+                    <i class="fas fa-search me-2"></i>
+                    <strong>No se encontraron errores que coincidan con tu búsqueda.</strong><br>
+                    <small>Intenta con palabras clave diferentes o revisa la ortografía.</small>
+                `;
+                document.querySelector('.container-fluid').appendChild(noResultsDiv);
+            }
+            noResultsDiv.style.display = 'block';
+        }
+
+        function hideNoResults() {
+            const noResultsDiv = document.getElementById('noResults');
+            if (noResultsDiv) {
+                noResultsDiv.style.display = 'none';
+            }
+        }
+
+        function copySolution(button) {
+            const solutionBox = button.parentElement;
+            const codeBlocks = solutionBox.querySelectorAll('.code-right');
+            let textToCopy = '';
+            
+            codeBlocks.forEach(block => {
+                textToCopy += block.textContent.trim() + '\n\n';
+            });
+            
+            navigator.clipboard.writeText(textToCopy.trim()).then(function() {
+                const originalText = button.textContent;
+                button.textContent = '¡Copiado!';
+                button.style.background = '#28a745';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '#17a2b8';
+                }, 2000);
+            });
+        }
+
+        // Smooth scroll para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
