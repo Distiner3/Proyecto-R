@@ -27,6 +27,8 @@
             border-left: 4px solid #6f42c1;
             transition: all 0.3s ease;
             margin-bottom: 1.5rem;
+            /* ¡ESTA ES LA PROPIEDAD CLAVE PARA EL SCROLL! */
+            scroll-margin-top: 120px; 
         }
 
         .command-section:hover {
@@ -71,7 +73,7 @@
 
         .quick-nav {
             position: sticky;
-            top: 20px;
+            top: 100px;
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid #dee2e6;
             border-radius: 10px;
@@ -181,7 +183,7 @@
         </div>
 
 
-        <!-- SIDEBAR -->
+        <!-- SIDEBAR (UNIFICADO) -->
         <div class="startbar d-print-none">
             <div class="brand">
                 <a href="index.html" class="logo">
@@ -201,7 +203,7 @@
                             <li class="menu-label pt-0 mt-0">
                                 <span>Menú Principal</span>
                             </li>
-
+                            
                             <li class="nav-item">
                                 <a class="nav-link" href="index.html">
                                     <i class="fas fa-home menu-icon"></i>
@@ -257,8 +259,7 @@
                                 <div class="collapse" id="sidebarAnalisis">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="estadisticas-basicas.html">Estadísticas
-                                                Básicas</a>
+                                            <a class="nav-link" href="estadisticas-basicas.html">Estadísticas Básicas</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="graficos.html">Gráficos y Visualización</a>
@@ -276,8 +277,7 @@
                                 <div class="collapse" id="sidebarProyectos">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="ejemplo-practico.html">Ejemplo: Análisis
-                                                Estaturas</a>
+                                            <a class="nav-link" href="ejemplo-practico.html">Ejemplo: Análisis Estaturas</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="proyecto-final.html">Proyecto Final</a>
@@ -291,7 +291,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="comandos-utiles.html">
+                                <a class="nav-link active" href="comandos-utiles.html">
                                     <i class="fas fa-terminal menu-icon"></i>
                                     <span>Comandos Útiles</span>
                                 </a>
@@ -325,7 +325,7 @@
 
         <!-- CONTENIDO PRINCIPAL -->
         <div class="page-content">
-            <div class="container">
+            <div class="container-fluid">
 
                 <div class="row">
                     <!-- NAVEGACIÓN RÁPIDA -->
@@ -357,6 +357,9 @@
                                 </a>
                                 <a class="nav-link-custom" href="#estadisticas">
                                     <i class="fas fa-chart-bar me-2"></i>Estadísticas Básicas
+                                </a>
+                                <a class="nav-link-custom" href="#conversiones">
+                                    <i class="fas fa-exchange-alt me-2"></i>Conversiones de Tipos
                                 </a>
                             </nav>
                         </div>
@@ -392,9 +395,9 @@
                         </div>
 
                         <!-- Funciones Matemáticas -->
-                        <div id="matematicas" class="row mb-4">
+                        <div class="row mb-4">
                             <div class="col-12">
-                                <div class="card command-section">
+                                <div id="matematicas" class="card command-section">
                                     <div class="card-body">
                                         <div class="d-flex align-items-start">
                                             <div class="section-icon">
@@ -484,9 +487,9 @@
                         </div>
 
                         <!-- Manipulación de Texto -->
-                        <div id="texto" class="row mb-4">
+                        <div class="row mb-4">
                             <div class="col-12">
-                                <div class="card command-section">
+                                <div id="texto" class="card command-section">
                                     <div class="card-body">
                                         <div class="d-flex align-items-start">
                                             <div class="section-icon">
@@ -581,9 +584,9 @@
                         </div>
 
                         <!-- Trabajo con Vectores -->
-                        <div id="vectores" class="row mb-4">
+                        <div class="row mb-4">
                             <div class="col-12">
-                                <div class="card command-section">
+                                <div id="vectores" class="card command-section">
                                     <div class="card-body">
                                         <div class="d-flex align-items-start">
                                             <div class="section-icon">
@@ -707,9 +710,9 @@
                         </div>
 
                         <!-- DataFrames -->
-                        <div id="dataframes" class="row mb-4">
+                        <div class="row mb-4">
                             <div class="col-12">
-                                <div class="card command-section">
+                                <div id="dataframes" class="card command-section">
                                     <div class="card-body">
                                         <div class="d-flex align-items-start">
                                             <div class="section-icon">
@@ -811,9 +814,9 @@
                         </div>
 
                         <!-- Manejo de Archivos -->
-                        <div id="archivos" class="row mb-4">
+                        <div class="row mb-4">
                             <div class="col-12">
-                                <div class="card command-section">
+                                <div id="archivos" class="card command-section">
                                     <div class="card-body">
                                         <div class="d-flex align-items-start">
                                             <div class="section-icon">
@@ -895,9 +898,9 @@
                         </div>
 
                         <!-- Scripts y Flujo -->
-                        <div id="scripts" class="row mb-4">
+                        <div class="row mb-4">
                             <div class="col-12">
-                                <div class="card command-section">
+                                <div id="scripts" class="card command-section">
                                     <div class="card-body">
                                         <div class="d-flex align-items-start">
                                             <div class="section-icon">
@@ -980,9 +983,9 @@
                         </div>
 
                         <!-- Estadísticas Básicas -->
-                        <div id="estadisticas" class="row mb-4">
+                        <div class="row mb-4">
                             <div class="col-12">
-                                <div class="card command-section">
+                                <div id="estadisticas" class="card command-section">
                                     <div class="card-body">
                                         <div class="d-flex align-items-start">
                                             <div class="section-icon">
@@ -1092,7 +1095,7 @@
                         <!-- Conversiones de Tipos -->
                         <div class="row">
                             <div class="col-12">
-                                <div class="card command-section">
+                                <div id="conversiones" class="card command-section">
                                     <div class="card-body">
                                         <div class="d-flex align-items-start">
                                             <div class="section-icon">
